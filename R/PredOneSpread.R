@@ -25,7 +25,7 @@
 #' }
 #' @export
 #' @importFrom shiny reactiveValues observe observeEvent req renderUI updateSelectInput HTML numericInput tagList
-#' @importFrom shiny renderPlot downloadHandler
+#' @importFrom shiny renderPlot downloadHandler fluidPage
 #' @importFrom MASS ginv
 #' @importFrom stats quantile cov dnorm
 #' @importFrom rmarkdown render
@@ -400,7 +400,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_report-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermOnereport.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermOnereport.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOnereport.Rmd")
         file.copy("UsermOnereport.Rmd", tempReport, overwrite = TRUE)
 
@@ -422,7 +422,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_NxN-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermOneNxN.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermOneNxN.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOneNxN.Rmd")
         file.copy("UsermOneNxN.Rmd", tempReport, overwrite = TRUE)
 
@@ -444,7 +444,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_Nx1-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermOneNx1.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermOneNx1.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOneNx1.Rmd")
         file.copy("UsermOneNx1.Rmd", tempReport, overwrite = TRUE)
 

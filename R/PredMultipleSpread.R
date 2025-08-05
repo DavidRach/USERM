@@ -25,7 +25,7 @@
 #' }
 #' @export
 #' @importFrom shiny reactiveValues observe observeEvent req renderUI updateSelectInput HTML numericInput tagList
-#' @importFrom shiny renderPlot downloadHandler
+#' @importFrom shiny renderPlot downloadHandler fluidPage
 #' @importFrom MASS ginv
 #' @importFrom stats quantile cov dnorm
 #' @importFrom rmarkdown render
@@ -362,7 +362,7 @@ PredMultipleSpread = function(Userm,population_ids){
         paste0("UsermMultiple_report-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermMultiplereport.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermMultiplereport.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermMultiplereport.Rmd")
         file.copy("UsermMultiplereport.Rmd", tempReport, overwrite = TRUE)
 
@@ -385,7 +385,7 @@ PredMultipleSpread = function(Userm,population_ids){
         paste0("UsermMultiple_NxN-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermMultipleNxN.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermMultipleNxN.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermMultipleNxN.Rmd")
         file.copy("UsermMultipleNxN.Rmd", tempReport, overwrite = TRUE)
 
@@ -407,7 +407,7 @@ PredMultipleSpread = function(Userm,population_ids){
         paste0("UsermMultiple_Nx1-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("report_tmp", "UsermMultipleNx1.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "report_tmp/UsermMultipleNx1.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermMultipleNx1.Rmd")
         file.copy("UsermMultipleNx1.Rmd", tempReport, overwrite = TRUE)
 
