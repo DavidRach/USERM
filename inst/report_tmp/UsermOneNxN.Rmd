@@ -19,6 +19,7 @@ library(ComplexHeatmap)
 library(circlize)
 library(MASS)
 library(patchwork)
+library(ggplot2)
 
 Userm = params$Userm
 fluor_selected = params$fluor_selected
