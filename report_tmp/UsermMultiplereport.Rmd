@@ -1,0 +1,110 @@
+---
+title: "USERM report"
+output: html_document
+params:
+  Userm: NULL
+  detector_selected: NULL
+  fluor_selected: NULL
+  prediction_plot_mode_report: NULL
+  population_ids: NULL
+  
+knitr:
+  opts_chunk:
+    echo: FALSE
+---
+
+## Parameters：
+```{r,include=FALSE}
+library(ComplexHeatmap)
+library(circlize)
+Userm = params$Userm
+fluor_selected = params$fluor_selected
+detector_selected = params$detector_selected
+prediction_plot_mode_report = params$prediction_plot_mode_report
+population_ids = params$population_ids
+```
+
+```{r, echo=FALSE}
+paste0("A total of ",length(fluor_selected), " fluors and ",length(detector_selected)," are selected.")
+paste0("population_ids: ",paste(population_ids, collapse = ", "))
+```
+
+## Unmixing matrix：
+Unmixing matrix contains the normalized (to 1) signatures of fluorescences.
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+A = Userm$A
+A = A[detector_selected, fluor_selected, drop = FALSE]
+
+Userm_html_table(mat = A, val_min = -1, val_mid = 0, val_max = 1,
+                         colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Intensity (-1 to 1)")
+
+```
+
+## Pseudo-inverse matrix：
+The pseudo-inverse matrix is the Moore–Penrose inverse of the unmixing matrix. The pseudo-inverse matrix is part of the weight matrix for spread calculation.
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+
+A_pinv = ginv(A)
+colnames(A_pinv) = rownames(A)
+rownames(A_pinv) = colnames(A)
+
+Userm_html_table(mat = A_pinv, val_min = -1, val_mid = 0, val_max = 1,
+                         colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Value (-1 to 1)")
+
+```
+
+## Weighted intercept matrix：
+Intercept matrix represents the spread of negative population. Since the intercept matrix may differ between estimations of fluorescences, we use a "weighted intercept matrix" (median) as a robust estimation for the USERM spread prediction. If the raw data is of high quality with enough sample size, the intercept matrix should be stable and consistant.
+In general, negative population has limited spread and small impact on flow cytometry analysis. What matters more is the spread from the residual of fluorescences.
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+
+weighted_intercept_matrix <- array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+
+for (i in 1:ncol(A)) {
+  fluor = colnames(A)[i]
+  intercept_matrix = Userm$Res[[fluor]]$interceptMtx
+  intercept_matrix = intercept_matrix[detector_selected,detector_selected]
+  weighted_intercept_matrix[,i] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
+}
+
+final_col = matrix(apply(weighted_intercept_matrix,1,median),ncol = 1)
+sqrt_col = sqrt(abs(final_col))
+final_matrix = cbind(weighted_intercept_matrix, final_col)
+final_matrix = cbind(final_matrix, sqrt_col)
+colnames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
+rownames(final_matrix) = colnames(A)
+
+Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
+                         colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Spread Intensity (-10 to 10)")
+
+```
+
+## Populaiton Intensity matrix：
+The spread is highly related to the intensity of fluorescences. The populaiton Intensity matrix shows the intensity used for spread estimation. 
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+intensity_matrix = Userm$Intensity_mtx
+intensity_matrix = intensity_matrix[fluor_selected,population_ids,drop = FALSE]
+
+Userm_html_table(mat = intensity_matrix, val_min = -1000, val_mid = 0, val_max = 1000,colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Population Intensity (-1000 to 1000)")
+
+```
+
+
+## Slop matrix (raw)：
+Slop matrix is the key part of the weight matrix for spread calculation. 
+If the raw data is of high quality, the slop matrix should be stable and only related to the fluorescence. The slop matrix should be highly similar to each other when estimated from cells vs. beads or with distinct targets. High quality means the cells/beads intensity ranges form low to very high value and covers the estiamted intensity. Also, it is very important to have enough amount of sample size to have robust estimation. The higher the more robust, > 10000 is recommended.
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+for (fluor in fluor_selected) {
+  slop_matrix = Userm$Res[[fluor]]$slopMtx
+  slop_matrix = slop_matrix[detector_selected,detector_selected]
+  print(fluor)
+  slop_html = Userm_html_table(mat = slop_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                       colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Slop/beta (-1 to 1)")
+  print(slop_html)
+}
+```

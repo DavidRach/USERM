@@ -1,1 +1,5 @@
 .Rproj.user
+tmp/
+test/
+instruction.md
+data/

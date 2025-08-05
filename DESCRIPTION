@@ -1,11 +1,10 @@
 Package: USERM
-Title: What the Package Does (One Line, Title Case)
+Title: Unmixing Spread Estimation with Residual Model
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Xiangming", "Cai", , "xiangming_cai@126.com", role = c("aut", "cre"))
+Description: The USERM estimates the spread of unmixed data for spectral flow cytometry.
+License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

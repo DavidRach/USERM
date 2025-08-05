@@ -1,0 +1,135 @@
+---
+title: "USERM Nx1"
+output: html_document
+params:
+  Userm: NULL
+  detector_selected: NULL
+  fluor_selected: NULL
+  prediction_plot_mode_report: NULL
+  x_fluor: NULL
+  population_ids: NULL
+knitr:
+  opts_chunk:
+    echo: FALSE
+---
+
+## Parameters：
+```{r,include=FALSE}
+library(ComplexHeatmap)
+library(circlize)
+Userm = params$Userm
+fluor_selected = params$fluor_selected
+detector_selected = params$detector_selected
+prediction_plot_mode_report = params$prediction_plot_mode_report
+x_fluor = params$x_fluor
+population_ids = params$population_ids
+  
+
+# Scale_df
+Scale_df = Userm$Scale_df
+
+# Unmixing matrix
+A = Userm$A
+A = A[detector_selected, fluor_selected, drop = FALSE]
+
+# Pseudo-inverse matrix
+A_pinv = ginv(A)
+colnames(A_pinv) = rownames(A)
+rownames(A_pinv) = colnames(A)
+
+# Weighted intercept_col
+weighted_intercept_matrix <- array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+for (i in 1:ncol(A)) {
+  fluor = colnames(A)[i]
+  intercept_matrix = Userm$Res[[fluor]]$interceptMtx
+  intercept_matrix = intercept_matrix[detector_selected,detector_selected]
+  weighted_intercept_matrix[,i] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
+}
+intercept_col = matrix(apply(weighted_intercept_matrix,1,median),ncol = 1)
+
+# Populaiton Intensity matrix
+intensity_matrix = Userm$Intensity_mtx
+intensity_matrix = intensity_matrix[fluor_selected,population_ids,drop = FALSE]
+
+
+```
+
+```{r, echo=FALSE}
+paste0("A total of ",length(fluor_selected), " fluors and ",length(detector_selected)," are selected.")
+paste0("population_ids: ",paste(population_ids, collapse = ", "))
+```
+
+
+## N by 1：
+```{r, results='asis', echo=FALSE}
+
+for (j in 1:length(fluor_selected)) {
+  # create grid
+  x <- create_seq(min = Scale_df[x_fluor,"min"],
+                  max = Scale_df[x_fluor,"max"], len=100,
+                  scale = Scale_df[x_fluor,"scale"], cofactor = Scale_df[x_fluor,"cofactor"])
+  y <- create_seq(min = Scale_df[fluor_selected[j],"min"],
+                  max = Scale_df[fluor_selected[j],"max"], len=100,
+                  scale = Scale_df[fluor_selected[j],"scale"], cofactor = Scale_df[fluor_selected[j],"cofactor"])
+  grid <- expand.grid(x = x, y = y)
+  grid$z = 0
+  
+  for (i_population in 1:length(population_ids)) {
+    
+    popultion = population_ids[i_population]
+    
+    grid_tmp = grid
+
+    weighted_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+    intensity_col = array(0, dim = c(ncol(A), 1)) #(channel, 1)
+    for (i in 1:ncol(A)) {
+      fluor = colnames(A)[i]
+      slop_matrix = Userm$Res[[fluor]]$slopMtx
+      slop_matrix = slop_matrix[detector_selected,detector_selected]
+      weighted_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_matrix[fluor,popultion]
+      intensity_col[i,1] = intensity_matrix[fluor,popultion]
+    }
+    spread_col = matrix(apply(weighted_matrix,1,sum),ncol = 1)
+
+    final_col = spread_col + intercept_col
+
+    sqrt_col = sqrt(abs(final_col))
+    rownames(sqrt_col) = colnames(A)
+    rownames(intensity_col) = colnames(A)
+    #Calculate iso band data
+
+    mu_x = intensity_col[x_fluor,1]
+    mu_y = intensity_col[fluor_selected[j],1]
+    sigma_x = sqrt_col[x_fluor,1]
+    sigma_y = sqrt_col[fluor_selected[j],1]
+
+    # calculate intensity for x and y
+    fx <- dnorm(grid_tmp$x, mean = mu_x, sd = sigma_x)
+    fy <- dnorm(grid_tmp$y, mean = mu_y, sd = sigma_y)
+
+    # Joint probability density (due to independence, it equals the product of individual densities)
+    grid_tmp$z <- fx * fy
+
+    grid$z = grid$z + grid_tmp$z
+  }
+  
+  #visualize iso band data
+  p = PredIsobandPlot(grid = grid,
+                      x_scale = Scale_df[x_fluor,"scale"],
+                      y_scale = Scale_df[fluor_selected[j],"scale"],
+                      x_cofactor = Scale_df[x_fluor,"cofactor"],
+                      y_cofactor = Scale_df[fluor_selected[j],"cofactor"],
+                      x_label = x_fluor,
+                      y_label = fluor_selected[j],
+                      x_min = Scale_df[x_fluor,"min"],
+                      x_max = Scale_df[x_fluor,"max"],
+                      y_min = Scale_df[fluor_selected[j],"min"],
+                      y_max = Scale_df[fluor_selected[j],"max"],
+                      mode = prediction_plot_mode_report,
+                      legned_show = FALSE,
+                      label_population = population_ids,
+                      intensity_matrix = intensity_matrix)
+  print(p)
+}
+
+```
