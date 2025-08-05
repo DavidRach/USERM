@@ -1,3 +1,33 @@
+#' Generate an HTML table with color-coded cells and a legend
+#'
+#' This function creates an HTML representation of a numeric matrix with each cell
+#' color-coded based on its value. A color legend is also appended to help interpret
+#' the color scale.
+#'
+#' @param mat A numeric matrix to be displayed as an HTML table.
+#' @param val_min Minimum value for color scaling.
+#' @param val_mid Midpoint value for color scaling.
+#' @param val_max Maximum value for color scaling.
+#' @param colormin Color corresponding to `val_min`.
+#' @param colormid Color corresponding to `val_mid`.
+#' @param colormax Color corresponding to `val_max`.
+#' @param Legend A character string for the legend title. Default is `"Color Legend"`.
+#'
+#' @return A character string containing HTML code for the table and legend.
+#'
+#' @details This function is useful for visualizing matrices with a heatmap-like
+#' color gradient directly in Shiny apps or HTML reports. It relies on a helper
+#' function `getColor()` to compute the appropriate background color for each cell.
+#'
+#' @examples
+#' mat <- matrix(runif(9, 0, 100), nrow = 3)
+#' rownames(mat) <- paste0("Row", 1:3)
+#' colnames(mat) <- paste0("Col", 1:3)
+#' Userm_html_table(mat, 0, 50, 100, "#0000FF", "#FFFFFF", "#FF0000")
+#'
+#' @export
+
+
 Userm_html_table = function(mat,val_min, val_mid, val_max, colormin, colormid, colormax, Legend = "Color Legend"){
   # construct HTML
   html <- "<table style='border-collapse:collapse;'>"
