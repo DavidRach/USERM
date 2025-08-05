@@ -17,6 +17,9 @@ knitr:
 ```{r,include=FALSE}
 library(ComplexHeatmap)
 library(circlize)
+library(MASS)
+library(patchwork)
+
 Userm = params$Userm
 fluor_selected = params$fluor_selected
 detector_selected = params$detector_selected
