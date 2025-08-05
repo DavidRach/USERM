@@ -400,7 +400,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_report-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("inst", "report_tmp/UsermOnereport.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "UsermOnereport.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOnereport.Rmd")
         file.copy("UsermOnereport.Rmd", tempReport, overwrite = TRUE)
 
@@ -422,7 +422,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_NxN-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("inst", "report_tmp/UsermOneNxN.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "UsermOneNxN.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOneNxN.Rmd")
         file.copy("UsermOneNxN.Rmd", tempReport, overwrite = TRUE)
 
@@ -444,7 +444,7 @@ PredOneSpread = function(Userm,population_id){
         paste0("UsermOne_Nx1-", format(Sys.time(), "%Y-%m-%d_%H_%M_%S"), ".html")
       },
       content = function(file) {
-        tempReport <- system.file("inst", "report_tmp/UsermOneNx1.Rmd", package = "USERM")
+        tempReport <- system.file("inst", "UsermOneNx1.Rmd", package = "USERM")
         # tempReport <- file.path(report_tmp_dir, "UsermOneNx1.Rmd")
         file.copy("UsermOneNx1.Rmd", tempReport, overwrite = TRUE)
 
