@@ -15,6 +15,8 @@
 #' @examples
 #' getColor(0.75, 0, 0.5, 1, "#0000FF", "#00FF00", "#FF0000")
 #' @export
+#' @importFrom grDevices col2rgb rgb
+
 
 getColor <- function(val, min, mid, max, colormin, colormid, colormax) {
   # Clamp val within [min, max]

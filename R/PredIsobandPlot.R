@@ -34,6 +34,11 @@
 #'                 mode = "Pseudo-color")
 #' }
 #' @export
+#' @importFrom ggplot2 ggplot aes geom_contour geom_contour_filled geom_text
+#' @importFrom ggplot2 scale_color_viridis_c scale_x_continuous scale_y_continuous
+#' @importFrom ggplot2 labs theme_light theme xlim ylim after_stat
+#' @importFrom scales trans_new
+
 
 
 PredIsobandPlot = function(grid,x_scale,y_scale,x_cofactor,y_cofactor,

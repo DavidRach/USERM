@@ -1,5 +1,5 @@
 Userm_html_table = function(mat,val_min, val_mid, val_max, colormin, colormid, colormax, Legend = "Color Legend"){
-  # 构造 HTML 表格
+  # construct HTML
   html <- "<table style='border-collapse:collapse;'>"
   html <- paste0(html, "<tr><th></th>",
                  paste0("<th style='padding: 6px 12px;'>", colnames(mat), "</th>", collapse = ""),

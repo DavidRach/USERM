@@ -25,6 +25,9 @@
 #' Res <- SlopEstimation(Res, count_thre = 30, bin_num = 20, bin_method = "percentile")
 #' }
 #' @export
+#' @importFrom MASS ginv rlm cov.rob
+#' @importFrom stats quantile cov
+#' @importFrom progress progress_bar
 
 SlopEstimation = function(Res, count_thre, bin_num = 20, bin_method = "percentile", z_thre = 3, ...){
   set.seed(123)

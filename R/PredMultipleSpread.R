@@ -24,6 +24,12 @@
 #' PredMultipleSpread(Userm, population_ids = c("P1", "P2"))
 #' }
 #' @export
+#' @importFrom shiny reactiveValues observe observeEvent req renderUI updateSelectInput HTML numericInput tagList
+#' @importFrom shiny renderPlot downloadHandler
+#' @importFrom MASS ginv
+#' @importFrom stats quantile cov dnorm
+#' @importFrom rmarkdown render
+
 
 PredMultipleSpread = function(Userm,population_ids){
 

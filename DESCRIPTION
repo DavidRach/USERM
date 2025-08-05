@@ -13,9 +13,12 @@ Imports:
     DT,
     flowCore,
     ggplot2,
+    grDevices,
     MASS,
     patchwork,
     progress,
     reshape2,
     rmarkdown,
+    scales,
+    stats,
     shiny
