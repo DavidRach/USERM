@@ -4,7 +4,16 @@
 \alias{ExtractSig}
 \title{Extract a normalized signature from a single-stained control (SCC)}
 \usage{
-ExtractSig(df_pos, df_neg, cols, method, PrimaryName, SecondaryName, id)
+ExtractSig(
+  df_pos,
+  df_neg,
+  cols,
+  method,
+  PrimaryName,
+  SecondaryName,
+  id,
+  instrument
+)
 }
 \arguments{
 \item{df_pos}{A data frame containing positive control signal data (cells x detectors).}
@@ -20,6 +29,8 @@ ExtractSig(df_pos, df_neg, cols, method, PrimaryName, SecondaryName, id)
 \item{SecondaryName}{A character string specifying the secondary name of the fluorophore or marker.}
 
 \item{id}{A character string used to identify the signature object.}
+
+\item{instrument}{A character string used to specify the instrument used to generate the raw data, e.g. Aurora5L, Xenith.}
 }
 \value{
 A list containing:
