@@ -7,7 +7,7 @@
 SlopEstimation(
   Res,
   count_thre,
-  bin_num = 20,
+  bin_num = 30,
   bin_method = "percentile",
   z_thre = 3,
   ...
@@ -18,7 +18,7 @@ SlopEstimation(
 
 \item{count_thre}{An integer specifying the minimum number of data points required in a bin to perform covariance estimation.}
 
-\item{bin_num}{An integer specifying the number of bins to divide the data into. Default is 20.}
+\item{bin_num}{An integer specifying the number of bins to divide the data into. Default is 30.}
 
 \item{bin_method}{A character string specifying the binning method. Must be either \code{"absolute"} or \code{"percentile"}. Default is \code{"percentile"}.}
 
@@ -43,6 +43,6 @@ and fits robust linear models to estimate the relationship between covariance va
 \examples{
 \dontrun{
 Res <- CreateRes("F1", R, A)
-Res <- SlopEstimation(Res, count_thre = 30, bin_num = 20, bin_method = "percentile")
+Res <- SlopEstimation(Res, count_thre = 30, bin_num = 30, bin_method = "percentile")
 }
 }

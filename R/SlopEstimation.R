@@ -6,7 +6,7 @@
 #'
 #' @param Res A result object created by \code{\link{CreateRes}}, containing raw signal matrix \code{R}, unmixing matrix \code{A}, and detector information.
 #' @param count_thre An integer specifying the minimum number of data points required in a bin to perform covariance estimation.
-#' @param bin_num An integer specifying the number of bins to divide the data into. Default is 20.
+#' @param bin_num An integer specifying the number of bins to divide the data into. Default is 30.
 #' @param bin_method A character string specifying the binning method. Must be either \code{"absolute"} or \code{"percentile"}. Default is \code{"percentile"}.
 #' @param z_thre A numeric threshold for removing outliers based on z-scores of the first column of matrix \code{B}. Default is 3.
 #' @param ... Additional arguments passed to internal functions (currently unused).
@@ -22,14 +22,14 @@
 #' @examples
 #' \dontrun{
 #' Res <- CreateRes("F1", R, A)
-#' Res <- SlopEstimation(Res, count_thre = 30, bin_num = 20, bin_method = "percentile")
+#' Res <- SlopEstimation(Res, count_thre = 30, bin_num = 30, bin_method = "percentile")
 #' }
 #' @export
 #' @importFrom MASS ginv rlm cov.rob
 #' @importFrom stats quantile cov
 #' @importFrom progress progress_bar
 
-SlopEstimation = function(Res, count_thre, bin_num = 20, bin_method = "percentile", z_thre = 3, ...){
+SlopEstimation = function(Res, count_thre, bin_num = 30, bin_method = "percentile", z_thre = 3, ...){
   set.seed(123)
 
   #check if R and A are available
@@ -60,6 +60,7 @@ SlopEstimation = function(Res, count_thre, bin_num = 20, bin_method = "percentil
   #remove outliers based on B
   z_scores = scale(B[,1])
   mask = abs(z_scores) <= z_thre
+  # table(mask)
   B = B[mask, , drop = FALSE]
   Residual = Residual[mask, , drop = FALSE]
 
@@ -87,7 +88,7 @@ SlopEstimation = function(Res, count_thre, bin_num = 20, bin_method = "percentil
   #loop bin and fill cov_matrices and bin_mids
   for (i in 1:bin_num) {
     pb$tick()
-    # i = 1
+    # i = 2
     if(bin_method == "absolute"){
       bin_min = min(B) + (i - 1) * bin_size  - 1 * bin_size
       bin_max = bin_min + bin_size + 1 * bin_size
@@ -106,7 +107,9 @@ SlopEstimation = function(Res, count_thre, bin_num = 20, bin_method = "percentil
 
     if (length(bin_points) > count_thre) {
       residuals_in_bin = Residual[bin_mask,]
-      cov_matrices[ , ,i] = cov.rob(residuals_in_bin)$cov
+      dim(residuals_in_bin)
+      # cov_matrices[ , ,i] = MASS::cov.rob(residuals_in_bin)$cov #will cause sigularity issue when cal inv matrix of cov matrix
+      cov_matrices[ , ,i] = robust_pairwise_cov_zscore(residuals_in_bin,z_thresh = z_thre)
       bin_mids = c(bin_mids, bin_mid)
     }else{
       bin_mids = c(bin_mids, NA)
