@@ -13,6 +13,8 @@
 #' @param SecondaryName A character string specifying the secondary name of the fluorophore or marker.
 #' @param id A character string used to identify the signature object.
 #' @param instrument A character string used to specify the instrument used to generate the raw data, e.g. Aurora5L, Xenith.
+#' @param Source A character string used to specify the source the raw data, e.g. name of researcher or institution.
+#' @param Note A character string used to specify any additional information related to the fluorophore.
 #'
 #' @return A list containing:
 #' \item{id}{The identifier string.}
@@ -29,7 +31,8 @@
 #' }
 #' @export
 
-ExtractSig <- function(df_pos, df_neg, cols, method, PrimaryName, SecondaryName, id, instrument){
+ExtractSig <- function(df_pos, df_neg, cols, method, PrimaryName, SecondaryName, id,
+                       instrument, Source, Note = NA){
 
   missing_cols <- setdiff(cols, colnames(df_pos))
   if (length(missing_cols) > 0) {
@@ -53,5 +56,7 @@ ExtractSig <- function(df_pos, df_neg, cols, method, PrimaryName, SecondaryName,
               PrimaryName = PrimaryName,
               SecondaryName = SecondaryName,
               Signature = sig,
-              instrument = instrument))
+              instrument = instrument,
+              Source = Source,
+              Note = Note))
 }
