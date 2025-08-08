@@ -43,7 +43,7 @@
 
 PredIsobandPlot = function(grid,x_scale,y_scale,x_cofactor,y_cofactor,
                            x_label,y_label,x_min,x_max,y_min,y_max,
-                           mode,legned_show = TRUE,label_population = NA,intensity_matrix = NA){
+                           mode,legend_show = TRUE,label_population = NA,intensity_matrix = NA){
   asinh_trans_cofactor <- function(cofactor = 5) {
     scales::trans_new(
       name = paste0("asinh_", cofactor),
@@ -117,7 +117,7 @@ PredIsobandPlot = function(grid,x_scale,y_scale,x_cofactor,y_cofactor,
 
   p <- p + theme_light()
 
-  if(!legned_show){
+  if(!legend_show){
     p <- p + theme(legend.position = "none")
   }
   return(p)

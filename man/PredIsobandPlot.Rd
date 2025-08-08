@@ -17,7 +17,7 @@ PredIsobandPlot(
   y_min,
   y_max,
   mode,
-  legned_show = TRUE,
+  legend_show = TRUE,
   label_population = NA,
   intensity_matrix = NA
 )
@@ -47,11 +47,11 @@ PredIsobandPlot(
 
 \item{mode}{A character string specifying the plot mode. Must be either \code{"Pseudo-color"} or \code{"Contour line"}.}
 
-\item{legned_show}{Logical; whether to show the legend. Default is \code{TRUE}.}
-
 \item{label_population}{Optional character vector specifying population names to label on the plot.}
 
 \item{intensity_matrix}{Optional matrix or data frame containing intensity values for labeling populations. Must include rows named by \code{x_label} and \code{y_label}.}
+
+\item{legned_show}{Logical; whether to show the legend. Default is \code{TRUE}.}
 }
 \value{
 A \code{ggplot} object representing the prediction plot.

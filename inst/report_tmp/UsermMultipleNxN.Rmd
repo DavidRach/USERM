@@ -138,7 +138,7 @@ for (i_plot in 1:N) {
                           y_min = Scale_df[fluor_selected[j_plot],"min"],
                           y_max = Scale_df[fluor_selected[j_plot],"max"],
                           mode = prediction_plot_mode_report,
-                          legned_show = FALSE,
+                          legend_show = TRUE,
                           label_population = population_ids,
                           intensity_matrix = intensity_matrix)
 

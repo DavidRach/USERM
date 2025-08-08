@@ -127,7 +127,7 @@ for (i in 1:N) {
                           x_max = Scale_df[fluor_selected[i],"max"],
                           y_min = Scale_df[fluor_selected[j],"min"],
                           y_max = Scale_df[fluor_selected[j],"max"],
-                          mode = prediction_plot_mode_report,legned_show = FALSE)
+                          mode = prediction_plot_mode_report,legend_show = FALSE)
 
     } else {
       p <- ggplot() + theme_void()  # empty

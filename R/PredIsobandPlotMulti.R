@@ -51,9 +51,6 @@ PredIsobandPlotMulti <- function(grid_list,
                                  label_population = NA,
                                  intensity_matrix = NA) {
 
-  library(ggplot2)
-  library(scales)
-  library(dplyr)
 
   # Custom transformation functions
   asinh_trans_cofactor <- function(cofactor = 5) {

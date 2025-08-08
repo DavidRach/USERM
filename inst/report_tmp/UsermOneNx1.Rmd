@@ -119,7 +119,7 @@ for (j in 1:length(fluor_selected)) {
                       x_max = Scale_df[x_fluor,"max"],
                       y_min = Scale_df[fluor_selected[j],"min"],
                       y_max = Scale_df[fluor_selected[j],"max"],
-                      mode = prediction_plot_mode_report,legned_show = FALSE)
+                      mode = prediction_plot_mode_report,legend_show = FALSE)
   print(p)
 }
 
