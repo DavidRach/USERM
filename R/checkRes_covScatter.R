@@ -26,7 +26,7 @@
 #' }
 
 #' @import ggplot2
-#
+#' @export
 checkRes_covScatter <- function(Res, detector1, detector2) {
 
   if (is.null(Res$cov_matrices) || !is.matrix(Res$cov_matrices)) {

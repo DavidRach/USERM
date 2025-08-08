@@ -20,6 +20,7 @@
 #'
 #' @import ComplexHeatmap
 #' @import circlize
+#' @import grid
 #' @export
 
 checkRes_slopMtx <- function(Res, min = -1, mid = 0, max = 1, mincolor = "blue", midcolor = "white", maxcolor = "red") {

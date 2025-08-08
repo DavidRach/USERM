@@ -21,6 +21,7 @@
 #'
 #' @import ComplexHeatmap
 #' @import circlize
+#' @import grid
 #' @export
 
 checkRes_interceptMtx <- function(Res, min = -10, mid = 0, max = 10, mincolor = "blue", midcolor = "white", maxcolor = "red") {
