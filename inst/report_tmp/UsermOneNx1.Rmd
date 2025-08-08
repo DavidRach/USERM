@@ -100,11 +100,11 @@ for (j in 1:length(fluor_selected)) {
 
   grid <- expand.grid(x = x, y = y)
 
-  # 计算各自的密度
+  # 
   fx <- dnorm(grid$x, mean = mu_x, sd = sigma_x)
   fy <- dnorm(grid$y, mean = mu_y, sd = sigma_y)
 
-  # 联合密度（因为独立，所以直接相乘）
+  # 
   grid$z <- fx * fy
 
   #visualize iso band data

@@ -86,7 +86,7 @@ PredIsobandPlot = function(grid,x_scale,y_scale,x_cofactor,y_cofactor,
   }
 
 
-  # 根据 scale 类型设置坐标轴缩放
+  # scale
   if (x_scale == "Log10") {
     p <- p + scale_x_continuous(trans = signed_log10_trans(),
                                 limits = c(x_min, x_max))

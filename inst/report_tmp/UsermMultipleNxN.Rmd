@@ -85,6 +85,7 @@ for (i_plot in 1:N) {
 
       grid <- expand.grid(x = x, y = y)
       grid$z = 0
+      grid_list = list()
       for (i_population in 1:length(population_ids)) {
         
         popultion = population_ids[i_population]
@@ -120,12 +121,12 @@ for (i_plot in 1:N) {
     
         # Joint probability density (due to independence, it equals the product of individual densities)
         grid_tmp$z <- fx * fy
-    
-        grid$z = grid$z + grid_tmp$z
+        grid_list[[popultion]] = scale_z(grid_tmp)
+        #grid$z = grid$z + grid_tmp$z
       }
       
       #visualize iso band data
-      p = PredIsobandPlot(grid = grid,
+      p = PredIsobandPlotMulti(grid_list = grid_list,
                           x_scale = Scale_df[fluor_selected[i_plot],"scale"],
                           y_scale = Scale_df[fluor_selected[j_plot],"scale"],
                           x_cofactor = Scale_df[fluor_selected[i_plot],"cofactor"],

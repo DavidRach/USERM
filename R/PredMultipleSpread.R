@@ -253,8 +253,8 @@ PredMultipleSpread = function(Userm,population_ids){
     observe({
       req(fluor_cache$selected)
       updateSelectInput(session, "prediction_plot_mode",
-                        choices = c("Pseudo-color","Contour line"),
-                        selected = "Pseudo-color")
+                        choices = c("Contour line","Pseudo-color"),
+                        selected = "Contour line")
       updateSelectInput(session, "fluor_selector_x_prediction",
                         choices = fluor_cache$selected,
                         selected = fluor_cache$selected[1])
@@ -290,7 +290,7 @@ PredMultipleSpread = function(Userm,population_ids){
                       scale = input$y_scale, cofactor = input$y_cofactor)
       grid <- expand.grid(x = x, y = y)
       grid$z = 0
-
+      grid_list = list()
       for (popultion in population_ids) {
 
         grid_tmp = grid
@@ -324,26 +324,41 @@ PredMultipleSpread = function(Userm,population_ids){
 
         # Joint probability density (due to independence, it equals the product of individual densities)
         grid_tmp$z <- fx * fy
-
-        grid$z = grid$z + grid_tmp$z
+        grid_list[[popultion]] = scale_z(grid_tmp)
+        # grid$z = grid$z + grid_tmp$z
       }
 
 
       #visualize iso band data
-      p = PredIsobandPlot(grid = grid,
-                          x_scale = input$x_scale,
-                          y_scale = input$y_scale,
-                          x_cofactor = input$x_cofactor,
-                          y_cofactor = input$y_cofactor,
-                          x_label = input$fluor_selector_x_prediction,
-                          y_label = input$fluor_selector_y_prediction,
-                          x_min = input$x_min_input,
-                          x_max = input$x_max_input,
-                          y_min = input$y_min_input,
-                          y_max = input$y_max_input,
-                          mode = input$prediction_plot_mode,
-                          label_population = population_ids,
-                          intensity_matrix = intensity_cache$matrix)
+      # p = PredIsobandPlot(grid = grid,
+      #                     x_scale = input$x_scale,
+      #                     y_scale = input$y_scale,
+      #                     x_cofactor = input$x_cofactor,
+      #                     y_cofactor = input$y_cofactor,
+      #                     x_label = input$fluor_selector_x_prediction,
+      #                     y_label = input$fluor_selector_y_prediction,
+      #                     x_min = input$x_min_input,
+      #                     x_max = input$x_max_input,
+      #                     y_min = input$y_min_input,
+      #                     y_max = input$y_max_input,
+      #                     mode = input$prediction_plot_mode,
+      #                     label_population = population_ids,
+      #                     intensity_matrix = intensity_cache$matrix)
+
+      p = PredIsobandPlotMulti(grid_list = grid_list,
+                               x_scale = input$x_scale,
+                               y_scale = input$y_scale,
+                               x_cofactor = input$x_cofactor,
+                               y_cofactor = input$y_cofactor,
+                               x_label = input$fluor_selector_x_prediction,
+                               y_label = input$fluor_selector_y_prediction,
+                               x_min = input$x_min_input,
+                               x_max = input$x_max_input,
+                               y_min = input$y_min_input,
+                               y_max = input$y_max_input,
+                               mode = input$prediction_plot_mode,
+                               label_population = population_ids,
+                               intensity_matrix = intensity_cache$matrix)
       p
 
     })
