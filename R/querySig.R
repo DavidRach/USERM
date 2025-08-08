@@ -25,7 +25,7 @@ querySig = function(){
   Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
 
   info_df = as.data.frame(matrix(nrow = length(Sig_list), ncol = 5))
-  colnames(info_df) = c("id","PrimaryName","SecondaryName","detectors","instrument")
+  colnames(info_df) = c("id","PrimaryName","SecondaryName","detectors","instrument","Source","Note")
 
   for (i in 1:length(Sig_list)) {
     info_df[i,"id"] = Sig_list[[i]]$id
@@ -33,6 +33,8 @@ querySig = function(){
     info_df[i,"SecondaryName"] = Sig_list[[i]]$SecondaryName
     info_df[i,"detectors"] = length(Sig_list[[i]]$Signature)
     info_df[i,"instrument"] = Sig_list[[i]]$instrument
+    info_df[i,"Source"] = Sig_list[[i]]$Source
+    info_df[i,"Note"] = Sig_list[[i]]$Note
   }
 
   return(info_df)
