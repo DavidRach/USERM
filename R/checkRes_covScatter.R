@@ -29,8 +29,8 @@
 #' @export
 checkRes_covScatter <- function(Res, detector1, detector2) {
 
-  if (is.null(Res$cov_matrices) || !is.matrix(Res$cov_matrices)) {
-    stop("Res$cov_matrices is missing or not a matrix.")
+  if (is.null(Res$cov_matrices)) {
+    stop("Res$cov_matrices is missing.")
   }
 
   x <- Res$bin_mids
