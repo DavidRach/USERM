@@ -24,7 +24,7 @@ querySig = function(){
 
   Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
 
-  info_df = as.data.frame(matrix(nrow = length(Sig_list), ncol = 5))
+  info_df = as.data.frame(matrix(nrow = length(Sig_list), ncol = 7))
   colnames(info_df) = c("id","PrimaryName","SecondaryName","detectors","instrument","Source","Note")
 
   for (i in 1:length(Sig_list)) {
