@@ -71,8 +71,8 @@ paste0("population_ids: ",paste(population_ids, collapse = ", "))
 N <- length(fluor_selected)
 
 plots <- list()
-for (i_plot in 1:N) {
-  for (j_plot in 1:N) {
+for (j_plot in 1:N) {
+  for (i_plot in 1:N) {
     
     if (i_plot > j_plot) {
       # create grid

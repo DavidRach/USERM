@@ -114,7 +114,7 @@ PredMultipleSpread = function(Userm,population_ids){
                    )
           ),
           tabPanel("Export",
-                   selectInput("prediction_plot_mode_report", "select display mode：", choices = c("Pseudo-color","Contour line"), selected = "Pseudo-color"),
+                   selectInput("prediction_plot_mode_report", "select display mode：", choices = c("Contour line"), selected = "Contour line"),#,"Pseudo-color" not used for multiple spread
                    downloadButton("downloadHTML", "Export HTML report"),
                    downloadButton("downloadNxN", "Export N x N plot"),
                    p("Note: all parameters are from input Userm object."),
@@ -253,7 +253,7 @@ PredMultipleSpread = function(Userm,population_ids){
     observe({
       req(fluor_cache$selected)
       updateSelectInput(session, "prediction_plot_mode",
-                        choices = c("Contour line","Pseudo-color"),
+                        choices = c("Contour line"),#,"Pseudo-color" not used
                         selected = "Contour line")
       updateSelectInput(session, "fluor_selector_x_prediction",
                         choices = fluor_cache$selected,
