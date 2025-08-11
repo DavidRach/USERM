@@ -89,8 +89,8 @@ paste0("population_id: ",population_id)
 N <- length(fluor_selected)
 
 plots <- list()
-for (i in 1:N) {
-  for (j in 1:N) {
+for (j in 1:N) {
+  for (i in 1:N) {
     
     if (i > j) {
       
