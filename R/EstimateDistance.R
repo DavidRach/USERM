@@ -48,6 +48,7 @@ EstimateDistance = function(Spr1, Spr2){
       colnames(intensity_matrix) = c("Spr1","Spr2")
       sigma_matrix = data.frame(Spr1 = sqrt(Spr1$intercept_sigma2 + Spr1$slop_sigma2),
                                 Spr2 = sqrt(Spr2$intercept_sigma2 + Spr2$slop_sigma2))
+      sigma_matrix = sigma_matrix * 1.96
       #prepare empty ED_mtx
 
       ED_mtx = array(0, dim = c(length(fluors), length(fluors))) #(channel, scc)
