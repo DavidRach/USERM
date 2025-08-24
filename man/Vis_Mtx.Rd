@@ -11,7 +11,8 @@ Vis_Mtx(
   max = 1,
   mincolor = "blue",
   midcolor = "white",
-  maxcolor = "red"
+  maxcolor = "red",
+  title = "Heatmap"
 )
 }
 \arguments{
