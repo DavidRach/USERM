@@ -5,6 +5,7 @@
 #' in detector names across selected Signatures, and returns a matrix of Signature values.
 #'
 #' @param ids A character vector of Signature IDs to retrieve.
+#' @param Sig_list Users may provide Signature list themselves, which contains signature items generated with ExtractSig function.
 #'
 #' @details
 #' The function reads the Signature list from the internal package path:
@@ -27,9 +28,13 @@
 #'
 #' @export
 
-getSigMtx = function(ids){
+getSigMtx = function(ids, Sig_list=NULL){
+  if(is.null(Sig_list)){
+    Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
+  }else{
+    Sig_list = Sig_list
+  }
 
-  Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
 
   # find ids location
   indices = c()

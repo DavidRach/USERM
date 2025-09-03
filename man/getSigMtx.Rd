@@ -4,10 +4,12 @@
 \alias{getSigMtx}
 \title{Retrieve Signature Matrix by ID}
 \usage{
-getSigMtx(ids)
+getSigMtx(ids, Sig_list = NULL)
 }
 \arguments{
 \item{ids}{A character vector of Signature IDs to retrieve.}
+
+\item{Sig_list}{Users may provide Signature list themselves, which contains signature items generated with ExtractSig function.}
 }
 \value{
 A numeric matrix of Signature values if detectors are consistent across selected Signatures.
