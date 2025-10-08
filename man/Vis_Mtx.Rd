@@ -12,7 +12,8 @@ Vis_Mtx(
   mincolor = "blue",
   midcolor = "white",
   maxcolor = "red",
-  title = "Heatmap"
+  title = "Heatmap",
+  legend_name = "value"
 )
 }
 \arguments{

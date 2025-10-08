@@ -31,7 +31,7 @@
 #' @export
 
 
-Vis_Mtx <- function(mat = NULL, min = -1, mid = 0, max = 1, mincolor = "blue", midcolor = "white", maxcolor = "red",title = "Heatmap") {
+Vis_Mtx <- function(mat = NULL, min = -1, mid = 0, max = 1, mincolor = "blue", midcolor = "white", maxcolor = "red",title = "Heatmap",legend_name = "value") {
   if (is.null(mat) || !is.matrix(mat)) {
     stop("mat is missing or not a matrix.")
   }
@@ -41,7 +41,7 @@ Vis_Mtx <- function(mat = NULL, min = -1, mid = 0, max = 1, mincolor = "blue", m
   p = Heatmap(mat,col = col_fun, cluster_rows = FALSE,cluster_columns = FALSE,
               cell_fun = function(j, i, x, y, width, height, fill) {
                 grid.text(sprintf("%.1f", mat[i, j]), x, y, gp = gpar(fontsize = 6))
-              },column_title = paste0(title),name = "beta")
+              },column_title = paste0(title),name = legend_name)
 
   return(p)
 }
