@@ -49,6 +49,7 @@ EstimateSpreadTangentMtx = function(Userm){
   colnames(tan_matrix) = colnames(A)
   rownames(tan_matrix) = colnames(A)
   tan_matrix = t(tan_matrix)
+  tan_matrix = sqrt(abs(tan_matrix))# Variance To Standard deviation
 
   return(tan_matrix)
 }
