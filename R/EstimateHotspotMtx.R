@@ -37,6 +37,7 @@ EstimateHotspotMtx = function(Userm){
   H_mtx = (t(A) %*% A)
   H_mtx = ginv(H_mtx)
   H_mtx = sqrt(abs(H_mtx))
-
+  colnames(H_mtx) = colnames(A)
+  rownames(H_mtx) = colnames(A)
   return(H_mtx)
 }
