@@ -7,17 +7,27 @@
 EstimateHotspotMtx(Userm)
 }
 \arguments{
-\item{Userm}{A list containing the following elements:
+\item{Userm}{A list containing:
 \itemize{
-\item \code{detectors}: A character vector specifying the row names (detectors) to extract from matrix \code{A}.
-\item \code{fluors}: A character vector specifying the column names (fluorophores) to extract from matrix \code{A}.
-\item \code{A}: A numeric matrix with row names and column names corresponding to detectors and fluorophores.
+\item \code{detectors}: A character vector of row names to select from matrix \code{A}.
+\item \code{fluors}: A character vector of column names to select from matrix \code{A}.
+\item \code{A}: A numeric matrix with named rows and columns representing detectors and fluorophores.
 }}
 }
 \value{
-A numeric matrix representing the estimated hotspot matrix. The matrix is derived from the square root of the absolute values of the pseudoinverse of the selected submatrix.
+A numeric matrix representing the estimated hotspot matrix, derived from the pseudoinverse of the Gram matrix of the selected submatrix.
 }
 \description{
-This function estimates a hotspot matrix based on the user's input matrix \code{A}, using selected detectors and fluorophores.
-It computes the Moore-Penrose pseudoinverse of the submatrix defined by \code{detectors} and \code{fluors}, then applies a square root transformation to the absolute values.
+Computes a hotspot matrix based on a user-defined matrix \code{A}, using specified detectors and fluorophores.
+The function extracts a submatrix from \code{A}, calculates its Gram matrix, applies the Moore-Penrose pseudoinverse,
+and returns the square root of the absolute values of the result.
+}
+\details{
+The function performs the following steps:
+\enumerate{
+\item Extracts the submatrix of \code{A} using specified \code{detectors} and \code{fluors}.
+\item Computes the Gram matrix: \code{t(A) \%*\% A}.
+\item Applies the Moore-Penrose pseudoinverse to the Gram matrix.
+\item Takes the square root of the absolute values of the pseudoinverse matrix.
+}
 }
