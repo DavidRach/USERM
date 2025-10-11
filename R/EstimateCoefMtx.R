@@ -1,4 +1,4 @@
-#' Estimate Tangent Matrix of Slope Components in USERM
+#' Estimate Coefficient Matrix of Slope Components in USERM
 #'
 #' This function computes a tangent matrix representing the diagonalized slope components
 #' of signal spread across fluorochromes, based on the system matrix and slope matrices
@@ -22,13 +22,13 @@
 #'
 #' @examples
 #' \dontrun{
-#'   tangent_mtx <- EstimateSpreadTangentMtx(Userm)
+#'   tangent_mtx <- EstimateCoefMtx(Userm)
 #'   print(tangent_mtx)
 #' }
 #'
 #' @importFrom MASS ginv
 #' @export
-EstimateSpreadTangentMtx = function(Userm){
+EstimateCoefMtx = function(Userm){
 
   detectors = Userm$detectors
   fluors = Userm$fluors
@@ -39,19 +39,19 @@ EstimateSpreadTangentMtx = function(Userm){
   rownames(A_pinv) = colnames(A)
 
   #calculate weighted slop
-  tan_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+  Coef_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
   for (i in 1:ncol(A)) {
     fluor = colnames(A)[i]
     slop_matrix = Userm$Res[[fluor]]$slopMtx
     slop_matrix = slop_matrix[detectors,detectors]
-    tan_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv))
+    Coef_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv))
   }
-  colnames(tan_matrix) = colnames(A)
-  rownames(tan_matrix) = colnames(A)
-  tan_matrix = t(tan_matrix)
-  tan_matrix = sqrt(abs(tan_matrix))# Variance To Standard deviation
+  colnames(Coef_matrix) = colnames(A)
+  rownames(Coef_matrix) = colnames(A)
+  Coef_matrix = t(Coef_matrix)
+  # Coef_matrix = sqrt(abs(Coef_matrix))# Variance To Standard deviation
 
-  return(tan_matrix)
+  return(Coef_matrix)
 }
 
 
