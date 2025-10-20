@@ -4,15 +4,10 @@
 \alias{EstimateHotspotMtx}
 \title{Estimate Hotspot Matrix}
 \usage{
-EstimateHotspotMtx(Userm)
+EstimateHotspotMtx(A)
 }
 \arguments{
-\item{Userm}{A list containing:
-\itemize{
-\item \code{detectors}: A character vector of row names to select from matrix \code{A}.
-\item \code{fluors}: A character vector of column names to select from matrix \code{A}.
-\item \code{A}: A numeric matrix with named rows and columns representing detectors and fluorophores.
-}}
+\item{A}{A numeric matrix with named rows and columns representing detectors and fluorophores.}
 }
 \value{
 A numeric matrix representing the estimated hotspot matrix, derived from the pseudoinverse of the Gram matrix of the selected submatrix.
@@ -25,7 +20,6 @@ and returns the square root of the absolute values of the result.
 \details{
 The function performs the following steps:
 \enumerate{
-\item Extracts the submatrix of \code{A} using specified \code{detectors} and \code{fluors}.
 \item Computes the Gram matrix: \code{t(A) \%*\% A}.
 \item Applies the Moore-Penrose pseudoinverse to the Gram matrix.
 \item Takes the square root of the absolute values of the pseudoinverse matrix.

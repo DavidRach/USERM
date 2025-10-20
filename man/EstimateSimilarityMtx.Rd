@@ -4,15 +4,10 @@
 \alias{EstimateSimilarityMtx}
 \title{Estimate Cosine Similarity Matrix for Fluorochromes}
 \usage{
-EstimateSimilarityMtx(Userm)
+EstimateSimilarityMtx(A)
 }
 \arguments{
-\item{Userm}{A list containing the following components:
-\itemize{
-\item \code{detectors}: A character vector of detector names to be used as rows.
-\item \code{fluors}: A character vector of fluorochrome names to be used as columns.
-\item \code{A}: A numeric matrix with rows representing detectors and columns representing fluorochromes.
-}}
+\item{A}{A numeric matrix with named rows and columns representing detectors and fluorophores.}
 }
 \value{
 A symmetric numeric matrix of cosine similarity values between fluorochromes.

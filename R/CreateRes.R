@@ -8,7 +8,27 @@
 #' @param R A numeric matrix of raw signal data (cells × detectors), typically extracted from an FCS file.
 #' @param A A numeric unmixing matrix (detectors × fluors), typically extracted from a single-stained control (SCC) FCS file.
 #'
-#' @return A list representing the initialized residual object, containing the input matrices and placeholders for analysis results.
+#' @return A named list representing the initialized residual modeling object (`Res`) with the following components:
+#' \describe{
+#'   \item{id}{Character string identifier for the residual object. Defaults to `"x"` if not provided.}
+#'   \item{R}{Numeric matrix of raw signal data (cells × detectors), subset to match `A`'s rownames.}
+#'   \item{A}{Numeric unmixing matrix (detectors × fluors), with validated row and column names. For one fluorescence, here is the signature of it.}
+#'   \item{detectors}{Character vector of detector names, extracted from `rownames(A)`.}
+#'   \item{fluors}{Character vector of fluor names, extracted from `colnames(A)` or auto-assigned.}
+#'   \item{par}{List of analysis parameters, including:
+#'     \describe{
+#'       \item{bin_num}{Number of bins used in residual modeling (default `NA`).}
+#'       \item{bin_method}{Binning method used (e.g., `"equal-width"`, `"quantile"`; default `NA`).}
+#'       \item{count_thre}{Threshold for minimum bin count (default `NA`).}
+#'     }
+#'   }
+#'   \item{bin_mids}{Numeric vector of bin midpoints (default `NA`).}
+#'   \item{bin_counts}{Numeric vector of bin counts (default `NA`).}
+#'   \item{cov_matrices}{List of covariance matrices per bin (default `NA`).}
+#'   \item{interceptMtx}{Matrix of intercepts from bin-wise regression (default `NA`).}
+#'   \item{slopMtx}{Matrix of slopes from bin-wise regression (default `NA`).}
+#' }
+#' The CreateRes function is used together with SlopEstimation function to fill in most contents in the ResObj. See \code{\link{SlopEstimation}} for more detail.
 #'
 #' @examples
 #' \dontrun{
