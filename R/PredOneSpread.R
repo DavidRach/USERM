@@ -58,6 +58,7 @@ PredOneSpread = function(Userm,population_id){
                     tabPanel("Intensity",
                              uiOutput("intensity_inputs")
                     )
+
         )
       ),
       mainPanel(
@@ -89,7 +90,11 @@ PredOneSpread = function(Userm,population_id){
                      column(4, selectInput("y_scale", "Scale", choices = NULL)),
                      column(8, numericInput("y_cofactor", "Cofactor(only for Arcsinh)", value = 100, min = 1))
                    ),
-
+                   numericInput(
+                     inputId = paste0("intercept_factor"),
+                     label = paste("Factor for default Autofluorescence (100: baseline; 0: no AF)"),
+                     value = 100
+                   ),
                    plotOutput("prediction_plot")
           ),
 
@@ -341,7 +346,7 @@ PredOneSpread = function(Userm,population_id){
       }
       spread_col = matrix(apply(weighted_matrix,1,sum),ncol = 1)
 
-      final_col = spread_col + intercept_col
+      final_col = spread_col + intercept_col * (input$intercept_factor / 100)
 
       sqrt_col = sqrt(abs(final_col))
       rownames(sqrt_col) = colnames(A)

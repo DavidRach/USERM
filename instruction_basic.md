@@ -262,8 +262,8 @@ Prediction for more than one population is possible. However, users need to set 
 ``` r
 UsermObj$Intensity_mtx[,2] = 200*c(1:length(UsermObj$fluors))
 UsermObj$Intensity_mtx[,3] = 300*c(1:length(UsermObj$fluors))
-names(UsermObj$Intensity_mtx) = c("P1","P2","P3")
-PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
+names(UsermObj$Intensity_mtx) = c("V1","V2","V3")
+PredMultipleSpread(Userm = UsermObj,population_ids = c("V1","V2","V3"))
 ```
 <p align="center">
 

@@ -22,7 +22,12 @@ checkRes_covScatter(Res = ResObj,
                     detector2 = ResObj$detectors[2])
 
 # Step 2 Select fluors and create UsermObj
-fluors_selected = c(Sig_info$id[c(32:38,41:42,46:48,50:54,8,9,12,63)])#,58:62,8,9,12,14,18,24,25,26,63
+# fluors_selected = c(Sig_info$id[c(32:38,41:42,46:48,50:54,8,9,12,63)])#,58:62,8,9,12,14,18,24,25,26,63
+fluors_selected = c(Sig_info$id[c(149,201,150,151,
+                                  152,153,154,155,
+                                  156,157,158,159,
+                                  160,161,162,163,
+                                  189,200,196,199,138)])#,58:62,8,9,12,14,18,24,25,26,63
 print(fluors_selected)
 Sig_mtx  = getSigMtx(ids = fluors_selected)
 dim(Sig_mtx)
@@ -35,19 +40,28 @@ for (save_suf in colnames(Sig_mtx)) {
 }
 
 # Step 3 Make prediction (optional)
+UsermObj$Scale_df$min = -2000
+UsermObj$Scale_df$max = 5000
 PredOneSpread(Userm = UsermObj,population_id = c("V1"))
+PredOneSpread_update(Userm = UsermObj,population_id = c("V1"))
+
+UsermObj$Intensity_mtx[,2] = UsermObj$Intensity_mtx[,1]
+UsermObj$Intensity_mtx[,3] = UsermObj$Intensity_mtx[,1]
+UsermObj$Intensity_mtx[20,2] = UsermObj$Intensity_mtx[20,1]*5
+UsermObj$Intensity_mtx[20,3] = UsermObj$Intensity_mtx[20,1]*10
+
 
 UsermObj$Intensity_mtx[,2] = 200*c(1:length(UsermObj$fluors))
 UsermObj$Intensity_mtx[,3] = 300*c(1:length(UsermObj$fluors))
-names(UsermObj$Intensity_mtx) = c("P1","P2","P3")
-PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
+names(UsermObj$Intensity_mtx) = c("V1","V2","V3")
+PredMultipleSpread(Userm = UsermObj,population_ids = c("V1","V2","V3"))
 
 
 # Step 4 matrics estimation and visualization
 Coef_mtx = EstimateCoefMtx(Userm = UsermObj)
 # pdf(file = "E:/ResidualModel/CoefMtx.pdf",width = 10,height = 10)
 Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABDB",
-        max = 2,mid = 1,min = 0,legend_name = "Coef",
+        max = 20,mid = 10,min = 0,legend_name = "Coef",
         title = "Coefficient of residual model matrix (Coef Matrix) (row spread into column)")
 # dev.off()
 
