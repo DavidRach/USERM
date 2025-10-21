@@ -43,12 +43,16 @@ for (save_suf in colnames(Sig_mtx)) {
 UsermObj$Scale_df$min = -2000
 UsermObj$Scale_df$max = 5000
 PredOneSpread(Userm = UsermObj,population_id = c("V1"))
-PredOneSpread_update(Userm = UsermObj,population_id = c("V1"))
+# PredOneSpread_update(Userm = UsermObj,population_id = c("V1"))
 
+#create 3 populations with all zero fluroescence intensities
+UsermObj$Intensity_mtx[,1] = 0
 UsermObj$Intensity_mtx[,2] = UsermObj$Intensity_mtx[,1]
 UsermObj$Intensity_mtx[,3] = UsermObj$Intensity_mtx[,1]
-UsermObj$Intensity_mtx[20,2] = UsermObj$Intensity_mtx[20,1]*5
-UsermObj$Intensity_mtx[20,3] = UsermObj$Intensity_mtx[20,1]*10
+# assign 100, 500, 1000 to the PECy7 intensities of these 3 populations
+UsermObj$Intensity_mtx[20,1] = 100
+UsermObj$Intensity_mtx[20,2] = 500
+UsermObj$Intensity_mtx[20,3] = 1000
 
 
 UsermObj$Intensity_mtx[,2] = 200*c(1:length(UsermObj$fluors))
@@ -83,3 +87,58 @@ Spr1 = EstimateSpread(Userm = UsermObj,population_id = c("P1"))
 Spr2 = EstimateSpread(Userm = UsermObj,population_id = c("P2"))
 SpreadDistance_mtx = EstimateDistance(Spr1, Spr2)
 Vis_Mtx(mat = SpreadDistance_mtx,mincolor = "darkred",midcolor = "white", maxcolor = "white",max = 1.5,mid = 1,min = 0,title = "Spread Distance matrix")
+
+
+A = UsermObj$A
+pdf(file = "E:/ResidualModel/Signature matrix.pdf",width = 6,height = 12)
+Vis_Mtx(mat = A,mincolor = "white",midcolor = "#D03E4C", maxcolor = "#B02B38",
+        max = 1,mid = 0.5,min = 0,legend_name = "Signal",
+        title = "Signature matrix")
+dev.off()
+
+library(MASS)
+A_pinv = ginv(A)
+colnames(A_pinv) = rownames(A)
+rownames(A_pinv) = colnames(A)
+Vis_Mtx(mat = A_pinv,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
+        max = 1,mid = 0,min = -1,legend_name = "Value",
+        title = "Pseudo-inverse matrix")
+
+A_pinv_t = t(A_pinv)
+pdf(file = "E:/ResidualModel/transpose pinv matrix.pdf",width = 6,height = 12)
+Vis_Mtx(mat = A_pinv_t,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
+        max = 1,mid = 0,min = -1,legend_name = "Value",
+        title = "transpose of Pseudo-inverse matrix")
+dev.off()
+
+pdf(file = "E:/ResidualModel/slop matrix.pdf",width = 12,height = 12)
+slop_mtx = UsermObj$Res$SCC3_Cell_PECy7_CD4$slopMtx
+Vis_Mtx(mat = slop_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
+        max = 1,mid = 0,min = -1,legend_name = "beta",
+        title = "slop matrix")
+dev.off()
+
+weight_mtx = A_pinv["SCC3_Cell_BV510_CD4",]%o%A_pinv["SCC3_Cell_BV510_CD4",]
+pdf(file = "E:/ResidualModel/weight matrix.pdf",width = 12,height = 12)
+Vis_Mtx(mat = weight_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
+        max = 1,mid = 0,min = -1,legend_name = "weight",
+        title = "weight matrix")
+dev.off()
+
+
+weighted_slope_mtx = weight_mtx * slop_mtx
+pdf(file = "E:/ResidualModel/weight slope matrix.pdf",width = 12,height = 12)
+Vis_Mtx(mat = weighted_slope_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
+        max = 10,mid = 0,min = -10,legend_name = "value",
+        title = "weighted slop matrix")
+dev.off()
+sum(weighted_slope_mtx)
+
+
+ResObj = UsermObj$Res$SCC3_Cell_PECy7_CD4
+ResObj$detectors
+checkRes_covScatter(Res = ResObj,
+                    detector1 = "B13-A",
+                    detector2 = "B14-A")
+
+checkSig_linePlot(id = "SCC3_Cell_PECy7_CD4")

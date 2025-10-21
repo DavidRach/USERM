@@ -1,4 +1,4 @@
-# USERM
+# Basic instruction for USERM use
 
 Xiangming Cai
 
@@ -208,6 +208,14 @@ The right panel have some tabs. The unmixing matrix is signature matrix.
 </p>
 
 In the prediction tab, you will see a scatter plot visualizing the 95% range of predicted spread. Two display mode is supported: ***Pseudo-color*** and ***Counter-line***. It allows the selection of fluorescence for x and y axes. You can also adjsut the display limis of the axes. Scale is support with ***Linear***, ***Log10*** and ***Arcsinh*** options. For Arcsinh, users need to set a cofactor.
+
+<p align="center">
+
+<img src="./images/af_factor.jpg" width="500/"/>
+
+</p>
+
+Of note, you can now set the ***Factor for default Autofluorescence*** to control the displayed spread from AF. the displayed spread will be multiplied with the (factor / 100). So, when the factor is set to 100, the estimated spread from AF will be displayed completely. If the factor is set to 0, the spread from AF will be removed. This helps to check only the spread from noise. 
 
 <p align="center">
 
