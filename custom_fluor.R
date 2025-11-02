@@ -1,4 +1,4 @@
-devtools::install_github("xiangmingcai/USERM@dev")
+# devtools::install_github("xiangmingcai/USERM@dev")
 # devtools::install_github("xiangmingcai/USERM")
 library(USERM)
 library(flowCore)
@@ -6,6 +6,9 @@ library(flowCore)
 library(GateData)
 library(dplyr)
 library(ggplot2)
+library(MASS)
+library(circlize)
+library(ComplexHeatmap)
 
 custom_dir = "E:/MyFolder"
 dir.create(paste0(custom_dir,"/sig"))
@@ -43,8 +46,11 @@ SecondaryName = "SB780"
 # SecondaryName = "AF"
 
 #step 1.3 gate positive popualtion and negative population
-#In this step, we need to find positive and negative populations. You can use the GateData R package or other packages that works for you. Here we show how to gate a subset population with the GateData
-#For detailed instruction of GateData, please refer to https://github.com/xiangmingcai/GateData
+# In this step, we need to find positive and negative populations. You can use the GateData R package or other packages that works for you. Here we show how to gate a subset population with the GateData
+#
+# For detailed instruction of GateData, please refer to https://github.com/xiangmingcai/GateData
+#
+# Brief instruction: draw a gate, and click 3 buttons in order.
 
 # 1. sample cells.
 #You may modify code here to sample specific set for rare markers.
@@ -66,7 +72,7 @@ data <-GateDecider(gate = gate2, df = data)
 
 # 3. gate target population (e.g. lymphocytes)
 gate3<-PolygonGating(df=data, x_col= "488 SSC-A", y_col= "488 FSC-A", feature_col= "488 SSC-A",
-                     parentgate_col= "gate2", newgate_col= "gate3",canvas_width=1500, canvas_height=1500,
+                     parentgate_col= "gate2", newgate_col= "gate3",canvas_width=800, canvas_height=500,
                      title_text = "Gate target population")
 data <-GateDecider(gate = gate3, df = data)
 
@@ -91,8 +97,8 @@ data_neg = data[data$gate_neg,]
 # data_neg[,] <- 0
 
 # #you may save the gates if needed.
-# saveRDS(list(gate1,gate2,gate3,gate_pos,gate_neg), file = paste0(tmp_dir,"/",save_suf,"_gatelist.rds"))
-# saveRDS(c("gate1","gate2","gate3","gate_pos","gate_neg"), file = paste0(tmp_dir,"/",save_suf,"_gatenames.rds"))
+# saveRDS(list(gate1,gate2,gate3,gate_pos,gate_neg), file = paste0(custom_dir,"/",save_suf,"_gatelist.rds"))
+# saveRDS(c("gate1","gate2","gate3","gate_pos","gate_neg"), file = paste0(custom_dir,"/",save_suf,"_gatenames.rds"))
 
 #step 1.4 extract signatures
 #Select detectors. Please select only the detectors for unmixing
@@ -147,6 +153,7 @@ Custom_Sig_list = readRDS(paste0(custom_dir,"/sig/Custom_Sig_list.rds"))
 
 Sig_info = querySig(Sig_list = Custom_Sig_list)
 fluors_selected = c(Sig_info$id[c(1,2)])
+print(fluors_selected)
 Sig_mtx  = getSigMtx(ids = fluors_selected, Sig_list = Custom_Sig_list)
 
 #step 2.2 read scc fcs
@@ -163,6 +170,7 @@ colnames(data) = desc
 head(data)
 
 # step 2.3 set target and AF info
+print(colnames(Sig_mtx))
 save_suf = "SCCcustom_Cell_CD2_SB780"
 idx_target_fluor = 1
 idx_AF_fluor = 2
@@ -201,7 +209,7 @@ data <-GateDecider(gate = gate2, df = data)
 
 # 3. gate target population (e.g. lymphocytes)
 gate3<-PolygonGating(df=data, x_col= "488 SSC-A", y_col= "488 FSC-A", feature_col= "488 SSC-A",
-                     parentgate_col= "gate2", newgate_col= "gate3",canvas_width=1500, canvas_height=1500,
+                     parentgate_col= "gate2", newgate_col= "gate3",canvas_width=800, canvas_height=500,
                      title_text = "Gate target population")
 data <-GateDecider(gate = gate3, df = data)
 
@@ -229,7 +237,7 @@ data = cbind(data,t_B)
 #                quantile(data[,colnames(Sig_mtx)[idx_target_fluor]],0.999)),]
 # data = data[(data[,colnames(Sig_mtx)[idx_target_fluor]] >
 #                quantile(data[,colnames(Sig_mtx)[idx_target_fluor]],0.01)),]
-
+data$gate0 = TRUE
 data_backup = data
 data = sample_n(data, 20000)
 gate_normal<-PolygonGating(df=data, x_col= colnames(Sig_mtx)[idx_target_fluor],
@@ -241,8 +249,8 @@ data = GateDecider(gate = gate_normal, df = data)
 data = data[data$gate_normal,rownames(Sig_mtx)]
 
 #you may save gate_normal is you want
-# saveRDS(list(gate_normal), file = paste0(tmp_dir,"/",save_suf,"_gatelist.rds"))
-# saveRDS(c("gate_normal"), file = paste0(tmp_dir,"/",save_suf,"_gatenames.rds"))
+# saveRDS(list(gate_normal), file = paste0(custom_dir,"/",save_suf,"_gatelist.rds"))
+# saveRDS(c("gate_normal"), file = paste0(custom_dir,"/",save_suf,"_gatenames.rds"))
 
 # 2.7 calculate and save residual model
 R = as.matrix(data)
@@ -261,13 +269,95 @@ Heatmap(ResObj$slopMtx,col = col_fun, cluster_rows = FALSE,cluster_columns = FAL
         },column_title = colnames(Sig_mtx)[idx_target_fluor],name = "beta")
 
 saveRDS(ResObj, file = paste0(custom_dir,"/res","/ResObj_",save_suf,".rds"))
-
+ResObj = readRDS(paste0(custom_dir,"/res","/ResObj_","SCCcustom_Cell_CD2_SB780",".rds"))
 
 
 
 
 #### Part 3 Use custom res obj and preprocessed res obj together ####
-# tbd
+
+Custom_Sig_list = readRDS(paste0(custom_dir,"/sig/Custom_Sig_list.rds"))
+Custom_Sig_info = querySig(Sig_list = Custom_Sig_list)
+fluor_to_check = Custom_Sig_info$id[1]
+print(fluor_to_check)
+checkSig_linePlot(id = fluor_to_check, Sig_list = Custom_Sig_list)
+
+
+#get Residual Obj
+ResObj = getRes(id = fluor_to_check,custom_dir = paste0(custom_dir,"/res"))
+
+checkRes_slopMtx(Res = ResObj)
+checkRes_interceptMtx(Res = ResObj)
+print(ResObj$bin_mids)
+checkRes_covMtx(Res = ResObj,bin=3)
+ResObj$detectors
+checkRes_covScatter(Res = ResObj,
+                    detector1 = ResObj$detectors[1],
+                    detector2 = ResObj$detectors[2])
 
 
 
+Custom_fluors_selected = c(Custom_Sig_info$id[c(1,2)])#,58:62,8,9,12,14,18,24,25,26,63
+print(Custom_fluors_selected)
+Custom_Sig_mtx  = getSigMtx(ids = Custom_fluors_selected,Sig_list = Custom_Sig_list)
+dim(Custom_Sig_mtx)
+
+
+
+
+builtin_Sig_info = querySig()
+builtin_fluors_selected = c(builtin_Sig_info$id[c(34,35,36)])
+print(builtin_fluors_selected)
+builtin_Sig_mtx  = getSigMtx(ids = builtin_fluors_selected)
+dim(builtin_Sig_mtx)
+
+
+Sig_mtx = cbind(builtin_Sig_mtx,Custom_Sig_mtx)
+UsermObj = CreateUserm(A = Sig_mtx)
+#add ResObj into UsermObj
+for (save_suf in colnames(builtin_Sig_mtx)) {
+  ResObj = getRes(id = save_suf)
+  UsermObj = AddRes2Userm(Res = ResObj, Userm = UsermObj)
+}
+for (save_suf in colnames(Custom_Sig_mtx)) {
+  ResObj = getRes(id = save_suf,custom_dir = paste0(custom_dir,"/res"))
+  UsermObj = AddRes2Userm(Res = ResObj, Userm = UsermObj)
+}
+
+
+PredOneSpread(Userm = UsermObj,population_id = c("V1"))
+
+#create 3 populations with all zero fluroescence intensities
+UsermObj$Intensity_mtx[,1] = 0
+UsermObj$Intensity_mtx[,2] = UsermObj$Intensity_mtx[,1]
+UsermObj$Intensity_mtx[,3] = UsermObj$Intensity_mtx[,1]
+
+UsermObj$Intensity_mtx[4,1] = 100
+UsermObj$Intensity_mtx[4,2] = 500
+UsermObj$Intensity_mtx[4,3] = 1000
+
+names(UsermObj$Intensity_mtx) = c("V1","V2","V3")
+PredMultipleSpread(Userm = UsermObj,population_ids = c("V1","V2","V3"))
+
+
+# Step 4 matrics estimation and visualization
+Coef_mtx = EstimateCoefMtx(Userm = UsermObj)
+# pdf(file = "E:/ResidualModel/CoefMtx.pdf",width = 10,height = 10)
+Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABDB",
+        max = 20,mid = 10,min = 0,legend_name = "Coef",
+        title = "Coefficient of residual model matrix (Coef Matrix) (row spread into column)")
+# dev.off()
+
+Hotspot_mtx = EstimateHotspotMtx(A = UsermObj$A)
+# pdf(file = "E:/ResidualModel/HotspotMtx.pdf",width = 10,height = 10)
+Vis_Mtx(mat = Hotspot_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABDB",
+        max = 2,mid = 1,min = 0,legend_name = "Hotspot",
+        title = "Hotspot matrix")
+# dev.off()
+
+Similarity_mtx = EstimateSimilarityMtx(A = UsermObj$A)
+# pdf(file = "E:/ResidualModel/SimilarityMtx.pdf",width = 10,height = 10)
+Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABDB",
+        max = 1,mid = 0.8,min = 0,legend_name = "Cosine",
+        title = "Cosine similarity matrix")
+# dev.off()

@@ -10,7 +10,7 @@ checkSig_linePlot(id = fluor_to_check)
 
 #get Residual Obj
 #See \code{\link{CreateRes}} and \code{\link{SlopEstimation}} for detailed introduction of the structure of ResObj.
-
+#get Residual Obj
 ResObj = getRes(id = fluor_to_check)
 checkRes_slopMtx(Res = ResObj)
 checkRes_interceptMtx(Res = ResObj)
@@ -83,8 +83,8 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
         title = "Cosine similarity matrix")
 # dev.off()
 
-Spr1 = EstimateSpread(Userm = UsermObj,population_id = c("P1"))
-Spr2 = EstimateSpread(Userm = UsermObj,population_id = c("P2"))
+Spr1 = EstimateSpread(Userm = UsermObj,population_id = c("V1"))
+Spr2 = EstimateSpread(Userm = UsermObj,population_id = c("V2"))
 SpreadDistance_mtx = EstimateDistance(Spr1, Spr2)
 Vis_Mtx(mat = SpreadDistance_mtx,mincolor = "darkred",midcolor = "white", maxcolor = "white",max = 1.5,mid = 1,min = 0,title = "Spread Distance matrix")
 
