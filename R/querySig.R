@@ -20,9 +20,13 @@
 #'
 #' @export
 
-querySig = function(){
+querySig = function(Sig_list=NULL){
 
-  Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
+  if(is.null(Sig_list)){
+    Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
+  }else{
+    Sig_list = Sig_list
+  }
 
   info_df = as.data.frame(matrix(nrow = length(Sig_list), ncol = 7))
   colnames(info_df) = c("id","PrimaryName","SecondaryName","detectors","instrument","Source","Note")

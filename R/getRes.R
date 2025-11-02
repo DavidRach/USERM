@@ -21,9 +21,14 @@
 #'
 #' @export
 
-getRes = function(id){
+getRes = function(id,custom_dir = NULL){
 
-  file_addr = system.file("res", paste0("ResObj_",id,".rds"), package = "USERM")
+  if(is.null(custom_dir)){
+    file_addr = system.file("res", paste0("ResObj_",id,".rds"), package = "USERM")
+  }else{
+    file_addr = paste0(custom_dir,"/ResObj_",id,".rds")
+  }
+
 
   if(file.exists(file_addr)){
     Res = readRDS(file_addr)
