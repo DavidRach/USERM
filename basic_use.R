@@ -10,7 +10,7 @@ checkSig_linePlot(id = fluor_to_check)
 
 #get Residual Obj
 #See \code{\link{CreateRes}} and \code{\link{SlopEstimation}} for detailed introduction of the structure of ResObj.
-
+#get Residual Obj
 ResObj = getRes(id = fluor_to_check)
 checkRes_slopMtx(Res = ResObj)
 checkRes_interceptMtx(Res = ResObj)
@@ -28,6 +28,7 @@ fluors_selected = c(Sig_info$id[c(149,201,150,151,
                                   156,157,158,159,
                                   160,161,162,163,
                                   189,200,196,199,138)])#,58:62,8,9,12,14,18,24,25,26,63
+# fluors_selected = c(Sig_info$id[c(149,201,150,151)])#,58:62,8,9,12,14,18,24,25,26,63
 print(fluors_selected)
 Sig_mtx  = getSigMtx(ids = fluors_selected)
 dim(Sig_mtx)
@@ -42,6 +43,8 @@ for (save_suf in colnames(Sig_mtx)) {
 # Step 3 Make prediction (optional)
 UsermObj$Scale_df$min = -2000
 UsermObj$Scale_df$max = 5000
+UsermObj$Scale_df$scale = "Linear"
+UsermObj$Scale_df$cofactor = 10
 PredOneSpread(Userm = UsermObj,population_id = c("V1"))
 # PredOneSpread_update(Userm = UsermObj,population_id = c("V1"))
 
@@ -83,18 +86,18 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
         title = "Cosine similarity matrix")
 # dev.off()
 
-Spr1 = EstimateSpread(Userm = UsermObj,population_id = c("P1"))
-Spr2 = EstimateSpread(Userm = UsermObj,population_id = c("P2"))
+Spr1 = EstimateSpread(Userm = UsermObj,population_id = c("V1"))
+Spr2 = EstimateSpread(Userm = UsermObj,population_id = c("V2"))
 SpreadDistance_mtx = EstimateDistance(Spr1, Spr2)
 Vis_Mtx(mat = SpreadDistance_mtx,mincolor = "darkred",midcolor = "white", maxcolor = "white",max = 1.5,mid = 1,min = 0,title = "Spread Distance matrix")
 
 
 A = UsermObj$A
-pdf(file = "E:/ResidualModel/Signature matrix.pdf",width = 6,height = 12)
+# pdf(file = "E:/ResidualModel/Signature matrix.pdf",width = 6,height = 12)
 Vis_Mtx(mat = A,mincolor = "white",midcolor = "#D03E4C", maxcolor = "#B02B38",
         max = 1,mid = 0.5,min = 0,legend_name = "Signal",
         title = "Signature matrix")
-dev.off()
+# dev.off()
 
 library(MASS)
 A_pinv = ginv(A)

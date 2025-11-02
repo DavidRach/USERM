@@ -21,9 +21,15 @@
 #' @export
 
 
-checkSig_linePlot = function(id){
+checkSig_linePlot = function(id, Sig_list = NULL){
 
   #check if id is in Sig_list
+  if(is.null(Sig_list)){
+    Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
+  }else{
+    Sig_list = Sig_list
+  }
+
   Sig_list = readRDS(system.file("sig", "Sig_list.rds", package = "USERM"))
   if (!(id %in% names(Sig_list))) {
     stop(paste0("The input id: ", id, " is not found. Please check with querySig() first."))

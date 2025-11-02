@@ -41,7 +41,7 @@
 #' }
 #' @export
 
-CreateRes = function(id, R, A){
+CreateRes = function(id, R, A_Target, A_AF){
 
   #check if id is provided
   if (missing(id)) {
@@ -49,16 +49,40 @@ CreateRes = function(id, R, A){
     id = "x"
   }
 
-  #check if A has good colnames and rownames
-  detectors = rownames(A)
-  fluors = colnames(A)
+  #check if A_AF has good colnames and rownames
+  detectors_AF = rownames(A_AF)
+  fluors_AF = colnames(A_AF)
+  if(is.null(detectors_AF)){
+    stop("Error: A_AF (detectors x fluors) has no rownames, cannot check if A_AF is compatible with R.")
+  }
+  if(is.null(fluors_AF)){
+    message("Warning: A_AF (detectors x fluors) has no colnames, defalt fluor names are assigned.")
+    colnames(A_AF) = paste0("f",c(1:ncol(A_AF)))
+  }
+
+  #check if A_Target has good colnames and rownames
+  detectors = rownames(A_Target)
+  fluors = colnames(A_Target)
   if(is.null(detectors)){
-    stop("Error: A (detectors x fluors) has no rownames, cannot check if A is compatible with R.")
+    stop("Error: A_Target (detectors x fluors) has no rownames, cannot check if A_Target is compatible with R.")
   }
   if(is.null(fluors)){
-    message("Warning: A (detectors x fluors) has no colnames, defalt fluor names are assigned.")
-    colnames(A) = paste0("f",c(1:ncol(A)))
+    message("Warning: A_Target (detectors x fluors) has no colnames, defalt fluor names are assigned.")
+    colnames(A_Target) = paste0("f",c(1:ncol(A_Target)))
   }
+
+  #check if A_AF has matched colnames
+  missing_cols <- setdiff(detectors, detectors_AF)
+  if (length(missing_cols) > 0) {
+    stop(paste("Error: The following required columns in A are missing from the A_AF:",
+               paste(missing_cols, collapse = ", ")))
+  }
+  extra_cols <- setdiff(detectors_AF,detectors)
+  if(length(extra_cols) > 0) {
+    warning(paste("Warning: The following columns in A_AF are not used and will be removed:",
+                  paste(extra_cols, collapse = ", ")))
+  }
+  A_AF = A_AF[rownames(A_Target),, drop = FALSE]
 
   #check if R has matched colnames
   missing_cols <- setdiff(detectors, colnames(R))
@@ -71,12 +95,13 @@ CreateRes = function(id, R, A){
     warning(paste("Warning: The following columns in R are not used and will be removed:",
                   paste(extra_cols, collapse = ", ")))
   }
-  R = R[,rownames(A)]
+  R = R[,rownames(A_Target)]
 
   #create Res object
   Res = list(id = id,
                 R = R,
-                A = A,
+                A = A_Target,
+                A_AF = A_AF,
                 detectors = detectors,
                 fluors = fluors,
                 par = list(bin_num = NA,

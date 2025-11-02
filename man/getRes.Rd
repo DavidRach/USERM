@@ -4,7 +4,7 @@
 \alias{getRes}
 \title{Retrieve Result Object by ID}
 \usage{
-getRes(id)
+getRes(id, custom_dir = NULL)
 }
 \arguments{
 \item{id}{A character string representing the ID of the result object to retrieve.}

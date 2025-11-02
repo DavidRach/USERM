@@ -38,6 +38,8 @@ SlopEstimation = function(Res, count_thre, bin_num = 30, bin_method = "percentil
   #calculate Residual and B
   R = Res$R
   A = Res$A #A (detectors x fluors)
+  A_AF = Res$A_AF #A (detectors x fluors)
+  A = cbind(A,A_AF)
   detectors = Res$detectors
 
   #unmix
@@ -51,6 +53,7 @@ SlopEstimation = function(Res, count_thre, bin_num = 30, bin_method = "percentil
   R_explained = B %*% t(A)
   Residual = R - R_explained
 
+  B = B[, 1, drop = FALSE]
 
   #set default for count_thre
   if (missing(count_thre)) {

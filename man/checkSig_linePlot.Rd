@@ -4,7 +4,7 @@
 \alias{checkSig_linePlot}
 \title{Plot Signature Signal Line for a Given ID}
 \usage{
-checkSig_linePlot(id)
+checkSig_linePlot(id, Sig_list = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the ID to be visualized. Must exist in the querySig() return.}

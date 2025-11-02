@@ -264,7 +264,7 @@ Similarly, The weighted slop matrix for each fluorescence is calculated as <img 
 </p>
 
 In the export tab, you may directlyh download a complete report of all the matrixes.
-You may also export the N-by-N or N-by-1 plots, which could be quite big for a big panel.
+You may also export the N-by-N or N-by-1 plots, which could be quite big for a big panel. If you want to plot the N-by-N or N-by-1 plots, you need to assign corresponding values to the UsermObj[["Scale_df"]]. Otherwise, an error will occur.
 
 Prediction for more than one population is possible. However, users need to set the intensities of populations in advance. Here we predict 3 populations together.
 ``` r
