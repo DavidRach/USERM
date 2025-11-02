@@ -462,6 +462,8 @@ data = cbind(data,t_B)
 ### step 2.6 gate normal samples
 It is common to find outliers or weird populations in SCC sample. However, we only need stable positive population, with as wide range as possible. So here we need to gate this normal population that we need.
 
+High quality data is needed, which means the cells/beads intensity ranges form low to very high value and covers the estiamted intensity. Also, it is very important to have enough amount of sample size to have robust estimation. The higher the more robust, > 10000 cells is recommended.
+
 If the outlier makes the gating difficult, you may remove outliers first.
 
 ``` r

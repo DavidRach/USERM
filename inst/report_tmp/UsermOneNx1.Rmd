@@ -100,11 +100,11 @@ for (j in 1:length(fluor_selected)) {
 
   grid <- expand.grid(x = x, y = y)
 
-  # 
+  #
   fx <- dnorm(grid$x, mean = mu_x, sd = sigma_x)
   fy <- dnorm(grid$y, mean = mu_y, sd = sigma_y)
 
-  # 
+  #
   grid$z <- fx * fy
 
   #visualize iso band data
@@ -122,5 +122,7 @@ for (j in 1:length(fluor_selected)) {
                       mode = prediction_plot_mode_report,legend_show = FALSE)
   print(p)
 }
+
+
 
 ```
