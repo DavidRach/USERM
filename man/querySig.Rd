@@ -4,7 +4,7 @@
 \alias{querySig}
 \title{Query and summarize Signature list information}
 \usage{
-querySig()
+querySig(Sig_list = NULL)
 }
 \value{
 A \code{data.frame} with the following columns:

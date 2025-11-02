@@ -4,7 +4,7 @@
 \alias{CreateRes}
 \title{Create a Res object}
 \usage{
-CreateRes(id, R, A)
+CreateRes(id, R, A_Target, A_AF)
 }
 \arguments{
 \item{id}{A character string representing the identifier for the result object. If missing, defaults to \code{"x"}.}

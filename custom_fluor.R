@@ -1,3 +1,4 @@
+devtools::install_github("xiangmingcai/USERM@dev")
 # devtools::install_github("xiangmingcai/USERM")
 library(USERM)
 library(flowCore)
@@ -267,3 +268,6 @@ saveRDS(ResObj, file = paste0(custom_dir,"/res","/ResObj_",save_suf,".rds"))
 
 #### Part 3 Use custom res obj and preprocessed res obj together ####
 # tbd
+
+
+
