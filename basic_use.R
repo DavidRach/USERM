@@ -145,3 +145,16 @@ checkRes_covScatter(Res = ResObj,
                     detector2 = "B14-A")
 
 checkSig_linePlot(id = "SCC3_Cell_PECy7_CD4")
+
+#ssm
+ssm = EstimateSSM(SSM_fluor = UsermObj$fluors[1:20],
+                  A = UsermObj$A,
+                  custom_ssm_dir = "E:/MyFolder/ssm")
+max(ssm)
+#check scatter for ss
+ss_output = check_ss(f_pos = "SCC3_Cell_BUV805_CD4",
+                     f_neg = "SCC3_Cell_BUV737_CD4",
+                     SSM_fluor = UsermObj$fluors[1:20],
+                     A = UsermObj$A,
+                     custom_ssm_dir = "E:/MyFolder/ssm")
+vis_ss_scatter(ss_output)
