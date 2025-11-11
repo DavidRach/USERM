@@ -38,7 +38,7 @@
 #' @export
 
 
-EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
+EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL,quiet = FALSE){
   #prepare A
   detector_A = rownames(A)
   fluor_A = colnames(A)
@@ -81,7 +81,9 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
 
   for (fluor in SSM_fluor) {
     # fluor = SSM_fluor[2]
-    print(fluor)
+    if(!quiet){
+      print(fluor)
+    }
     # load ssmobj
     if(fluor %in% all_ssm_file_builtin){
       tmp_ssm_obj = readRDS(system.file("ssm", paste0("SSMObj_",fluor,".rds"), package = "USERM"))
@@ -93,7 +95,7 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
     df_pos = tmp_ssm_obj$df_pos
     ##check columns of df_pos
     detector_pos = colnames(df_pos)
-    missing_cols <- setdiff(detector_pos, detector_A)
+    missing_cols <- setdiff(detector_A, detector_pos)
     if (length(missing_cols) > 0) {
       stop(paste("Error: The following detectors are missing from df_pos in the ssm obj of ",fluor ,":",
                  paste(missing_cols, collapse = ", ")))
@@ -104,7 +106,7 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
     df_neg = tmp_ssm_obj$df_neg
     ##check columns of df_neg
     detector_neg = colnames(df_neg)
-    missing_cols <- setdiff(detector_neg, detector_A)
+    missing_cols <- setdiff(detector_A, detector_neg)
     if (length(missing_cols) > 0) {
       stop(paste("Error: The following detectors are missing from df_neg in the ssm obj of ",fluor ,":",
                  paste(missing_cols, collapse = ", ")))
@@ -129,15 +131,25 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
       if(fluor_negchannel == fluor){
         ssm[fluor,fluor_negchannel] = 0
       }else{
+
+        B_pos_correct = as.data.frame(B_pos[,c(fluor,fluor_negchannel)])
+        #correct B_pos_correct
+        colnames(B_pos_correct) = c("X","Y")
+        B_pos_correct = correct_to_horizontal(B_pos_correct)
+        colnames(B_pos_correct) = c(fluor,fluor_negchannel)
+        mean_neg = mean(B_neg[,c(fluor_negchannel)])
+        mean_pos = mean(B_pos[,c(fluor_negchannel)])
+        B_pos_correct[,c(fluor_negchannel)] = B_pos_correct[,c(fluor_negchannel)] - (mean_pos - mean_neg)
+
         R_F_neg_84 = quantile(B_neg[,fluor_negchannel],probs = 0.84)[[1]]
         R_F_neg_50 = quantile(B_neg[,fluor_negchannel],probs = 0.50)[[1]]
         R_sigma_F_neg = R_F_neg_84 - R_F_neg_50
 
-        S_F_neg_84 = quantile(B_pos[,fluor_negchannel],probs = 0.84)[[1]]
-        S_F_neg_50 = quantile(B_pos[,fluor_negchannel],probs = 0.50)[[1]]
+        S_F_neg_84 = quantile(B_pos_correct[,fluor_negchannel],probs = 0.84)[[1]]
+        S_F_neg_50 = quantile(B_pos_correct[,fluor_negchannel],probs = 0.50)[[1]]
         S_sigma_F_neg = S_F_neg_84 - S_F_neg_50
 
-        S_F_pos_50 = quantile(B_pos[,fluor],probs = 0.50)[[1]]
+        S_F_pos_50 = quantile(B_pos_correct[,fluor],probs = 0.50)[[1]]
         R_F_pos_50 = quantile(B_neg[,fluor],probs = 0.50)[[1]]
         delta_F_pos = S_F_pos_50 - R_F_pos_50
 
@@ -164,4 +176,5 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL){
 
   return(ssm)
 }
+
 

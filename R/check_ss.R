@@ -128,10 +128,22 @@ check_ss = function(f_pos, f_neg, SSM_fluor,A,custom_ssm_dir = NULL){
   B_pos = t(B_pos)
   colnames(B_pos) = fluor_A
 
+
+
   R_neg = t(df_neg) #R (detectors x cells)
   B_neg =  A_pinv %*% R_neg #B (fluors x cells)
   B_neg = t(B_neg)
   colnames(B_neg) = fluor_A
+
+  #correct B_pos
+  B_pos_correct = as.data.frame(B_pos[,c(f_pos,f_neg)])
+  #correct B_pos_correct
+  colnames(B_pos_correct) = c("X","Y")
+  B_pos_correct = correct_to_horizontal(B_pos_correct)
+  mean_neg = mean(B_neg[,c(f_neg)])
+  mean_pos = mean(B_pos_correct$Y)
+  B_pos[,c(f_neg)] = B_pos_correct$Y - (mean_pos - mean_neg)
+
 
   #calculate ss
   fluor_negchannel = f_neg

@@ -4,7 +4,7 @@
 \alias{EstimateSSM}
 \title{Estimate Spillover Spreading Matrix (SSM) from Unmixing and Control Data}
 \usage{
-EstimateSSM(SSM_fluor, A, custom_ssm_dir = NULL)
+EstimateSSM(SSM_fluor, A, custom_ssm_dir = NULL, quiet = FALSE)
 }
 \arguments{
 \item{SSM_fluor}{A character vector of fluorophore names to include in the SSM. Each must have a corresponding \code{SSMObj_*.rds} file.}
