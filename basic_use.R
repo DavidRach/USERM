@@ -1,4 +1,4 @@
-# devtools::install_github("xiangmingcai/USERM")
+devtools::install_github("xiangmingcai/USERM")
 library(USERM)
 
 # Step 1 querySig
