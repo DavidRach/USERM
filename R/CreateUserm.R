@@ -51,19 +51,26 @@ CreateUserm = function(A){
   Intensity_mtx = as.data.frame(matrix(data = 100,
                                             nrow = length(fluors),
                                             ncol = 1,
-                                            dimnames = list(fluors)))
+                                            dimnames = list(fluors,c("P1"))))
 
   Scale_df = as.data.frame(matrix(data = NA,
                                   nrow = length(fluors),
                                   ncol = 4,
                                   dimnames = list(fluors,c("min","max","scale","cofactor"))))
+  Rename_table = as.data.frame(matrix(data = NA,
+                                      nrow = length(fluors),
+                                      ncol = 2,
+                                      dimnames = list(fluors,c("raw_name","new_name"))))
+  Rename_table$raw_name = rownames(Rename_table)
+  Rename_table$new_name = rownames(Rename_table)
 
   Userm = list(A = Sig_mtx,
                  detectors = detectors,
                  fluors = fluors,
                  Res = Res_list,
                  Scale_df = Scale_df,
-                 Intensity_mtx = Intensity_mtx)
+                 Intensity_mtx = Intensity_mtx,
+                 Rename_table = Rename_table)
 
   return(Userm)
 }

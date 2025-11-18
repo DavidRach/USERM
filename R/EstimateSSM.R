@@ -38,7 +38,22 @@
 #' @export
 
 
-EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL,quiet = FALSE){
+EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
+
+
+  #use raw_name to label SSM_fluor and A
+  Rename_table = Userm$Rename_table
+  new_name_SSM_fluor = SSM_fluor
+  raw_name_SSM_fluor = c()
+  for (i_SSM_fluor in new_name_SSM_fluor) {
+    # i_SSM_fluor = new_name_SSM_fluor[1]
+    raw_name_SSM_fluor = c(raw_name_SSM_fluor,Rename_table$raw_name[grep(i_SSM_fluor,Rename_table$new_name)])
+  }
+  SSM_fluor = raw_name_SSM_fluor
+  for (i_A in 1:ncol(A)) {
+    colnames(A)[i_A] = Rename_table$raw_name[grep(colnames(A)[i_A],Rename_table$new_name)]
+  }
+
   #prepare A
   detector_A = rownames(A)
   fluor_A = colnames(A)
@@ -141,6 +156,12 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL,quiet = FALSE){
         mean_pos = mean(B_pos[,c(fluor_negchannel)])
         B_pos_correct[,c(fluor_negchannel)] = B_pos_correct[,c(fluor_negchannel)] - (mean_pos - mean_neg)
 
+        # #robust estimation, remove outlier
+        # mean_val <- mean(B_pos_correct[,c(fluor_negchannel)], na.rm = TRUE)
+        # sd_val <- sd(B_pos_correct[,c(fluor_negchannel)], na.rm = TRUE)
+        # B_pos_correct <- B_pos_correct[B_pos_correct[,c(fluor_negchannel)] > (mean_val - 3 * sd_val) & B_pos_correct[,c(fluor_negchannel)] < (mean_val + 3 * sd_val), ]
+
+
         R_F_neg_84 = quantile(B_neg[,fluor_negchannel],probs = 0.84)[[1]]
         R_F_neg_50 = quantile(B_neg[,fluor_negchannel],probs = 0.50)[[1]]
         R_sigma_F_neg = R_F_neg_84 - R_F_neg_50
@@ -173,6 +194,9 @@ EstimateSSM = function(SSM_fluor,A,custom_ssm_dir = NULL,quiet = FALSE){
     }
 
   }
+
+  rownames(ssm) = new_name_SSM_fluor
+  colnames(ssm) = new_name_SSM_fluor
 
   return(ssm)
 }

@@ -128,8 +128,6 @@ check_ss = function(f_pos, f_neg, SSM_fluor,A,custom_ssm_dir = NULL){
   B_pos = t(B_pos)
   colnames(B_pos) = fluor_A
 
-
-
   R_neg = t(df_neg) #R (detectors x cells)
   B_neg =  A_pinv %*% R_neg #B (fluors x cells)
   B_neg = t(B_neg)
