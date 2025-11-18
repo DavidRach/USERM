@@ -51,7 +51,8 @@ EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
   }
   SSM_fluor = raw_name_SSM_fluor
   for (i_A in 1:ncol(A)) {
-    colnames(A)[i_A] = Rename_table$raw_name[grep(colnames(A)[i_A],Rename_table$new_name)]
+    # i_A= 32
+    colnames(A)[i_A] = Rename_table$raw_name[which(Rename_table$new_name == colnames(A)[i_A])]
   }
 
   #prepare A
