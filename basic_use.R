@@ -112,6 +112,7 @@ ss_output = check_ss(f_pos = "SCC_Cell_TCRVb11_PEVio770",
                      f_neg = "SCC_Cell_CD3_BV510",
                      SSM_fluor = UsermObj$fluors[1:31],
                      A = UsermObj$A,
+                     Userm = UsermObj,
                      custom_ssm_dir = "E:/MyFolder/ssm")
 vis_ss_scatter(ss_output)
 

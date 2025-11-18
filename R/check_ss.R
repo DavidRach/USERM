@@ -51,7 +51,23 @@
 #' @export
 
 
-check_ss = function(f_pos, f_neg, SSM_fluor,A,custom_ssm_dir = NULL){
+check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL){
+
+  #use raw_name to label SSM_fluor and A, f_pos, f_neg
+  Rename_table = Userm$Rename_table
+  new_name_SSM_fluor = SSM_fluor
+  raw_name_SSM_fluor = c()
+  for (i_SSM_fluor in new_name_SSM_fluor) {
+    # i_SSM_fluor = new_name_SSM_fluor[1]
+    raw_name_SSM_fluor = c(raw_name_SSM_fluor,Rename_table$raw_name[grep(i_SSM_fluor,Rename_table$new_name)])
+  }
+  SSM_fluor = raw_name_SSM_fluor
+  for (i_A in 1:ncol(A)) {
+    colnames(A)[i_A] = Rename_table$raw_name[which(Rename_table$new_name == colnames(A)[i_A])]
+  }
+
+  f_pos = Rename_table$raw_name[which(Rename_table$new_name == f_pos)]
+  f_neg = Rename_table$raw_name[which(Rename_table$new_name == f_neg)]
 
   #prepare A
   detector_A = rownames(A)
@@ -186,6 +202,14 @@ check_ss = function(f_pos, f_neg, SSM_fluor,A,custom_ssm_dir = NULL){
       }
     }
   }
+
+
+  for (i_B in 1:ncol(B_pos)) {
+    colnames(B_pos)[i_B] = Rename_table$new_name[which(Rename_table$raw_name == colnames(B_pos)[i_B])]
+    colnames(B_neg)[i_B] = Rename_table$new_name[which(Rename_table$raw_name == colnames(B_neg)[i_B])]
+  }
+  f_pos = Rename_table$new_name[which(Rename_table$raw_name == f_pos)]
+  f_neg = Rename_table$new_name[which(Rename_table$new_name == f_neg)]
 
   return(list(f_pos = f_pos,
               f_neg = f_neg,
