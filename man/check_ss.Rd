@@ -4,7 +4,7 @@
 \alias{check_ss}
 \title{Compute Spillover Spreading Score (SS) Between Fluorophores}
 \usage{
-check_ss(f_pos, f_neg, SSM_fluor, A, custom_ssm_dir = NULL)
+check_ss(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL)
 }
 \arguments{
 \item{f_pos}{A character string specifying the positive fluorophore (positive channel).}
