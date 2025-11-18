@@ -209,7 +209,7 @@ check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL){
     colnames(B_neg)[i_B] = Rename_table$new_name[which(Rename_table$raw_name == colnames(B_neg)[i_B])]
   }
   f_pos = Rename_table$new_name[which(Rename_table$raw_name == f_pos)]
-  f_neg = Rename_table$new_name[which(Rename_table$new_name == f_neg)]
+  f_neg = Rename_table$new_name[which(Rename_table$raw_name == f_neg)]
 
   return(list(f_pos = f_pos,
               f_neg = f_neg,

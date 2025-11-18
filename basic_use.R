@@ -109,11 +109,12 @@ Vis_Mtx(mat = ssm,mincolor = "#B02B38",midcolor = "white", maxcolor = "#95ABDB",
         title = "Spillover Spreading Matrix")
 dev.off()
 ss_output = check_ss(f_pos = "SCC_Cell_TCRVb11_PEVio770",
-                     f_neg = "SCC_Cell_CD3_BV510",
+                     f_neg = "CD3_BV510",
                      SSM_fluor = UsermObj$fluors[1:31],
                      A = UsermObj$A,
                      Userm = UsermObj,
                      custom_ssm_dir = "E:/MyFolder/ssm")
+library(MASS)
 vis_ss_scatter(ss_output)
 
 
