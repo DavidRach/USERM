@@ -32,11 +32,12 @@ Userm_html_table = function(mat,val_min, val_mid, val_max, colormin, colormid, c
   # construct HTML
   html <- "<table style='border-collapse:collapse;'>"
   html <- paste0(html, "<tr><th></th>",
-                 paste0("<th style='padding: 6px 12px;'>", colnames(mat), "</th>", collapse = ""),
+                 paste0("<th class='rotate'><div><span>", colnames(mat), "</span></div></th>", collapse = ""),
                  "</tr>")
 
+
   for (i in seq_along(rownames(mat))) {
-    html <- paste0(html, "<tr><th>", rownames(mat)[i], "</th>")
+    html <- paste0(html, "<tr><th style = 'white-space: nowrap; text-align: right;'>", rownames(mat)[i], "</th>")
     for (j in seq_along(colnames(mat))) {
       val <- mat[i, j]
       color <-getColor(val = val, min = val_min, mid = val_mid, max = val_max,

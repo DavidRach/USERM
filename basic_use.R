@@ -114,7 +114,7 @@ ss_output = check_ss(f_pos = "SCC_Cell_TCRVb11_PEVio770",
                      A = UsermObj$A,
                      Userm = UsermObj,
                      custom_ssm_dir = "E:/MyFolder/ssm")
-library(MASS)
+
 vis_ss_scatter(ss_output)
 
 

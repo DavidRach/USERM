@@ -36,10 +36,76 @@ PredOneSpread = function(Userm,population_id){
   }
 
   ui <- fluidPage(
-    titlePanel("USERM"),
+    tags$head(
+      tags$style(HTML("
+      body {
+        background-color: #f7f9fc;
+        font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        padding-right: 10px;
+      }
+      #input_sidebarPanel {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 6px 16px rgba(0,0,0,0.15);
+        padding: 20px;
+        margin-left: 10px;
+      }
+      #output_mainPanel {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 6px 16px rgba(0,0,0,0.15);
+        padding: 20px;
+      }
+      .scrollable-table {
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: 600px;
+      }
 
+      #titlePanel {
+        font-size: 40px;
+        font-weight: 600;
+        color: #2e4e7e;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        padding-left: 15px;
+      }
+      #subtitle{
+        font-size: 20px;
+        color: #2e4e7e;
+        margin-top: 0;
+        padding-top: 0px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+      }
+      th.rotate {
+        /* Something you can count on */
+        height: 180px;
+        white-space: nowrap;
+      }
+
+      th.rotate > div {
+        transform:
+          /* Magic Numbers */
+          translate(3px, 81px)
+          /* 45 is really 360 - 45 */
+          rotate(315deg);
+        width: 30px;
+      }
+      th.rotate > div > span {
+        padding: 5px 10px;
+      }
+
+    "))
+    ),
+
+    div(id = "titlePanel","USERM"),
+    div(id = "subtitle","Unmixing Spread Estimation based on Residual Model"),
     sidebarLayout(
       sidebarPanel(
+        id = "input_sidebarPanel",
+        width = 3,
         tabsetPanel(id = "input_tabs",
                     tabPanel("Fluors",
                              tagList(
@@ -62,9 +128,14 @@ PredOneSpread = function(Userm,population_id){
         )
       ),
       mainPanel(
+        id = "output_mainPanel",
+        width = 9,
         tabsetPanel(
+
           tabPanel("unmixing_matrix",
-                   uiOutput("unmixing_matrix_html")
+                   div(class = "scrollable-table",
+                       uiOutput("unmixing_matrix_html")
+                   )
           ),
           tabPanel("prediction",
                    selectInput("prediction_plot_mode", "select display mode：", choices = NULL),
@@ -99,24 +170,34 @@ PredOneSpread = function(Userm,population_id){
           ),
 
           tabPanel("pinv_matrix",
-                   uiOutput("pinv_matrix_html")
+                   div(class = "scrollable-table",
+                       uiOutput("pinv_matrix_html")
+                   )
           ),
           tabPanel("intercept_matrix",
                    tabsetPanel(
                      tabPanel("raw",
                               selectInput("fluor_selector_intercept_matrix_raw", "select fluor SCC file：", choices = NULL),
-                              uiOutput("intercept_matrix_raw_html")),
+                              div(class = "scrollable-table",
+                                  uiOutput("intercept_matrix_raw_html")
+                              )),
                      tabPanel("weighted",
-                              uiOutput("intercept_matrix_weighted_html"))
+                              div(class = "scrollable-table",
+                                  uiOutput("intercept_matrix_weighted_html")
+                              ))
                    )
           ),
           tabPanel("slop_matrix",
                    tabsetPanel(
                      tabPanel("raw",
                               selectInput("fluor_selector_slop_matrix_raw", "select fluor SCC file：", choices = NULL),
-                              uiOutput("slop_matrix_raw_html")),
+                              div(class = "scrollable-table",
+                                  uiOutput("slop_matrix_raw_html")
+                              )),
                      tabPanel("weighted",
-                              uiOutput("slop_matrix_weighted_html"))
+                              div(class = "scrollable-table",
+                                  uiOutput("slop_matrix_weighted_html")
+                              ))
                    )
           ),
           tabPanel("Export",
@@ -213,7 +294,7 @@ PredOneSpread = function(Userm,population_id){
       A = Userm$A
       mat = A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
       HTML(Userm_html_table(mat = mat, val_min = -1, val_mid = 0, val_max = 1,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
     # pinv_matrix_table
@@ -225,7 +306,7 @@ PredOneSpread = function(Userm,population_id){
       colnames(mat_pinv) = detector_cache$selected
       rownames(mat_pinv) = fluor_cache$selected
       HTML(Userm_html_table(mat = mat_pinv, val_min = -1, val_mid = 0, val_max = 1,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
     # intercept_matrix_table
@@ -240,7 +321,7 @@ PredOneSpread = function(Userm,population_id){
       intercept_matrix = Userm$Res[[input$fluor_selector_intercept_matrix_raw]]$interceptMtx
       intercept_matrix = intercept_matrix[detector_cache$selected,detector_cache$selected]
       HTML(Userm_html_table(mat = intercept_matrix, val_min = -10, val_mid = 0, val_max = 10,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$intercept_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -258,7 +339,7 @@ PredOneSpread = function(Userm,population_id){
       rownames(final_matrix) = colnames(A)
 
       HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
     # slop_matrix_table
@@ -273,7 +354,7 @@ PredOneSpread = function(Userm,population_id){
       slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_raw]]$slopMtx
       slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
       HTML(Userm_html_table(mat = slop_matrix, val_min = -1, val_mid = 0, val_max = 1,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$slop_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -300,7 +381,7 @@ PredOneSpread = function(Userm,population_id){
       rownames(final_matrix) = colnames(A)
 
       HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
     #prediction
