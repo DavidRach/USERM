@@ -28,6 +28,7 @@
 #' @importFrom MASS ginv
 #' @importFrom stats quantile cov dnorm
 #' @importFrom rmarkdown render
+#' @importFrom lsa cosine
 
 PredOneSpread = function(Userm,population_id){
 
@@ -56,11 +57,12 @@ PredOneSpread = function(Userm,population_id){
         border-radius: 8px;
         box-shadow: 0px 6px 16px rgba(0,0,0,0.15);
         padding: 20px;
+        /*height: 800px;*/
       }
       .scrollable-table {
         overflow-x: auto;
         overflow-y: auto;
-        max-height: 600px;
+        max-height: 1500px;
       }
 
       #titlePanel {
@@ -138,35 +140,37 @@ PredOneSpread = function(Userm,population_id){
                    )
           ),
           tabPanel("prediction",
-                   selectInput("prediction_plot_mode", "select display mode：", choices = NULL),
+                   div(class = "scrollable-table",
+                     selectInput("prediction_plot_mode", "select display mode：", choices = NULL),
 
-                   # X axis controls in one row
-                   fluidRow(
-                     column(4, selectInput("fluor_selector_x_prediction", "select x axis：", choices = NULL)),
-                     column(4, numericInput("x_min_input", "Min", value = 0)),
-                     column(4, numericInput("x_max_input", "Max", value = 1000))
-                   ),
-                   fluidRow(
-                     column(4, selectInput("x_scale", "Scale", choices = NULL)),
-                     column(8, numericInput("x_cofactor", "Cofactor(only for Arcsinh)", value = 100, min = 1))
-                   ),
+                     # X axis controls in one row
+                     fluidRow(
+                       column(4, selectInput("fluor_selector_x_prediction", "select x axis：", choices = NULL)),
+                       column(4, numericInput("x_min_input", "Min", value = 0)),
+                       column(4, numericInput("x_max_input", "Max", value = 1000))
+                     ),
+                     fluidRow(
+                       column(4, selectInput("x_scale", "Scale", choices = NULL)),
+                       column(8, numericInput("x_cofactor", "Cofactor(only for Arcsinh)", value = 100, min = 1))
+                     ),
 
-                   # Y axis controls in one row
-                   fluidRow(
-                     column(4, selectInput("fluor_selector_y_prediction", "select y axis：", choices = NULL)),
-                     column(4, numericInput("y_min_input", "Min", value = 0)),
-                     column(4, numericInput("y_max_input", "Max", value = 1000))
-                   ),
-                   fluidRow(
-                     column(4, selectInput("y_scale", "Scale", choices = NULL)),
-                     column(8, numericInput("y_cofactor", "Cofactor(only for Arcsinh)", value = 100, min = 1))
-                   ),
-                   numericInput(
-                     inputId = paste0("intercept_factor"),
-                     label = paste("Factor for default Autofluorescence (100: baseline; 0: no AF)"),
-                     value = 100
-                   ),
-                   plotOutput("prediction_plot")
+                     # Y axis controls in one row
+                     fluidRow(
+                       column(4, selectInput("fluor_selector_y_prediction", "select y axis：", choices = NULL)),
+                       column(4, numericInput("y_min_input", "Min", value = 0)),
+                       column(4, numericInput("y_max_input", "Max", value = 1000))
+                     ),
+                     fluidRow(
+                       column(4, selectInput("y_scale", "Scale", choices = NULL)),
+                       column(8, numericInput("y_cofactor", "Cofactor(only for Arcsinh)", value = 100, min = 1))
+                     ),
+                     numericInput(
+                       inputId = paste0("intercept_factor"),
+                       label = paste("Factor for default Autofluorescence (100: baseline; 0: no AF)"),
+                       value = 100
+                     ),
+                     plotOutput("prediction_plot", width = "600px", height = "400px")
+                   )
           ),
 
           tabPanel("pinv_matrix",
@@ -195,9 +199,30 @@ PredOneSpread = function(Userm,population_id){
                                   uiOutput("slop_matrix_raw_html")
                               )),
                      tabPanel("weighted",
+                              selectInput("fluor_selector_slop_matrix_weighted_from", "select fluor SCC file：", choices = NULL),
+                              selectInput("fluor_selector_slop_matrix_weighted_to", "select spread channel：", choices = NULL),
                               div(class = "scrollable-table",
                                   uiOutput("slop_matrix_weighted_html")
+                              )),
+                     tabPanel("summary",
+                              div(class = "scrollable-table",
+                                  uiOutput("slop_matrix_summary_html")
                               ))
+                   )
+          ),
+          tabPanel("Coef_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("coef_matrix_html")
+                   )
+          ),
+          tabPanel("Similarity_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("similarity_matrix_html")
+                   )
+          ),
+          tabPanel("Hotspot_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("hotspot_matrix_html")
                    )
           ),
           tabPanel("Export",
@@ -348,6 +373,12 @@ PredOneSpread = function(Userm,population_id){
       updateSelectInput(session, "fluor_selector_slop_matrix_raw",
                         choices = fluor_cache$selected,
                         selected = fluor_cache$selected[1])
+      updateSelectInput(session, "fluor_selector_slop_matrix_weighted_from",
+                        choices = fluor_cache$selected,
+                        selected = fluor_cache$selected[1])
+      updateSelectInput(session, "fluor_selector_slop_matrix_weighted_to",
+                        choices = fluor_cache$selected,
+                        selected = fluor_cache$selected[1])
     })
     output$slop_matrix_raw_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -357,6 +388,22 @@ PredOneSpread = function(Userm,population_id){
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$slop_matrix_weighted_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_weighted_from]]$slopMtx
+      slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+      A_weight_mtx = A_pinv[input$fluor_selector_slop_matrix_weighted_to,]%o%A_pinv[input$fluor_selector_slop_matrix_weighted_to,]
+      weighted_slop_matrix = A_weight_mtx * slop_matrix * intensity_cache$matrix[input$fluor_selector_slop_matrix_weighted_from,1]
+
+      HTML(Userm_html_table(mat = weighted_slop_matrix, val_min = -10, val_mid = 0, val_max = 10,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    output$slop_matrix_summary_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
 
       A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
@@ -370,17 +417,72 @@ PredOneSpread = function(Userm,population_id){
         fluor = colnames(A)[i]
         slop_matrix = Userm$Res[[fluor]]$slopMtx
         slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
-        weighted_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_cache$matrix[fluor,1]
+        weighted_matrix[i,] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_cache$matrix[fluor,1]
       }
 
-      final_col = matrix(apply(weighted_matrix,1,sum),ncol = 1)
-      sqrt_col = sqrt(abs(final_col))
-      final_matrix = cbind(weighted_matrix, final_col)
-      final_matrix = cbind(final_matrix, sqrt_col)
-      colnames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
-      rownames(final_matrix) = colnames(A)
+      final_row = matrix(apply(weighted_matrix,1,sum),nrow = 1)
+      sqrt_row = sqrt(abs(final_row))
+      final_matrix = rbind(weighted_matrix, final_row)
+      final_matrix = rbind(final_matrix, sqrt_row)
+      rownames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
+      colnames(final_matrix) = colnames(A)
 
       HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+
+    # estimation mtx
+    # coef_matrix_html
+    output$coef_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+
+      #calculate weighted slop
+      Coef_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+      for (i in 1:ncol(A)) {
+        fluor = colnames(A)[i]
+        slop_matrix = Userm$Res[[fluor]]$slopMtx
+        slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+        Coef_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv))
+      }
+      colnames(Coef_matrix) = colnames(A)
+      rownames(Coef_matrix) = colnames(A)
+      Coef_matrix = t(Coef_matrix)
+
+      HTML(Userm_html_table(mat = Coef_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    #similarity_matrix_html
+    output$similarity_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      cos_sim_matrix <- cosine(A)
+      colnames(cos_sim_matrix) = colnames(A)
+      rownames(cos_sim_matrix) = colnames(A)
+
+      HTML(Userm_html_table(mat = cos_sim_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    #hotspot_matrix_html
+    output$hotspot_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+      H_mtx = (t(A) %*% A)
+      H_mtx = ginv(H_mtx)
+      H_mtx = sqrt(abs(H_mtx))
+      colnames(H_mtx) = colnames(A)
+      rownames(H_mtx) = colnames(A)
+
+      HTML(Userm_html_table(mat = H_mtx, val_min = -1, val_mid = 0, val_max = 1,
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 

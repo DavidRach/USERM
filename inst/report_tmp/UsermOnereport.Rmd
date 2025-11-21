@@ -18,6 +18,7 @@ knitr:
 library(ComplexHeatmap)
 library(circlize)
 library(MASS)
+library(lsa)
 
 Userm = params$Userm
 fluor_selected = params$fluor_selected
@@ -118,16 +119,64 @@ for (i in 1:ncol(A)) {
   fluor = colnames(A)[i]
   slop_matrix = Userm$Res[[fluor]]$slopMtx
   slop_matrix = slop_matrix[detector_selected,detector_selected]
-  weighted_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_matrix[fluor,population_id]
+  weighted_matrix[i,] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_matrix[fluor,population_id]
 }
 
-final_col = matrix(apply(weighted_matrix,1,sum),ncol = 1)
-sqrt_col = sqrt(abs(final_col))
-final_matrix = cbind(weighted_matrix, final_col)
-final_matrix = cbind(final_matrix, sqrt_col)
-colnames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
-rownames(final_matrix) = colnames(A)
+final_row = matrix(apply(weighted_matrix,1,sum),nrow = 1)
+sqrt_row = sqrt(abs(final_row))
+final_matrix = rbind(weighted_matrix, final_row)
+final_matrix = rbind(final_matrix, sqrt_row)
+rownames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
+colnames(final_matrix) = colnames(A)
+
 
 Userm_html_table(mat = final_matrix, val_min = -100, val_mid = 0, val_max = 100,
                      colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Sigma^2 (-100 to 100)")
+```
+
+## Coefficient matrix：
+The coefficient matrix shows the estimated spread from fluorescence in row into channels in column.
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+
+#calculate weighted slop
+Coef_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+for (i in 1:ncol(A)) {
+  fluor = colnames(A)[i]
+  slop_matrix = Userm$Res[[fluor]]$slopMtx
+  slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+  Coef_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv))
+}
+colnames(Coef_matrix) = colnames(A)
+rownames(Coef_matrix) = colnames(A)
+Coef_matrix = t(Coef_matrix)
+
+Coef_html = Userm_html_table(mat = Coef_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                     colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Slop/beta (-1 to 1)")
+print(Coef_html)
+```
+
+## Similarity matrix：
+The Similarity matrix shows the cosine similarity between fluorescence.
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+cos_sim_matrix <- cosine(A)
+colnames(cos_sim_matrix) = colnames(A)
+rownames(cos_sim_matrix) = colnames(A)
+
+sim_html = Userm_html_table(mat = cos_sim_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                     colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Slop/beta (-1 to 1)")
+print(sim_html)
+```
+
+## Hotspot matrix：
+
+```{r, results='asis', echo=FALSE, fig.width=20, fig.height=16}
+H_mtx = (t(A) %*% A)
+H_mtx = ginv(H_mtx)
+H_mtx = sqrt(abs(H_mtx))
+colnames(H_mtx) = colnames(A)
+rownames(H_mtx) = colnames(A)
+
+Hotspot_html = Userm_html_table(mat = H_mtx, val_min = -1, val_mid = 0, val_max = 1,
+                     colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Slop/beta (-1 to 1)")
+print(Hotspot_html)
 ```

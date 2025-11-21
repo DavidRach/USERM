@@ -28,7 +28,7 @@
 #' @importFrom MASS ginv
 #' @importFrom stats quantile cov dnorm
 #' @importFrom rmarkdown render
-
+#' @importFrom lsa cosine
 
 PredMultipleSpread = function(Userm,population_ids){
 
@@ -188,13 +188,47 @@ PredMultipleSpread = function(Userm,population_ids){
                               ))
                    )
           ),
+          # tabPanel("slop_matrix",
+          #          tabsetPanel(
+          #            tabPanel("raw",
+          #                     selectInput("fluor_selector_slop_matrix_raw", "select fluor SCC file：", choices = NULL),
+          #                     div(class = "scrollable-table",
+          #                         uiOutput("slop_matrix_raw_html")
+          #                     ))
+          #          )
+          # ),
           tabPanel("slop_matrix",
                    tabsetPanel(
                      tabPanel("raw",
                               selectInput("fluor_selector_slop_matrix_raw", "select fluor SCC file：", choices = NULL),
                               div(class = "scrollable-table",
                                   uiOutput("slop_matrix_raw_html")
+                              )),
+                     tabPanel("weighted",
+                              selectInput("fluor_selector_slop_matrix_weighted_from", "select fluor SCC file：", choices = NULL),
+                              selectInput("fluor_selector_slop_matrix_weighted_to", "select spread channel：", choices = NULL),
+                              div(class = "scrollable-table",
+                                  uiOutput("slop_matrix_weighted_html")
+                              )),
+                     tabPanel("summary",
+                              div(class = "scrollable-table",
+                                  uiOutput("slop_matrix_summary_html")
                               ))
+                   )
+          ),
+          tabPanel("Coef_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("coef_matrix_html")
+                   )
+          ),
+          tabPanel("Similarity_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("similarity_matrix_html")
+                   )
+          ),
+          tabPanel("Hotspot_matrix",
+                   div(class = "scrollable-table",
+                       uiOutput("hotspot_matrix_html")
                    )
           ),
           tabPanel("Export",
@@ -318,10 +352,30 @@ PredMultipleSpread = function(Userm,population_ids){
                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
+    # # slop_matrix_table
+    # observe({
+    #   req(fluor_cache$selected)
+    #   updateSelectInput(session, "fluor_selector_slop_matrix_raw",
+    #                     choices = fluor_cache$selected,
+    #                     selected = fluor_cache$selected[1])
+    # })
+    # output$slop_matrix_raw_html <- renderUI({
+    #   req(detector_cache$selected, fluor_cache$selected)
+    #   slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_raw]]$slopMtx
+    #   slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+    #   HTML(Userm_html_table(mat = slop_matrix, val_min = -1, val_mid = 0, val_max = 1,
+    #                        colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    # })
     # slop_matrix_table
     observe({
       req(fluor_cache$selected)
       updateSelectInput(session, "fluor_selector_slop_matrix_raw",
+                        choices = fluor_cache$selected,
+                        selected = fluor_cache$selected[1])
+      updateSelectInput(session, "fluor_selector_slop_matrix_weighted_from",
+                        choices = fluor_cache$selected,
+                        selected = fluor_cache$selected[1])
+      updateSelectInput(session, "fluor_selector_slop_matrix_weighted_to",
                         choices = fluor_cache$selected,
                         selected = fluor_cache$selected[1])
     })
@@ -330,7 +384,105 @@ PredMultipleSpread = function(Userm,population_ids){
       slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_raw]]$slopMtx
       slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
       HTML(Userm_html_table(mat = slop_matrix, val_min = -1, val_mid = 0, val_max = 1,
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    output$slop_matrix_weighted_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_weighted_from]]$slopMtx
+      slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+      A_weight_mtx = A_pinv[input$fluor_selector_slop_matrix_weighted_to,]%o%A_pinv[input$fluor_selector_slop_matrix_weighted_to,]
+      weighted_slop_matrix = A_weight_mtx * slop_matrix * intensity_cache$matrix[input$fluor_selector_slop_matrix_weighted_from,1]
+
+      HTML(Userm_html_table(mat = weighted_slop_matrix, val_min = -10, val_mid = 0, val_max = 10,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    output$slop_matrix_summary_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+
+      weighted_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+
+      for (i in 1:ncol(A)) {
+        fluor = colnames(A)[i]
+        slop_matrix = Userm$Res[[fluor]]$slopMtx
+        slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+        weighted_matrix[i,] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv)) * intensity_cache$matrix[fluor,1]
+      }
+
+      final_col = matrix(apply(weighted_matrix,1,sum),nrow = 1)
+      sqrt_col = sqrt(abs(final_col))
+      final_matrix = rbind(weighted_matrix, final_col)
+      final_matrix = rbind(final_matrix, sqrt_col)
+      rownames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
+      colnames(final_matrix) = colnames(A)
+
+      HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+
+    # estimation mtx
+    # coef_matrix_html
+    output$coef_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+
+      #calculate weighted slop
+      Coef_matrix = array(0, dim = c(ncol(A), ncol(A))) #(channel, scc)
+      for (i in 1:ncol(A)) {
+        fluor = colnames(A)[i]
+        slop_matrix = Userm$Res[[fluor]]$slopMtx
+        slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
+        Coef_matrix[,i] = diag((A_pinv %*% slop_matrix) %*% t(A_pinv))
+      }
+      colnames(Coef_matrix) = colnames(A)
+      rownames(Coef_matrix) = colnames(A)
+      Coef_matrix = t(Coef_matrix)
+
+      HTML(Userm_html_table(mat = Coef_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    #similarity_matrix_html
+    output$similarity_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      cos_sim_matrix <- cosine(A)
+      colnames(cos_sim_matrix) = colnames(A)
+      rownames(cos_sim_matrix) = colnames(A)
+
+      HTML(Userm_html_table(mat = cos_sim_matrix, val_min = -1, val_mid = 0, val_max = 1,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+    })
+    #hotspot_matrix_html
+    output$hotspot_matrix_html <- renderUI({
+      req(detector_cache$selected, fluor_cache$selected)
+
+      A = Userm$A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
+      A_pinv = ginv(A)
+      colnames(A_pinv) = rownames(A)
+      rownames(A_pinv) = colnames(A)
+      H_mtx = (t(A) %*% A)
+      H_mtx = ginv(H_mtx)
+      H_mtx = sqrt(abs(H_mtx))
+      colnames(H_mtx) = colnames(A)
+      rownames(H_mtx) = colnames(A)
+
+      HTML(Userm_html_table(mat = H_mtx, val_min = -1, val_mid = 0, val_max = 1,
+                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
     #prediction
