@@ -64,7 +64,7 @@ PredMultipleSpread = function(Userm,population_ids){
       .scrollable-table {
         overflow-x: auto;
         overflow-y: auto;
-        max-height: 600px;
+        max-height: 1500px;
       }
 
       #titlePanel {
@@ -134,7 +134,14 @@ PredMultipleSpread = function(Userm,population_ids){
         tabsetPanel(
           tabPanel("unmixing_matrix",
                    div(class = "scrollable-table",
-                       uiOutput("unmixing_matrix_html")
+                       uiOutput("unmixing_matrix_html"),
+                       p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                       fluidRow(
+                         column(4, numericInput("unmixing_matrix_color_min", "Min", value = -1)),
+                         column(4, numericInput("unmixing_matrix_color_mid", "Mid", value = 0)),
+                         column(4, numericInput("unmixing_matrix_color_max", "Max", value = 1))
+                       ),
+                       actionButton(inputId = "unmixing_matrix_set_color_threshold", label = "Set")
                    )
           ),
           tabPanel("prediction",
@@ -172,7 +179,14 @@ PredMultipleSpread = function(Userm,population_ids){
 
           tabPanel("pinv_matrix",
                    div(class = "scrollable-table",
-                       uiOutput("pinv_matrix_html")
+                       uiOutput("pinv_matrix_html"),
+                       p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                       fluidRow(
+                         column(4, numericInput("pinv_matrix_color_min", "Min", value = -1)),
+                         column(4, numericInput("pinv_matrix_color_mid", "Mid", value = 0)),
+                         column(4, numericInput("pinv_matrix_color_max", "Max", value = 1))
+                       ),
+                       actionButton(inputId = "pinv_matrix_set_color_threshold", label = "Set")
                    )
           ),
           tabPanel("intercept_matrix",
@@ -180,11 +194,25 @@ PredMultipleSpread = function(Userm,population_ids){
                      tabPanel("raw",
                               selectInput("fluor_selector_intercept_matrix_raw", "select fluor SCC file：", choices = NULL),
                               div(class = "scrollable-table",
-                                  uiOutput("intercept_matrix_raw_html")
+                                  uiOutput("intercept_matrix_raw_html"),
+                                  p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                                  fluidRow(
+                                    column(4, numericInput("intercept_matrix_raw_color_min", "Min", value = -10)),
+                                    column(4, numericInput("intercept_matrix_raw_color_mid", "Mid", value = 0)),
+                                    column(4, numericInput("intercept_matrix_raw_color_max", "Max", value = 10))
+                                  ),
+                                  actionButton(inputId = "intercept_matrix_raw_set_color_threshold", label = "Set")
                               )),
                      tabPanel("weighted",
                               div(class = "scrollable-table",
-                                  uiOutput("intercept_matrix_weighted_html")
+                                  uiOutput("intercept_matrix_weighted_html"),
+                                  p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                                  fluidRow(
+                                    column(4, numericInput("intercept_matrix_weighted_color_min", "Min", value = -10)),
+                                    column(4, numericInput("intercept_matrix_weighted_color_mid", "Mid", value = 0)),
+                                    column(4, numericInput("intercept_matrix_weighted_color_max", "Max", value = 10))
+                                  ),
+                                  actionButton(inputId = "intercept_matrix_weighted_set_color_threshold", label = "Set")
                               ))
                    )
           ),
@@ -202,33 +230,75 @@ PredMultipleSpread = function(Userm,population_ids){
                      tabPanel("raw",
                               selectInput("fluor_selector_slop_matrix_raw", "select fluor SCC file：", choices = NULL),
                               div(class = "scrollable-table",
-                                  uiOutput("slop_matrix_raw_html")
+                                  uiOutput("slop_matrix_raw_html"),
+                                  p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                                  fluidRow(
+                                    column(4, numericInput("slop_matrix_raw_color_min", "Min", value = -1)),
+                                    column(4, numericInput("slop_matrix_raw_color_mid", "Mid", value = 0)),
+                                    column(4, numericInput("slop_matrix_raw_color_max", "Max", value = 1))
+                                  ),
+                                  actionButton(inputId = "slop_matrix_raw_set_color_threshold", label = "Set")
                               )),
                      tabPanel("weighted",
                               selectInput("fluor_selector_slop_matrix_weighted_from", "select fluor SCC file：", choices = NULL),
                               selectInput("fluor_selector_slop_matrix_weighted_to", "select spread channel：", choices = NULL),
                               div(class = "scrollable-table",
-                                  uiOutput("slop_matrix_weighted_html")
+                                  uiOutput("slop_matrix_weighted_html"),
+                                  p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                                  fluidRow(
+                                    column(4, numericInput("slop_matrix_weighted_color_min", "Min", value = -1)),
+                                    column(4, numericInput("slop_matrix_weighted_color_mid", "Mid", value = 0)),
+                                    column(4, numericInput("slop_matrix_weighted_color_max", "Max", value = 1))
+                                  ),
+                                  actionButton(inputId = "slop_matrix_weighted_set_color_threshold", label = "Set")
                               )),
                      tabPanel("summary",
                               div(class = "scrollable-table",
-                                  uiOutput("slop_matrix_summary_html")
+                                  uiOutput("slop_matrix_summary_html"),
+                                  p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                                  fluidRow(
+                                    column(4, numericInput("slop_matrix_summary_color_min", "Min", value = -1)),
+                                    column(4, numericInput("slop_matrix_summary_color_mid", "Mid", value = 0)),
+                                    column(4, numericInput("slop_matrix_summary_color_max", "Max", value = 1))
+                                  ),
+                                  actionButton(inputId = "slop_matrix_summary_set_color_threshold", label = "Set")
                               ))
                    )
           ),
           tabPanel("Coef_matrix",
                    div(class = "scrollable-table",
-                       uiOutput("coef_matrix_html")
+                       uiOutput("coef_matrix_html"),
+                       p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                       fluidRow(
+                         column(4, numericInput("coef_matrix_color_min", "Min", value = -1)),
+                         column(4, numericInput("coef_matrix_color_mid", "Mid", value = 0)),
+                         column(4, numericInput("coef_matrix_color_max", "Max", value = 1))
+                       ),
+                       actionButton(inputId = "coef_matrix_set_color_threshold", label = "Set")
                    )
           ),
           tabPanel("Similarity_matrix",
                    div(class = "scrollable-table",
-                       uiOutput("similarity_matrix_html")
+                       uiOutput("similarity_matrix_html"),
+                       p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                       fluidRow(
+                         column(4, numericInput("similarity_matrix_color_min", "Min", value = -1)),
+                         column(4, numericInput("similarity_matrix_color_mid", "Mid", value = 0)),
+                         column(4, numericInput("similarity_matrix_color_max", "Max", value = 1))
+                       ),
+                       actionButton(inputId = "similarity_matrix_set_color_threshold", label = "Set")
                    )
           ),
           tabPanel("Hotspot_matrix",
                    div(class = "scrollable-table",
-                       uiOutput("hotspot_matrix_html")
+                       uiOutput("hotspot_matrix_html"),
+                       p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
+                       fluidRow(
+                         column(4, numericInput("hotspot_matrix_color_min", "Min", value = -1)),
+                         column(4, numericInput("hotspot_matrix_color_mid", "Mid", value = 0)),
+                         column(4, numericInput("hotspot_matrix_color_max", "Max", value = 1))
+                       ),
+                       actionButton(inputId = "hotspot_matrix_set_color_threshold", label = "Set")
                    )
           ),
           tabPanel("Export",
@@ -297,13 +367,87 @@ PredMultipleSpread = function(Userm,population_ids){
       intercept_matrix_cache$matrix <- weighted_matrix
     })
 
+    #color_threshold
+    color_thre_mtx_init = matrix(nrow = 10,ncol = 3)
+    rownames(color_thre_mtx_init) = c("signature_mtx","pinv_mtx","intercept_mtx_raw","intercept_mtx_weighted",
+                                      "slop_mtx_raw","slop_mtx_weighted","slop_mtx_summary",
+                                      "coef_mtx","similarity_mtx","hotspot_mtx")
+    colnames(color_thre_mtx_init) = c("min","mid","max")
+    color_thre_mtx_init["signature_mtx",] = c(-1, 0, 1)
+    color_thre_mtx_init["pinv_mtx",] = c(-1, 0, 1)
+    color_thre_mtx_init["intercept_mtx_raw",] = c(-10, 0, 10)
+    color_thre_mtx_init["intercept_mtx_weighted",] = c(-10, 0, 10)
+    color_thre_mtx_init["slop_mtx_raw",] = c(-1, 0, 1)
+    color_thre_mtx_init["slop_mtx_weighted",] = c(-1, 0, 1)
+    color_thre_mtx_init["slop_mtx_summary",] = c(-1, 0, 1)
+    color_thre_mtx_init["coef_mtx",] = c(-1, 0, 1)
+    color_thre_mtx_init["similarity_mtx",] = c(-1, 0, 1)
+    color_thre_mtx_init["hotspot_mtx",] = c(-1, 0, 1)
+
+    color_cache <- reactiveValues()
+    color_cache$matrix = color_thre_mtx_init
+
+    observeEvent(input[["unmixing_matrix_set_color_threshold"]], {
+      color_cache$matrix["signature_mtx","min"] = input[["unmixing_matrix_color_min"]]
+      color_cache$matrix["signature_mtx","mid"] = input[["unmixing_matrix_color_mid"]]
+      color_cache$matrix["signature_mtx","max"] = input[["unmixing_matrix_color_max"]]
+    })
+    observeEvent(input[["pinv_matrix_set_color_threshold"]], {
+      color_cache$matrix["pinv_mtx","min"] = input[["pinv_matrix_color_min"]]
+      color_cache$matrix["pinv_mtx","mid"] = input[["pinv_matrix_color_mid"]]
+      color_cache$matrix["pinv_mtx","max"] = input[["pinv_matrix_color_max"]]
+    })
+    observeEvent(input[["intercept_matrix_raw_set_color_threshold"]], {
+      color_cache$matrix["intercept_mtx_raw","min"] = input[["intercept_matrix_raw_color_min"]]
+      color_cache$matrix["intercept_mtx_raw","mid"] = input[["intercept_matrix_raw_color_mid"]]
+      color_cache$matrix["intercept_mtx_raw","max"] = input[["intercept_matrix_raw_color_max"]]
+    })
+    observeEvent(input[["intercept_matrix_weighted_set_color_threshold"]], {
+      color_cache$matrix["intercept_mtx_weighted","min"] = input[["intercept_matrix_weighted_color_min"]]
+      color_cache$matrix["intercept_mtx_weighted","mid"] = input[["intercept_matrix_weighted_color_mid"]]
+      color_cache$matrix["intercept_mtx_weighted","max"] = input[["intercept_matrix_weighted_color_max"]]
+    })
+    observeEvent(input[["slop_matrix_raw_set_color_threshold"]], {
+      color_cache$matrix["slop_mtx_raw","min"] = input[["slop_matrix_raw_color_min"]]
+      color_cache$matrix["slop_mtx_raw","mid"] = input[["slop_matrix_raw_color_mid"]]
+      color_cache$matrix["slop_mtx_raw","max"] = input[["slop_matrix_raw_color_max"]]
+    })
+    observeEvent(input[["slop_matrix_weighted_set_color_threshold"]], {
+      color_cache$matrix["slop_mtx_weighted","min"] = input[["slop_matrix_weighted_color_min"]]
+      color_cache$matrix["slop_mtx_weighted","mid"] = input[["slop_matrix_weighted_color_mid"]]
+      color_cache$matrix["slop_mtx_weighted","max"] = input[["slop_matrix_weighted_color_max"]]
+    })
+    observeEvent(input[["slop_matrix_summary_set_color_threshold"]], {
+      color_cache$matrix["slop_mtx_summary","min"] = input[["slop_matrix_summary_color_min"]]
+      color_cache$matrix["slop_mtx_summary","mid"] = input[["slop_matrix_summary_color_mid"]]
+      color_cache$matrix["slop_mtx_summary","max"] = input[["slop_matrix_summary_color_max"]]
+    })
+    observeEvent(input[["coef_matrix_set_color_threshold"]], {
+      color_cache$matrix["coef_mtx","min"] = input[["coef_matrix_color_min"]]
+      color_cache$matrix["coef_mtx","mid"] = input[["coef_matrix_color_mid"]]
+      color_cache$matrix["coef_mtx","max"] = input[["coef_matrix_color_max"]]
+    })
+    observeEvent(input[["similarity_matrix_set_color_threshold"]], {
+      color_cache$matrix["similarity_mtx","min"] = input[["similarity_matrix_color_min"]]
+      color_cache$matrix["similarity_mtx","mid"] = input[["similarity_matrix_color_mid"]]
+      color_cache$matrix["similarity_mtx","max"] = input[["similarity_matrix_color_max"]]
+    })
+    observeEvent(input[["hotspot_matrix_set_color_threshold"]], {
+      color_cache$matrix["hotspot_mtx","min"] = input[["hotspot_matrix_color_min"]]
+      color_cache$matrix["hotspot_mtx","mid"] = input[["hotspot_matrix_color_mid"]]
+      color_cache$matrix["hotspot_mtx","max"] = input[["hotspot_matrix_color_max"]]
+    })
+
 
     # unmixing_matrix_table
     output$unmixing_matrix_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
       A = Userm$A
       mat = A[detector_cache$selected, fluor_cache$selected, drop = FALSE]
-      HTML(Userm_html_table(mat = mat, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = mat,
+                            val_min = color_cache$matrix["signature_mtx","min"],
+                            val_mid = color_cache$matrix["signature_mtx","mid"],
+                            val_max = color_cache$matrix["signature_mtx","max"],
                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
@@ -315,7 +459,10 @@ PredMultipleSpread = function(Userm,population_ids){
       mat_pinv = ginv(mat)
       colnames(mat_pinv) = detector_cache$selected
       rownames(mat_pinv) = fluor_cache$selected
-      HTML(Userm_html_table(mat = mat_pinv, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = mat_pinv,
+                            val_min = color_cache$matrix["pinv_mtx","min"],
+                            val_mid = color_cache$matrix["pinv_mtx","mid"],
+                            val_max = color_cache$matrix["pinv_mtx","max"],
                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
@@ -330,7 +477,10 @@ PredMultipleSpread = function(Userm,population_ids){
       req(detector_cache$selected, fluor_cache$selected)
       intercept_matrix = Userm$Res[[input$fluor_selector_intercept_matrix_raw]]$interceptMtx
       intercept_matrix = intercept_matrix[detector_cache$selected,detector_cache$selected]
-      HTML(Userm_html_table(mat = intercept_matrix, val_min = -10, val_mid = 0, val_max = 10,
+      HTML(Userm_html_table(mat = intercept_matrix,
+                            val_min = color_cache$matrix["intercept_mtx_raw","min"],
+                            val_mid = color_cache$matrix["intercept_mtx_raw","mid"],
+                            val_max = color_cache$matrix["intercept_mtx_raw","max"],
                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$intercept_matrix_weighted_html <- renderUI({
@@ -348,7 +498,10 @@ PredMultipleSpread = function(Userm,population_ids){
       colnames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
       rownames(final_matrix) = colnames(A)
 
-      HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
+      HTML(Userm_html_table(mat = final_matrix,
+                            val_min = color_cache$matrix["intercept_mtx_weighted","min"],
+                            val_mid = color_cache$matrix["intercept_mtx_weighted","mid"],
+                            val_max = color_cache$matrix["intercept_mtx_weighted","max"],
                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
@@ -383,7 +536,10 @@ PredMultipleSpread = function(Userm,population_ids){
       req(detector_cache$selected, fluor_cache$selected)
       slop_matrix = Userm$Res[[input$fluor_selector_slop_matrix_raw]]$slopMtx
       slop_matrix = slop_matrix[detector_cache$selected,detector_cache$selected]
-      HTML(Userm_html_table(mat = slop_matrix, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = slop_matrix,
+                            val_min = color_cache$matrix["slop_mtx_raw","min"],
+                            val_mid = color_cache$matrix["slop_mtx_raw","mid"],
+                            val_max = color_cache$matrix["slop_mtx_raw","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$slop_matrix_weighted_html <- renderUI({
@@ -399,7 +555,10 @@ PredMultipleSpread = function(Userm,population_ids){
       A_weight_mtx = A_pinv[input$fluor_selector_slop_matrix_weighted_to,]%o%A_pinv[input$fluor_selector_slop_matrix_weighted_to,]
       weighted_slop_matrix = A_weight_mtx * slop_matrix * intensity_cache$matrix[input$fluor_selector_slop_matrix_weighted_from,1]
 
-      HTML(Userm_html_table(mat = weighted_slop_matrix, val_min = -10, val_mid = 0, val_max = 10,
+      HTML(Userm_html_table(mat = weighted_slop_matrix,
+                            val_min = color_cache$matrix["slop_mtx_weighted","min"],
+                            val_mid = color_cache$matrix["slop_mtx_weighted","mid"],
+                            val_max = color_cache$matrix["slop_mtx_weighted","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     output$slop_matrix_summary_html <- renderUI({
@@ -426,7 +585,10 @@ PredMultipleSpread = function(Userm,population_ids){
       rownames(final_matrix) = c(colnames(A),"sum(Sigma^2)","abs(Sigma)")
       colnames(final_matrix) = colnames(A)
 
-      HTML(Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
+      HTML(Userm_html_table(mat = final_matrix,
+                            val_min = color_cache$matrix["slop_mtx_summary","min"],
+                            val_mid = color_cache$matrix["slop_mtx_summary","mid"],
+                            val_max = color_cache$matrix["slop_mtx_summary","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
@@ -452,7 +614,10 @@ PredMultipleSpread = function(Userm,population_ids){
       rownames(Coef_matrix) = colnames(A)
       Coef_matrix = t(Coef_matrix)
 
-      HTML(Userm_html_table(mat = Coef_matrix, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = Coef_matrix,
+                            val_min = color_cache$matrix["coef_mtx","min"],
+                            val_mid = color_cache$matrix["coef_mtx","mid"],
+                            val_max = color_cache$matrix["coef_mtx","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     #similarity_matrix_html
@@ -464,7 +629,10 @@ PredMultipleSpread = function(Userm,population_ids){
       colnames(cos_sim_matrix) = colnames(A)
       rownames(cos_sim_matrix) = colnames(A)
 
-      HTML(Userm_html_table(mat = cos_sim_matrix, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = cos_sim_matrix,
+                            val_min = color_cache$matrix["similarity_mtx","min"],
+                            val_mid = color_cache$matrix["similarity_mtx","mid"],
+                            val_max = color_cache$matrix["similarity_mtx","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
     #hotspot_matrix_html
@@ -481,7 +649,10 @@ PredMultipleSpread = function(Userm,population_ids){
       colnames(H_mtx) = colnames(A)
       rownames(H_mtx) = colnames(A)
 
-      HTML(Userm_html_table(mat = H_mtx, val_min = -1, val_mid = 0, val_max = 1,
+      HTML(Userm_html_table(mat = H_mtx,
+                            val_min = color_cache$matrix["hotspot_mtx","min"],
+                            val_mid = color_cache$matrix["hotspot_mtx","mid"],
+                            val_max = color_cache$matrix["hotspot_mtx","max"],
                             colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
     })
 
