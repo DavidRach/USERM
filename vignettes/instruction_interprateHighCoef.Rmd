@@ -1,3 +1,11 @@
+---
+title: "Interprate Spread"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Interprate Spread}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 # Interprate the observed spread with USERM
 
 Xiangming Cai

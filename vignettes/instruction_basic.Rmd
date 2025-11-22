@@ -1,3 +1,13 @@
+---
+title: "Basic Instruction"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Basic Instruction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
 # Basic instruction for USERM use
 
 Xiangming Cai

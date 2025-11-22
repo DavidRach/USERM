@@ -22,3 +22,5 @@ Imports:
     scales,
     stats,
     shiny
+URL: https://xiangmingcai.github.io/USERM
+BugReports: https://github.com/xiangmingcai/USERM/issues

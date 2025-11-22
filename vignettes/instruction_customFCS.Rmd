@@ -1,3 +1,11 @@
+---
+title: "Use Custom SCC"
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Custom Instruction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 # instruction for USERM use with Custom SCCs
 
 Xiangming Cai

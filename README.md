@@ -1,9 +1,11 @@
-# USERM  <a href="https://github.com/xiangmingcai/USERM"><img src="./images/USERMlogo.png" align="right" height="100" /></a>   
+# USERM  <a href="https://github.com/xiangmingcai/USERM"><img src="./man/figures/USERMlogo.png" align="right" width="100"/></a>
 
 Unmixing Spread Estimation based on Residual Model
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/xiangmingcai/USERM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/xiangmingcai/USERM/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/xiangmingcai/USERM/branch/main/graph/badge.svg)](https://app.codecov.io/gh/xiangmingcai/USERM)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 
