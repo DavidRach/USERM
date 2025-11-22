@@ -40,7 +40,7 @@ The following instructions and all reference can be found here: 📖 [Documentat
 
 3. Using USERM to interpret observed spread
 
-## ⚙️ Contribute Single-cor control FCS files to the USERM
+## ⚙️ Contribute Single-color control FCS files to the USERM
 
 The capabililty of the USERM greatly rely on the built-in FCS. However, there are many fluorescence not included in the current version. Also, there are many other spectral flow cytometry instruments that are missing in the current USERM. The current built-in SCC are all human PBMC or beads. That means we are also short in SCC acquired from other tissues or species.
 
