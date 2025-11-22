@@ -15,7 +15,7 @@ Xiangming Cai
 ## 🔍 Introduction
 This instruction will show a case about how to interprate a high Coef value found in the Coef Matrix. Of note, here we only show how to check the reason of observed high spread. Strategy for panel adjustment is out of the scope of this instruction.
 
-For basic instruction of the USERM, please refer to the basic [instruction](../instruction_basic.md).
+For basic instruction of the USERM, please refer to the basic [instruction](https://xiangmingcai.github.io/USERM/articles/instruction_basic.html).
 
 ## 💻 An example with high Coef value
 

@@ -119,7 +119,7 @@ Please avoid using space or underscore in these elements.
 
 In this step, we need to find positive and negative populations. You can use the GateData R package or other packages that works for you. Here we show how to gate a subset population with the GateData
 
-For detailed instruction of GateData, please refer to https://github.com/xiangmingcai/GateData
+For detailed instruction of GateData, please refer to [GateData](https://github.com/xiangmingcai/GateData)
 
 Brief instruction: draw a gate, and click 3 buttons in order.
 
@@ -565,7 +565,7 @@ The generated ResObj contains all details, which will be used for prediction.
 
 Once we have res obj for all custom SCC ready, we can make prediction!
 
-If you are falimilar with the basic use of USERM, it will be very easy to adapt it to the custom SCC. So, please try the built-in SCC first [instruction](../instruction_basic.md).
+If you are falimilar with the basic use of USERM, it will be very easy to adapt it to the custom SCC. So, please try the built-in SCC first [instruction](https://xiangmingcai.github.io/USERM/articles/instruction_basic.html).
 
 Here we show how to use both custom SCC and built-in SCC together. If you only use custom SCC, just ignore the code for built-in SCC.
 

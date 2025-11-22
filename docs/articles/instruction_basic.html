@@ -87,7 +87,7 @@ Similarity Matrix, and many others.</p>
 <div class="section level3">
 <h3 id="installation">💻 Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
-<p>You can install the development version of USERM from <a href="https://github.com/xiangmingcai" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of USERM from <a href="https://github.com/xiangmingcai/USERM" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"xiangmingcai/USERM"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -124,8 +124,9 @@ and its parameters, you can use the getRes function.</p>
 <p><img src="../reference/figures/ResObj.jpg" width="500"></p>
 <p>The ResObj Object contains all relavant informations. If you are
 interested, please read our paper (mentioned on the top) to know the
-concepts of each matrix shown here. See and for detailed introduction of
-the structure of ResObj.</p>
+concepts of each matrix shown here. See <a href="https://xiangmingcai.github.io/USERM/reference/CreateRes.html">CreateRes</a>
+and <a href="https://xiangmingcai.github.io/USERM/reference/SlopEstimation.html">SlopEstimation</a>
+for detailed introduction of the structure of ResObj.</p>
 <p>You can easily visaulize all these matrixes, when you are interested
 in any one of them.</p>
 <p>To check the slop matrix:</p>
@@ -159,7 +160,7 @@ fluorescence intensity (bin) between two speific detectors:</p>
 means if you plan to use FITC-CD4 in you panel, you can use FITC-CD2 in
 the USERM to make estimation and prediction. If the fluorescence that
 you need were not available in the USERM, you can prepare single color
-control FCS file yourself and process it following this custom <a href="../instruction_customFCS.html">instruction</a>.</p>
+control FCS file yourself and process it following this custom <a href="https://xiangmingcai.github.io/USERM/articles/instruction_customFCS.html">instruction</a>.</p>
 <p>Assume all fluorescence that you need is available, now you can
 select them out:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -247,7 +248,7 @@ fluorescence for x and y axes. You can also adjsut the display limis of
 the axes. Scale is support with <strong><em>Linear</em></strong>,
 <strong><em>Log10</em></strong> and <strong><em>Arcsinh</em></strong>
 options. For Arcsinh, users need to set a cofactor.</p>
-<p><img src="../reference/figures/af_factor.jpg" width="500"></p>
+<p><img src="../reference/figures/af_factor.jpg" width="1000"></p>
 <p>Of note, you can now set the <strong><em>Factor for default
 Autofluorescence</em></strong> to control the displayed spread from AF.
 the displayed spread will be multiplied with the (factor / 100). So,
@@ -331,7 +332,7 @@ fluorescence (column), following the increase of fluorescence intensity.
 To interpret a high observed coef number and its related severe spread,
 researchers can use PredOneSpread function to look for the underlying
 mechanical explanation and potential solutions. A detailed example is
-provided in another <a href="../instruction_interprateHighCoef.html">instruction</a>.</p>
+provided in another <a href="https://xiangmingcai.github.io/USERM/articles/instruction_interprateHighCoef.html">instruction</a>.</p>
 <p>There is no specific threshold for “bad” coef number or “good” coef
 number. Because the fluorescence intensity also matters and it varies in
 different settings and conjugated targets. However, this Coef Matrix
