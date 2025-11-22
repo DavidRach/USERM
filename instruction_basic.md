@@ -254,7 +254,7 @@ In the intercept matrix tab, you can check the intercept matrix of each SCC.
 
 </p>
 
-The weighted intercept matrix for each SCC is calculated as <img src="./images/function1.jpg" width="100/"/> The median value of all weighted intercept matrixes is used in the prediction (last two rows).
+The summary intercept matrix for each SCC is calculated as <img src="./images/function1.jpg" width="100/"/> The median value of all summary intercept matrixes is used in the prediction (last two rows).
 
 <p align="center">
 
@@ -294,21 +294,21 @@ Prediction for more than one population is possible. However, users need to set 
 ``` r
 UsermObj$Intensity_mtx[,2] = 200*c(1:length(UsermObj$fluors))
 UsermObj$Intensity_mtx[,3] = 300*c(1:length(UsermObj$fluors))
-names(UsermObj$Intensity_mtx) = c("V1","V2","V3")
-PredMultipleSpread(Userm = UsermObj,population_ids = c("V1","V2","V3"))
+names(UsermObj$Intensity_mtx) = c("P1","P2","P3")
+PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
 ```
 <p align="center">
 
 <img src="./images/prediction_11.jpg" width="500/"/>
 
 </p>
-All 3 populations will be shown together in the scatter plot. The design od the interactive web is similar to that for PredOneSpread function.
+All 3 populations will be shown together in the scatter plot. The design and the interactive web is similar to that for PredOneSpread function.
 
 ## Step 4 matrics estimation and visualization
 
-The USERM supports multiple matrix tools for panel design, including the Coef Matrix, the Hotspot Matrix, and the Similarity Matrix, and the Spread Distance Matrix. All matrix can be visualized with the ***Vis_Mtx*** function.
+The USERM supports multiple matrix tools for panel design, including the Coefficient Matrix, the Hotspot Matrix, and the Similarity Matrix, and the Spread Distance Matrix. All matrix can be visualized with the ***Vis_Mtx*** function.
 
-To estimate a Coef Matrix:
+To estimate a Coefficient Matrix:
 ``` r
 Coef_mtx = EstimateCoefMtx(Userm = UsermObj)
 Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABDB",
@@ -322,10 +322,9 @@ Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABD
 
 </p>
 
-In the Coef Matrix, a high coef number indicates high increasing trend of spread from one fluorescence (row) into another fluorescence (column), following the increase of fluorescence intensity. To interprate a high observed coef number and its related severe spread, researchers can use PredOneSpread function to look for the underlying machanical explanation and potentail solutions. A detailed example is provided in another [instruction](../instruction_interprateHighCoef.md). 
+In the Coefficient Matrix, a high coef number indicates high increasing trend of spread from one fluorescence (row) into another fluorescence (column), following the increase of fluorescence intensity. To interpret a high observed coef number and its related severe spread, researchers can use PredOneSpread function to look for the underlying mechanical explanation and potential solutions. A detailed example is provided in another [instruction](../instruction_interprateHighCoef.md). 
 
 There is no specific threshold for "bad" coef number or "good" coef number. Because the fluorescence intensity also matters and it varies in different settings and conjugated targets. However, this Coef Matrix provides an approach to compare the estimated spread between panels. So that users can choose a panel with less expected spread. 
-
 
 To estimate a Hotspot Matrix, only the signature matrix A is required:
 ``` r
@@ -377,16 +376,16 @@ For the Spread Distance matrix, a value < 1.0 indicates low resolution between t
 
 If you use this package in your research, please cite our paper and the package as:
 ```
-Xiangming Cai, Sara Garcia-Garcia, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
+Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
 
 Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package version
-  0.0.0.9000,  <https://github.com/xiangmingcai/USERM>.
+  1.0.0,  <https://github.com/xiangmingcai/USERM>.
   
 @Manual{,
     title = {USERM: Unmixing Spread Estimation with Residual Model},
     author = {Xiangming Cai},
     year = {2025},
-    note = {R package version 0.1},
+    note = {R package version 1.0.0},
     url = {https://github.com/xiangmingcai/USERM},
   }
 ```
@@ -394,6 +393,6 @@ Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package
 
 
 
-[^1]: Xiangming Cai, Sara Garcia-Garcia, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
+[^1]: Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
 
 [^2]: Mage PL, Konecny AJ, Mair F. Measurement and prediction of unmixing-dependent spreading in spectral flow cytometry panels. bioRxiv [Preprint]. 2025. doi: 10.1101/2025.04.17.649396.

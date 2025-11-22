@@ -69,7 +69,7 @@ CreateUserm = function(A){
   Rename_table$raw_name = rownames(Rename_table)
   Rename_table$new_name = rownames(Rename_table)
 
-  Userm = list(A = Sig_mtx,
+  Userm = list(A = A,
                  detectors = detectors,
                  fluors = fluors,
                  Res = Res_list,

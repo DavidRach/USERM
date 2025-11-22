@@ -2,7 +2,7 @@
 
 Xiangming Cai
 
-2025-11-202
+2025-11-22
 
 ## 🔍 Introduction
 The USERM supports predicting spread for unmixed spectral flow cytometry data, which helps for panel design and interpratation of unmixed results. There are over 200 built-in Single-color controls (SCCs) provided by the USERM. However, users can also apply USERM on their own SCCs. This helps when users need specific fluorescence not provided by USERM, or when they are using instruments not included in the USERM.
@@ -34,7 +34,7 @@ We need to prepare signatures for each SCC seperately. The steps for extracting 
 
 Normally, unstained sample is needed for AF extraction. However, you can extract AF from negative population in SCC if you do not have unstained sample.
 
-### step 1.1 readin scc fcs
+### step 1.1 read in scc fcs
 
 
 ``` r
@@ -391,7 +391,7 @@ Here we need to choose the index (idx) for target fluorescence and corresponding
 
 If we want to prepare res obj for AF. We can simply assign the index for the AF as idx_target_fluor, and use any other index as idx_AF_fluor.
 
-### step 2.4 gate signlets and target population
+### step 2.4 gate siglets and target population
 
 Here we want to use as many cells as possible to calculate parameters for the res obj. However, we need to gate required cells first. To speed up the gating step, we can use a sampled subset to make gates and then subset from all cells.
 
@@ -656,7 +656,7 @@ for (save_suf in colnames(Custom_Sig_mtx)) {
 Prediction is the same as the basic use. Here we show some simple case. You can explore more when your data is ready.
 
 ``` r
-PredOneSpread(Userm = UsermObj,population_id = c("V1"))
+PredOneSpread(Userm = UsermObj,population_id = c("P1"))
 ``` 
 <p align="center">
 
@@ -673,8 +673,8 @@ UsermObj$Intensity_mtx[4,1] = 100
 UsermObj$Intensity_mtx[4,2] = 500
 UsermObj$Intensity_mtx[4,3] = 1000
 
-names(UsermObj$Intensity_mtx) = c("V1","V2","V3")
-PredMultipleSpread(Userm = UsermObj,population_ids = c("V1","V2","V3"))
+names(UsermObj$Intensity_mtx) = c("P1","P2","P3")
+PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
 ```
 <p align="center">
 
@@ -718,3 +718,23 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
 <img src="./images/custom_predict_5.jpg" width="500/"/>
 
 </p>
+
+
+## 📚 Citation
+
+If you use this package in your research, please cite our paper and the package as:
+```
+Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
+
+Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package version
+  1.0.0,  <https://github.com/xiangmingcai/USERM>.
+  
+@Manual{,
+    title = {USERM: Unmixing Spread Estimation with Residual Model},
+    author = {Xiangming Cai},
+    year = {2025},
+    note = {R package version 1.0.0},
+    url = {https://github.com/xiangmingcai/USERM},
+  }
+```
+

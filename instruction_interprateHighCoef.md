@@ -2,7 +2,7 @@
 
 Xiangming Cai
 
-2025-10-21
+2025-11-22
 
 ## 🔍 Introduction
 This instruction will show a case about how to interprate a high Coef value found in the Coef Matrix. Of note, here we only show how to check the reason of observed high spread. Strategy for panel adjustment is out of the scope of this instruction.
@@ -357,27 +357,26 @@ The spread from PECy7 into BV510 was not identified.
 
 ## Perspective
 
-We think the Coef Matrix can be a good complementary to available tools. We want to encourage researchers to use all of these tools for panel design. The USERM package can be an out-of-box tool to apply these commonly used tools and makes the panel design better.
+We think the Coef Matrix can be a good complementary to available tools. We want to encourage researchers to use all of these tools for panel design and optimize unmixed results if possible. The USERM package can be an out-of-box tool to apply these commonly used tools and makes the panel design better.
 
 
 ## 📚 Citation
 
 If you use this package in your research, please cite our paper and the package as:
 ```
-Xiangming Cai, Sara Garcia-Garcia, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
+Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
 
 Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package version
-  0.0.0.9000,  <https://github.com/xiangmingcai/USERM>.
+  1.0.0,  <https://github.com/xiangmingcai/USERM>.
   
 @Manual{,
     title = {USERM: Unmixing Spread Estimation with Residual Model},
     author = {Xiangming Cai},
     year = {2025},
-    note = {R package version 0.1},
+    note = {R package version 1.0.0},
     url = {https://github.com/xiangmingcai/USERM},
   }
 ```
 
-
-[^1]: Xiangming Cai, Sara Garcia-Garcia, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
+[^1]: Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
 
