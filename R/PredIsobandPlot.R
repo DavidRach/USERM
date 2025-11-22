@@ -74,7 +74,7 @@ PredIsobandPlot = function(grid,x_scale,y_scale,x_cofactor,y_cofactor,
       scale_color_viridis_c(option = "C")
   }
 
-  p <- p + labs(title = "Prediction of Unmixed Spread",
+  p <- p + labs(title = "Prediction of Unmixed Spread (95% range)",
          x = x_label,
          y = y_label,
          fill = "Density")

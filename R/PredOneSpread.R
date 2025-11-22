@@ -38,6 +38,7 @@ PredOneSpread = function(Userm,population_id){
 
   ui <- fluidPage(
     tags$head(
+
       tags$style(HTML("
       body {
         background-color: #f7f9fc;
@@ -48,7 +49,7 @@ PredOneSpread = function(Userm,population_id){
       #input_sidebarPanel {
         background-color: #ffffff;
         border-radius: 8px;
-        box-shadow: 0px 6px 16px rgba(0,0,0,0.15);
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.15);
         padding: 20px;
         margin-left: 10px;
       }
@@ -74,7 +75,7 @@ PredOneSpread = function(Userm,population_id){
         padding-left: 15px;
       }
       #subtitle{
-        font-size: 20px;
+        font-size: 16px;
         color: #2e4e7e;
         margin-top: 0;
         padding-top: 0px;
@@ -134,7 +135,7 @@ PredOneSpread = function(Userm,population_id){
         width = 9,
         tabsetPanel(
 
-          tabPanel("unmixing_matrix",
+          tabPanel("Signature matrix",
                    div(class = "scrollable-table",
                        uiOutput("unmixing_matrix_html"),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -147,13 +148,13 @@ PredOneSpread = function(Userm,population_id){
                    )
 
           ),
-          tabPanel("prediction",
+          tabPanel("Prediction",
                    div(class = "scrollable-table",
-                     selectInput("prediction_plot_mode", "select display mode：", choices = NULL),
+                     selectInput("prediction_plot_mode", "Select display mode：", choices = NULL),
 
                      # X axis controls in one row
                      fluidRow(
-                       column(4, selectInput("fluor_selector_x_prediction", "select x axis：", choices = NULL)),
+                       column(4, selectInput("fluor_selector_x_prediction", "Select x axis：", choices = NULL)),
                        column(4, numericInput("x_min_input", "Min", value = 0)),
                        column(4, numericInput("x_max_input", "Max", value = 1000))
                      ),
@@ -164,7 +165,7 @@ PredOneSpread = function(Userm,population_id){
 
                      # Y axis controls in one row
                      fluidRow(
-                       column(4, selectInput("fluor_selector_y_prediction", "select y axis：", choices = NULL)),
+                       column(4, selectInput("fluor_selector_y_prediction", "Select y axis：", choices = NULL)),
                        column(4, numericInput("y_min_input", "Min", value = 0)),
                        column(4, numericInput("y_max_input", "Max", value = 1000))
                      ),
@@ -177,11 +178,11 @@ PredOneSpread = function(Userm,population_id){
                        label = paste("Factor for default Autofluorescence (100: baseline; 0: no AF)"),
                        value = 100
                      ),
-                     plotOutput("prediction_plot", width = "600px", height = "400px")
+                     plotOutput("prediction_plot", width = "1000px", height = "800px")
                    )
           ),
 
-          tabPanel("pinv_matrix",
+          tabPanel("pinv matrix",
                    div(class = "scrollable-table",
                        uiOutput("pinv_matrix_html"),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -193,10 +194,10 @@ PredOneSpread = function(Userm,population_id){
                        actionButton(inputId = "pinv_matrix_set_color_threshold", label = "Set")
                    )
           ),
-          tabPanel("intercept_matrix",
+          tabPanel("Intercept matrix",
                    tabsetPanel(
                      tabPanel("raw",
-                              selectInput("fluor_selector_intercept_matrix_raw", "select fluor SCC file：", choices = NULL),
+                              selectInput("fluor_selector_intercept_matrix_raw", "Select fluor SCC file：", choices = NULL),
                               div(class = "scrollable-table",
                                   uiOutput("intercept_matrix_raw_html"),
                                   p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -220,10 +221,10 @@ PredOneSpread = function(Userm,population_id){
                               ))
                    )
           ),
-          tabPanel("slop_matrix",
+          tabPanel("Slop matrix",
                    tabsetPanel(
                      tabPanel("raw",
-                              selectInput("fluor_selector_slop_matrix_raw", "select fluor SCC file：", choices = NULL),
+                              selectInput("fluor_selector_slop_matrix_raw", "Select fluor SCC file：", choices = NULL),
                               div(class = "scrollable-table",
                                   uiOutput("slop_matrix_raw_html"),
                                   p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -235,8 +236,8 @@ PredOneSpread = function(Userm,population_id){
                                   actionButton(inputId = "slop_matrix_raw_set_color_threshold", label = "Set")
                               )),
                      tabPanel("weighted",
-                              selectInput("fluor_selector_slop_matrix_weighted_from", "select fluor SCC file：", choices = NULL),
-                              selectInput("fluor_selector_slop_matrix_weighted_to", "select spread channel：", choices = NULL),
+                              selectInput("fluor_selector_slop_matrix_weighted_from", "Select fluor SCC file：", choices = NULL),
+                              selectInput("fluor_selector_slop_matrix_weighted_to", "Select spread channel：", choices = NULL),
                               div(class = "scrollable-table",
                                   uiOutput("slop_matrix_weighted_html"),
                                   p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -260,7 +261,7 @@ PredOneSpread = function(Userm,population_id){
                               ))
                    )
           ),
-          tabPanel("Coef_matrix",
+          tabPanel("Coefficient matrix",
                    div(class = "scrollable-table",
                        uiOutput("coef_matrix_html"),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -272,7 +273,7 @@ PredOneSpread = function(Userm,population_id){
                        actionButton(inputId = "coef_matrix_set_color_threshold", label = "Set")
                    )
           ),
-          tabPanel("Similarity_matrix",
+          tabPanel("Similarity matrix",
                    div(class = "scrollable-table",
                        uiOutput("similarity_matrix_html"),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -284,7 +285,7 @@ PredOneSpread = function(Userm,population_id){
                        actionButton(inputId = "similarity_matrix_set_color_threshold", label = "Set")
                    )
           ),
-          tabPanel("Hotspot_matrix",
+          tabPanel("Hotspot matrix",
                    div(class = "scrollable-table",
                        uiOutput("hotspot_matrix_html"),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
@@ -297,15 +298,66 @@ PredOneSpread = function(Userm,population_id){
                    )
           ),
           tabPanel("Export",
-                   selectInput("prediction_plot_mode_report", "select display mode：", choices = c("Pseudo-color","Contour line"), selected = "Pseudo-color"),
+                   selectInput("prediction_plot_mode_report", "Select display mode：", choices = c("Pseudo-color","Contour line"), selected = "Pseudo-color"),
                    downloadButton("downloadHTML", "Export HTML report"),
                    downloadButton("downloadNxN", "Export N x N plot"),
                    p("Note: all parameters are from input Userm object."),
-                   selectInput("prediction_Nx1_fluor", "select fluor for Nx1 plot：", choices = NULL),
+                   selectInput("prediction_Nx1_fluor", "Select fluor for Nx1 plot：", choices = NULL),
                    downloadButton("downloadNx1", "Export N x 1 plot")
+          ),tabPanel(
+            "About",
 
+            fluidRow(
+              column(12,
+                     h3("About USERM"),
+                     tags$hr()
+              )
+            ),
 
+            fluidRow(
+              column(12,
+                     p("The USERM package provides an out-of-box tool to apply the residual model approach,
+              which characterizes and predicts the spread of unmixed spectral flow cytometry data,
+              which arises from instrumental noise or deviations between actual cellular emission
+              and the average fluorescence signatures.")
+              )
+            ),
+            fluidRow(
+              column(12,
+                     p("You can predict spread and interactively adjust various parameters.")
+              )
+            ),
+
+            fluidRow(
+              column(12,
+                     p("To support panel design and spread interpretation,
+                       the USERM also supports computing various matrices, including:"),
+                     tags$ul(
+                       tags$li("Coefficient Matrix"),
+                       tags$li("Similarity Matrix"),
+                       tags$li("Hotspot Matrix"),
+                       tags$li("Signature Matrix"),
+                       tags$li("pseudo-inverse Matrix"),
+                       tags$li("Slop Matrix"),
+                       tags$li("Intercept Matrix")
+
+                     )
+              )
+            ),
+
+            fluidRow(
+              column(12,
+                     p(
+                       "Here is the link to ",
+                       tags$a(href = "https://github.com/xiangmingcai/USERM",
+                              "GitHub Repository", target = "_blank",
+                              style = "color:#2c3e50; font-weight:bold;"),
+                       ". You can find more instructions on the repository."
+                     )
+              )
+            )
           )
+
 
         )
       )
@@ -465,6 +517,9 @@ PredOneSpread = function(Userm,population_id){
       color_cache$matrix["hotspot_mtx","max"] = input[["hotspot_matrix_color_max"]]
     })
 
+    colormin = "#4473c5"#098ebb  2166ac
+    colormid = "#f7f7f7"
+    colormax = "#ef7e30" #e96449  b2182b
 
 
 
@@ -477,7 +532,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["signature_mtx","min"],
                             val_mid = color_cache$matrix["signature_mtx","mid"],
                             val_max = color_cache$matrix["signature_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # pinv_matrix_table
@@ -492,7 +547,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["pinv_mtx","min"],
                             val_mid = color_cache$matrix["pinv_mtx","mid"],
                             val_max = color_cache$matrix["pinv_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # intercept_matrix_table
@@ -510,7 +565,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["intercept_mtx_raw","min"],
                             val_mid = color_cache$matrix["intercept_mtx_raw","mid"],
                             val_max = color_cache$matrix["intercept_mtx_raw","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$intercept_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -531,7 +586,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["intercept_mtx_weighted","min"],
                             val_mid = color_cache$matrix["intercept_mtx_weighted","mid"],
                             val_max = color_cache$matrix["intercept_mtx_weighted","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # slop_matrix_table
@@ -555,7 +610,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["slop_mtx_raw","min"],
                             val_mid = color_cache$matrix["slop_mtx_raw","mid"],
                             val_max = color_cache$matrix["slop_mtx_raw","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$slop_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -574,7 +629,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["slop_mtx_weighted","min"],
                             val_mid = color_cache$matrix["slop_mtx_weighted","mid"],
                             val_max = color_cache$matrix["slop_mtx_weighted","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$slop_matrix_summary_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -604,7 +659,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["slop_mtx_summary","min"],
                             val_mid = color_cache$matrix["slop_mtx_summary","mid"],
                             val_max = color_cache$matrix["slop_mtx_summary","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # estimation mtx
@@ -633,7 +688,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["coef_mtx","min"],
                             val_mid = color_cache$matrix["coef_mtx","mid"],
                             val_max = color_cache$matrix["coef_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     #similarity_matrix_html
     output$similarity_matrix_html <- renderUI({
@@ -648,7 +703,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["similarity_mtx","min"],
                             val_mid = color_cache$matrix["similarity_mtx","mid"],
                             val_max = color_cache$matrix["similarity_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     #hotspot_matrix_html
     output$hotspot_matrix_html <- renderUI({
@@ -668,7 +723,7 @@ PredOneSpread = function(Userm,population_id){
                             val_min = color_cache$matrix["hotspot_mtx","min"],
                             val_mid = color_cache$matrix["hotspot_mtx","mid"],
                             val_max = color_cache$matrix["hotspot_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     #prediction

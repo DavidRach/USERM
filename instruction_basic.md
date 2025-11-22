@@ -6,7 +6,7 @@ Xiangming Cai
 
 ## 🔍 Introduction
 
-The USERM package provides an out-of-box tool to apply the residual model approach [^1], which characterizes and predicts the noise spread of unmixed spectral flow cytometry data, which arises from instrumental noise or deviations between actual cellular emission and the average fluorescence signatures.
+The USERM package provides an out-of-box tool to apply the residual model approach [^1], which characterizes and predicts the spread of unmixed spectral flow cytometry data, which arises from instrumental noise or deviations between actual cellular emission and the average fluorescence signatures.
 
 The USERM also supports computing various matrixes tools for panel design, including the Coef Matrix, the Hotspot Matrix, and the Similarity Matrix, and the Spread Distance Matrix.
 
