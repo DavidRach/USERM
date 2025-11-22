@@ -6,6 +6,8 @@ Unmixing Spread Estimation based on Residual Model
 [![R-CMD-check](https://github.com/xiangmingcai/USERM/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/xiangmingcai/USERM/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/xiangmingcai/USERM/branch/main/graph/badge.svg)](https://app.codecov.io/gh/xiangmingcai/USERM)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![pkgdown site](https://img.shields.io/badge/docs-pkgdown-blue)](https://xiangmingcai.github.io/USERM)
+
 <!-- badges: end -->
 
 
@@ -30,12 +32,13 @@ devtools::install_github("xiangmingcai/USERM")
 
 ## 🖊 Instruction
 
-For basic use of the USERM: [basic use instruction](https://github.com/xiangmingcai/USERM/blob/main/instruction_basic.md)
+The following instructions and all reference can be foudn here: 📖 [Documentation website](https://xiangmingcai.github.io/USERM)
 
-For instruction about using custom single-color control FCS file: [custom scc instruction](https://github.com/xiangmingcai/USERM/blob/main/instruction_customFCS.md)
+1. For basic use of the USERM
 
+2. For instruction about using custom single-color control FCS file
 
-For instruction about using USERM to interpret observed spread: [interpret spread instruction](https://github.com/xiangmingcai/USERM/blob/main/instruction_interprateHighCoef.md)
+3. For instruction about using USERM to interpret observed spread
 
 ## ⚙️ Contribute Single-cor control FCS files to the USERM
 
