@@ -57,6 +57,11 @@ CreateUserm = function(A){
                                   nrow = length(fluors),
                                   ncol = 4,
                                   dimnames = list(fluors,c("min","max","scale","cofactor"))))
+  Scale_df$min = 0
+  Scale_df$max = 1000
+  Scale_df$scale = "Linear"
+  cofactor = 10
+
   Rename_table = as.data.frame(matrix(data = NA,
                                       nrow = length(fluors),
                                       ncol = 2,

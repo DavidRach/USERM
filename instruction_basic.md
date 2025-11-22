@@ -232,8 +232,6 @@ In the prediction tab, you will see a scatter plot visualizing the 95% range of 
 
 Of note, you can now set the ***Factor for default Autofluorescence*** to control the displayed spread from AF. the displayed spread will be multiplied with the (factor / 100). So, when the factor is set to 100, the estimated spread from AF will be displayed completely. If the factor is set to 0, the spread from AF will be removed. This helps to check only the spread from noise. 
 
-#!!! update first, and continue from here.
-
 <p align="center">
 
 <img src="./images/prediction_5.jpg" width="500/"/>
@@ -248,7 +246,7 @@ The pinv matrix shows the pseudo-inverse of the signature matrix.
 
 </p>
 
-In the intercept matrix tab, you can check the intercept matries of each fluroescence. 
+In the intercept matrix tab, you can check the intercept matrix of each SCC. 
 
 <p align="center">
 
@@ -256,7 +254,7 @@ In the intercept matrix tab, you can check the intercept matries of each fluroes
 
 </p>
 
-The weighted intercept matrix for each fluorescence is calculated as <img src="./images/function1.jpg" width="100/"/> The median value of all weighted intercept matrixes is used in the prediction (last two columns).
+The weighted intercept matrix for each SCC is calculated as <img src="./images/function1.jpg" width="100/"/> The median value of all weighted intercept matrixes is used in the prediction (last two rows).
 
 <p align="center">
 
@@ -264,7 +262,8 @@ The weighted intercept matrix for each fluorescence is calculated as <img src=".
 
 </p>
 
-In the slop matrix tab, you can check the slop matries of each fluroescence. 
+In the slop matrix tab, you can check the slop matrix of each fluroescence. 
+
 
 <p align="center">
 
@@ -272,7 +271,15 @@ In the slop matrix tab, you can check the slop matries of each fluroescence.
 
 </p>
 
-Similarly, The weighted slop matrix for each fluorescence is calculated as <img src="./images/function2.jpg" width="100/"/> The summed value of all weighted slop matrixes is used in the prediction (last two columns).
+Similarly, The summary slop matrix for each fluorescence is calculated as <img src="./images/function2.jpg" width="100/"/> The summed value of all weighted slop matrixes is used in the prediction (last two rows).
+
+<p align="center">
+
+<img src="./images/prediction_82.jpg" width="500/"/>
+
+</p>
+
+To check the detail of each number summary slop matrix, you can use the weighted tab. Select the fluorescence and the channels to be spread into, you can check the weighted slop matrix. The sum of the weighted slop matrix will be the corresponding value in the summary slop matrix. With the weighted slop matrix, you can explain why a severe spread occurs. 
 
 <p align="center">
 
@@ -280,8 +287,8 @@ Similarly, The weighted slop matrix for each fluorescence is calculated as <img 
 
 </p>
 
-In the export tab, you may directlyh download a complete report of all the matrixes.
-You may also export the N-by-N or N-by-1 plots, which could be quite big for a big panel. If you want to plot the N-by-N or N-by-1 plots, you need to assign corresponding values to the UsermObj[["Scale_df"]]. Otherwise, an error will occur.
+In the export tab, you may directly download a complete report of all the matrixes.
+You may also export the N-by-N or N-by-1 plots, which could be quite big for a big panel. If you want to plot the N-by-N or N-by-1 plots with custom plot setting, you need to assign corresponding values to the UsermObj[["Scale_df"]]. Otherwise, default setting will be used.
 
 Prediction for more than one population is possible. However, users need to set the intensities of populations in advance. Here we predict 3 populations together.
 ``` r

@@ -208,7 +208,7 @@ PredOneSpread = function(Userm,population_id){
                                   ),
                                   actionButton(inputId = "intercept_matrix_raw_set_color_threshold", label = "Set")
                               )),
-                     tabPanel("weighted",
+                     tabPanel("summary",
                               div(class = "scrollable-table",
                                   uiOutput("intercept_matrix_weighted_html"),
                                   p("*spread from row into column."),
