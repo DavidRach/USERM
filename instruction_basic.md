@@ -2,13 +2,13 @@
 
 Xiangming Cai
 
-2025-10-20
+2025-11-22
 
 ## 🔍 Introduction
 
-The USERM package provides an out-of-box tool to apply the residual model approach [^1], which characterizes and predicts the spread of unmixed spectral flow cytometry data, which arises from instrumental noise or deviations between actual cellular emission and the average fluorescence signatures.
+The USERM provides an out-of-box tool to apply the residual model approach [^1], which characterizes and predicts the spread of unmixed spectral flow cytometry data, which arises from instrumental noise or deviations between actual cellular emission and the average fluorescence signatures.
 
-The USERM also supports computing various matrixes tools for panel design, including the Coef Matrix, the Hotspot Matrix, and the Similarity Matrix, and the Spread Distance Matrix.
+The USERM also supports computing various matrixes tools for panel design, including the Coef Matrix, the Hotspot Matrix, and the Similarity Matrix, and many others.
 
 
 ## 💻 Installation
@@ -58,7 +58,7 @@ checkSig_linePlot(id = fluor_to_check)
 
 </p>
 
-These available fluorescence were preprocessed with parameters extracted for redisual model. To access the corresponding residaul model and its parameters, you can use the getRes function.
+These available fluorescence were preprocessed with parameters extracted for residual model. To access the corresponding residaul model and its parameters, you can use the getRes function.
 
 ``` r
 ResObj = getRes(id = fluor_to_check)
@@ -69,7 +69,7 @@ ResObj = getRes(id = fluor_to_check)
 
 </p>
 
-The ResObj Object contains all relavant informations. Please read our paper (mentioned on the top) to know the concepts of each matrix shown here. See \code{\link{CreateRes}} and \code{\link{SlopEstimation}} for detailed introduction of the structure of ResObj.
+The ResObj Object contains all relavant informations. If you are interested, please read our paper (mentioned on the top) to know the concepts of each matrix shown here. See \code{\link{CreateRes}} and \code{\link{SlopEstimation}} for detailed introduction of the structure of ResObj.
 
 You can easily visaulize all these matrixes, when you are interested in any one of them.
 
@@ -118,28 +118,22 @@ checkRes_covScatter(Res = ResObj,
 </p>
 
 
-## Step 2 🖊 Select fluors and create SuprObj
+## Step 2 🖊 Select and rename fluors and create SuprObj
 
-You may now select fluorescence to make a panel. Of note, the targets (e.g. CD3, CD4) do not matter here, as long as the fluorescence matches. That means if you plan to use FITC-CD4 in you panel, you can use FITC-CD2 in the USERM to make estimation and prediction. 
-If the fluorescence that you need were not available in the USERM, you can prepare single color control FCS file yourself and process it following other [instruction](../instruction_customFCS.md). 
+You may now select fluorescence to make a panel. Of note, the targets (e.g. CD3, CD4) do not matter here, only the fluorescence matches. That means if you plan to use FITC-CD4 in you panel, you can use FITC-CD2 in the USERM to make estimation and prediction. 
+If the fluorescence that you need were not available in the USERM, you can prepare single color control FCS file yourself and process it following this custom [instruction](../instruction_customFCS.md). 
 
 Assume all fluorescence that you need is available, now you can select them out:
 ``` r
-fluors_selected = c(Sig_info$id[c(32:38,41:42,46:48,50:54,8,9,12,63)])
-print(fluors_selected)
+fluors_selected = c(Sig_info$id[c(32:34,63)])
+fluors_selected
+
 ```
 ``` r
-> print(fluors_selected)
- [1] "SCC_Cell_LD_LDNIR876"       "SCC_Cell_CD2_FITC"          "SCC_Cell_CD3_BV510"        
- [4] "SCC_Cell_CD4_NFR700"        "SCC_Cell_CD8_BV570"         "SCC_Cell_CD16_BUV805"      
- [7] "SCC_Cell_CD19_BUV496"       "SCC_Cell_CD38_BV650"        "SCC_Cell_CD45_AF532"       
-[10] "SCC_Cell_CD127_BUV661"      "SCC_Cell_CD161_BUV615"      "SCC_Cell_CD244_SB600"      
-[13] "SCC_Cell_CRTH2_PECy5"       "SCC_Cell_HLADR_NFB61070S"   "SCC_Cell_KIRDL1_PE"        
-[16] "SCC_Cell_KLRG1_BV480"       "SCC_Cell_NKG2A_PEDazzle594" "SCC_Bead_CD25_PECy55"      
-[19] "SCC_Bead_CD34_APCeFluor780" "SCC_Bead_CD56_BUV563"       "SCC_Cell_AF_AF"   
+> fluors_selected
+[1] "SCC_Cell_LD_LDNIR876" "SCC_Cell_CD2_FITC"    "SCC_Cell_CD3_BV510"   "SCC_Cell_AF_AF"   
 ```
-Here we select 20 fluorescence plus autofluorescence (AF) to make a panel. Notely, both SCC Cells and Beads are using together. Based on our research, it is ok to use SCC beads for prediction.
-
+Here we select 3 fluorescence plus autofluorescence (AF) to make a simple panel. If you expecting more (>40), just select all of them. Notely, both SCC Cells and Beads are using together. Based on our research, it is ok to use SCC beads for prediction.
 
 Now, we can create the signature matrix of selected fluorescence
 ``` r
@@ -148,7 +142,7 @@ dim(Sig_mtx)
 ```
 ``` r
 > dim(Sig_mtx)
-[1] 51 21
+[1] 51 4
 ```
 
 Then, we create a UsermObj to contain all ResObj. 
@@ -167,15 +161,36 @@ for (save_suf in colnames(Sig_mtx)) {
 
 </p>
 
-The UsermObj contains all information needed for prediction.  The Res item is a list with ResObj of each fluorescence. The Scale_df item contains the scale setting for visualization afterward. It is ok to leave it as NA. Default linear scale will be applied (Options: "Linear", "Log10", "Arcsinh"). The Intensity_mtx contains the estimated fluorescence intensities of cell populations. In the example shown here, we have one default populaiton named "V1". You can modify the name or intensities or add new populations for interactive prediction in Step 3.
+The UsermObj contains all information needed for prediction. The Res item is a list with ResObj of each fluorescence. The Scale_df item contains the scale setting for visualization afterward. It is ok to leave it as NA. Default linear scale will be applied (Options: "Linear", "Log10", "Arcsinh"). The Intensity_mtx contains the estimated fluorescence intensities of cell populations. In the example shown here, we have one default populaiton named "P1". You can modify the name or intensities or add new populations for interactive prediction in Step 3.
+
+
+If you hope to rename the fluorescence, you can do this now:
+``` r
+UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_LD_LDNIR876",new_name = "LiveDead")
+UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_CD2_FITC",new_name = "CD2_FITC")
+UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_CD3_BV510",new_name = "CD3_BV510")
+UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_AF_AF",new_name = "AF")
+```
+``` r
+> UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_LD_LDNIR876",new_name = "LiveDead")
+Successfully renamed SCC_Cell_LD_LDNIR876 as LiveDead
+> UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_CD2_FITC",new_name = "CD2_FITC")
+Successfully renamed SCC_Cell_CD2_FITC as CD2_FITC
+> UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_CD3_BV510",new_name = "CD3_BV510")
+Successfully renamed SCC_Cell_CD3_BV510 as CD3_BV510
+> UsermObj = RenameFluor(Userm = UsermObj,raw_name = "SCC_Cell_AF_AF",new_name = "AF")
+Successfully renamed SCC_Cell_AF_AF as AF  
+```
+
+
 
 ## Step 3 🧮 Make prediction (optional)
 
-We can now interactively predict spread from residual model, which accounts for instrumental noise and deviations between actual cellular emission and the average fluorescence signatures.
+We can now interactively predict spread with residual model, which accounts for instrumental noise and deviations between actual cellular emission and the average fluorescence signatures.
 
 To predict for one population:
 ``` r
-PredOneSpread(Userm = UsermObj,population_id = c("V1"))
+PredOneSpread(Userm = UsermObj,population_id = c("P1"))
 ```
 <p align="center">
 
@@ -191,7 +206,7 @@ You will see a pop-out shinyapp window.
 
 </p>
 
-The left panel allows users to interactively select and un-select fluroescence and detectors, and modify intensities. So that users can flexibily explore the impact of fluorescence combination and intensities on the predicted spread.
+The left panel allows users to interactively select and un-select fluroescence and detectors, and modify intensities. So that users can flexibly explore the impact of fluorescence combination and intensities on the predicted spread. Of note, you can use set-all button to adjust all intensities together. This can be handy when you want to set all of them as 0 except one fluorescence, in which case you are simulating a SCC sample.
 
 <p align="center">
 
@@ -199,7 +214,7 @@ The left panel allows users to interactively select and un-select fluroescence a
 
 </p>
 
-The right panel have some tabs. The unmixing matrix is signature matrix.
+The right panel have some tabs. The signature matrix contains all normalized signatures. If you want to adjust the color threshold, you may scroll down to the bottom and set new color threshold. There are tow ways to use different color palette. First, you can get the matrix with mathods described in Step1 or Step4, and visualize with the Vis_Mtx function, which is also described in Step4. Another method is that you can directly copy and paste the whole matrix into Excel and apply distinct color palette in Excel or other software.
 
 <p align="center">
 
@@ -216,6 +231,8 @@ In the prediction tab, you will see a scatter plot visualizing the 95% range of 
 </p>
 
 Of note, you can now set the ***Factor for default Autofluorescence*** to control the displayed spread from AF. the displayed spread will be multiplied with the (factor / 100). So, when the factor is set to 100, the estimated spread from AF will be displayed completely. If the factor is set to 0, the spread from AF will be removed. This helps to check only the spread from noise. 
+
+#!!! update first, and continue from here.
 
 <p align="center">
 

@@ -24,7 +24,8 @@ checkRes_covScatter(Res = ResObj,
 # Step 2 Select fluors and create UsermObj
 # fluors_selected = c(Sig_info$id[c(32:38,41:42,46:48,50:54,8,9,12,63)])#,58:62,8,9,12,14,18,24,25,26,63
 fluors_selected = c(Sig_info$id[c(32:38,41:42,44,46:48,50:54,58,59,60,61,62,8,9,12,14,18,24,25,26,63)])#,58:62,8,9,12,14,18,24,25,26,63
-fluors_selected = fluors_selected[c(1:3,32)]
+fluors_selected = c(Sig_info$id[c(32:34,63)])
+fluors_selected[c(1:3,32)]
 
 fluors_selected = c(Sig_info$id[c(149,201,150,151,
                                   152,153,154,155,

@@ -206,6 +206,7 @@ PredMultipleSpread = function(Userm,population_ids){
                      tabPanel("weighted",
                               div(class = "scrollable-table",
                                   uiOutput("intercept_matrix_weighted_html"),
+                                  p("*spread from row into column."),
                                   p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
                                   fluidRow(
                                     column(4, numericInput("intercept_matrix_weighted_color_min", "Min", value = -10)),
@@ -255,6 +256,7 @@ PredMultipleSpread = function(Userm,population_ids){
                      tabPanel("summary",
                               div(class = "scrollable-table",
                                   uiOutput("slop_matrix_summary_html"),
+                                  p("*spread from row into column."),
                                   p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
                                   fluidRow(
                                     column(4, numericInput("slop_matrix_summary_color_min", "Min", value = -1)),
@@ -268,6 +270,7 @@ PredMultipleSpread = function(Userm,population_ids){
           tabPanel("Coef_matrix",
                    div(class = "scrollable-table",
                        uiOutput("coef_matrix_html"),
+                       p("*spread from row into column."),
                        p("Set color threshold:", style = "font-size:18px; font-weight: bold; margin-top:20px;"),
                        fluidRow(
                          column(4, numericInput("coef_matrix_color_min", "Min", value = -1)),
@@ -413,7 +416,7 @@ PredMultipleSpread = function(Userm,population_ids){
         fluor = colnames(A)[i]
         intercept_matrix = Userm$Res[[fluor]]$interceptMtx
         intercept_matrix = intercept_matrix[detector_cache$selected,detector_cache$selected]
-        weighted_matrix[,i] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
+        weighted_matrix[i,] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
       }
 
       intercept_matrix_cache$matrix <- weighted_matrix
@@ -547,12 +550,12 @@ PredMultipleSpread = function(Userm,population_ids){
       req(intercept_matrix_cache$matrix)
       weighted_matrix = intercept_matrix_cache$matrix
 
-      final_col = matrix(apply(weighted_matrix,1,median),ncol = 1)
-      sqrt_col = sqrt(abs(final_col))
-      final_matrix = cbind(weighted_matrix, final_col)
-      final_matrix = cbind(final_matrix, sqrt_col)
-      colnames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
-      rownames(final_matrix) = colnames(A)
+      final_row = matrix(apply(weighted_matrix,1,median),nrow = 1)
+      sqrt_row = sqrt(abs(final_row))
+      final_matrix = rbind(weighted_matrix, final_row)
+      final_matrix = rbind(final_matrix, sqrt_row)
+      rownames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
+      colnames(final_matrix) = colnames(A)
 
       HTML(Userm_html_table(mat = final_matrix,
                             val_min = color_cache$matrix["intercept_mtx_weighted","min"],
@@ -736,6 +739,7 @@ PredMultipleSpread = function(Userm,population_ids){
       req(detector_cache$selected, fluor_cache$selected)
       req(intercept_matrix_cache$matrix)
       intercept_matrix = intercept_matrix_cache$matrix
+      intercept_matrix = t(intercept_matrix)
       intercept_col = matrix(apply(intercept_matrix,1,median),ncol = 1)
 
       # A = Userm$A

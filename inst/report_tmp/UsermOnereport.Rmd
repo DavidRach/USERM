@@ -68,15 +68,15 @@ for (i in 1:ncol(A)) {
   fluor = colnames(A)[i]
   intercept_matrix = Userm$Res[[fluor]]$interceptMtx
   intercept_matrix = intercept_matrix[detector_selected,detector_selected]
-  weighted_intercept_matrix[,i] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
+  weighted_intercept_matrix[i,] = diag((A_pinv %*% intercept_matrix) %*% t(A_pinv))
 }
 
-final_col = matrix(apply(weighted_intercept_matrix,1,median),ncol = 1)
-sqrt_col = sqrt(abs(final_col))
-final_matrix = cbind(weighted_intercept_matrix, final_col)
-final_matrix = cbind(final_matrix, sqrt_col)
-colnames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
-rownames(final_matrix) = colnames(A)
+final_row = matrix(apply(weighted_intercept_matrix,1,median),nrow = 1)
+sqrt_row = sqrt(abs(final_row))
+final_matrix = rbind(weighted_intercept_matrix, final_row)
+final_matrix = rbind(final_matrix, sqrt_row)
+rownames(final_matrix) = c(colnames(A),"median(Sigma^2)","abs(Sigma)")
+colnames(final_matrix) = colnames(A)
 
 Userm_html_table(mat = final_matrix, val_min = -10, val_mid = 0, val_max = 10,
                          colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b",Legend = "Spread Intensity (-10 to 10)")
