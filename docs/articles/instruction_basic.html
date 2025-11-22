@@ -115,19 +115,13 @@ fluorescence.</p>
 <span><span class="fu"><a href="../reference/checkSig_linePlot.html">checkSig_linePlot</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">fluor_to_check</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">print</span>(fluor_to_check)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"SCC_Bead_CD2_FITC"</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/checkSig_linePlot.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/checkSig_linePlot.jpg" width="500"></p>
 <p>These available fluorescence were preprocessed with parameters
 extracted for residual model. To access the corresponding residaul model
 and its parameters, you can use the getRes function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ResObj</span> <span class="op">=</span> <span class="fu"><a href="../reference/getRes.html">getRes</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">fluor_to_check</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/ResObj.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/ResObj.jpg" width="500"></p>
 <p>The ResObj Object contains all relavant informations. If you are
 interested, please read our paper (mentioned on the top) to know the
 concepts of each matrix shown here. See and for detailed introduction of
@@ -137,26 +131,17 @@ in any one of them.</p>
 <p>To check the slop matrix:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/checkRes_slopMtx.html">checkRes_slopMtx</a></span><span class="op">(</span>Res <span class="op">=</span> <span class="va">ResObj</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/slopmtx.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/slopmtx.jpg" width="500"></p>
 <p>To check the intercept matrix:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/checkRes_interceptMtx.html">checkRes_interceptMtx</a></span><span class="op">(</span>Res <span class="op">=</span> <span class="va">ResObj</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/interceptmtx.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/interceptmtx.jpg" width="500"></p>
 <p>You can check the covariance matrix at a specified fluorescence
 intensity (bin):</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ResObj</span><span class="op">$</span><span class="va">bin_mids</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/checkRes_covMtx.html">checkRes_covMtx</a></span><span class="op">(</span>Res <span class="op">=</span> <span class="va">ResObj</span>,bin<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/covmtx.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/covmtx.jpg" width="500"></p>
 <p>You can even check the linear fitting of covariance versus
 fluorescence intensity (bin) between two speific detectors:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -164,10 +149,7 @@ fluorescence intensity (bin) between two speific detectors:</p>
 <span><span class="fu"><a href="../reference/checkRes_covScatter.html">checkRes_covScatter</a></span><span class="op">(</span>Res <span class="op">=</span> <span class="va">ResObj</span>,</span>
 <span>                    detector1 <span class="op">=</span> <span class="va">ResObj</span><span class="op">$</span><span class="va">detectors</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>                    detector2 <span class="op">=</span> <span class="va">ResObj</span><span class="op">$</span><span class="va">detectors</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/covscatter.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/covscatter.jpg" width="500"></p>
 </div>
 <div class="section level3">
 <h3 id="step-2-select-and-rename-fluors-and-create-suprobj">Step 2 🖊 Select and rename fluors and create SuprObj<a class="anchor" aria-label="anchor" href="#step-2-select-and-rename-fluors-and-create-suprobj"></a>
@@ -203,10 +185,7 @@ research, it is ok to use SCC beads for prediction.</p>
 <span>  <span class="va">ResObj</span> <span class="op">=</span> <span class="fu"><a href="../reference/getRes.html">getRes</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">save_suf</span><span class="op">)</span></span>
 <span>  <span class="va">UsermObj</span> <span class="op">=</span> <span class="fu"><a href="../reference/AddRes2Userm.html">AddRes2Userm</a></span><span class="op">(</span>Res <span class="op">=</span> <span class="va">ResObj</span>, Userm <span class="op">=</span> <span class="va">UsermObj</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/UsermObj.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/UsermObj.jpg" width="500"></p>
 <p>The UsermObj contains all information needed for prediction. The Res
 item is a list with ResObj of each fluorescence. The Scale_df item
 contains the scale setting for visualization afterward. It is ok to
@@ -240,15 +219,9 @@ emission and the average fluorescence signatures.</p>
 <p>To predict for one population:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/PredOneSpread.html">PredOneSpread</a></span><span class="op">(</span>Userm <span class="op">=</span> <span class="va">UsermObj</span>,population_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P1"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p align="center">
-</p>
-<p><img src="./images/prediction_1.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_1.jpg" width="500"></p>
 <p>You will see a pop-out shinyapp window.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_2.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_2.jpg" width="500"></p>
 <p>The left panel allows users to interactively select and un-select
 fluroescence and detectors, and modify intensities. So that users can
 flexibly explore the impact of fluorescence combination and intensities
@@ -256,10 +229,7 @@ on the predicted spread. Of note, you can use set-all button to adjust
 all intensities together. This can be handy when you want to set all of
 them as 0 except one fluorescence, in which case you are simulating a
 SCC sample.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_3.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_3.jpg" width="500"></p>
 <p>The right panel have some tabs. The signature matrix contains all
 normalized signatures. If you want to adjust the color threshold, you
 may scroll down to the bottom and set new color threshold. There are tow
@@ -268,10 +238,7 @@ mathods described in Step1 or Step4, and visualize with the Vis_Mtx
 function, which is also described in Step4. Another method is that you
 can directly copy and paste the whole matrix into Excel and apply
 distinct color palette in Excel or other software.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_4.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_4.jpg" width="500"></p>
 <p>In the prediction tab, you will see a scatter plot visualizing the
 95% range of predicted spread. Two display mode is supported:
 <strong><em>Pseudo-color</em></strong> and
@@ -280,52 +247,34 @@ fluorescence for x and y axes. You can also adjsut the display limis of
 the axes. Scale is support with <strong><em>Linear</em></strong>,
 <strong><em>Log10</em></strong> and <strong><em>Arcsinh</em></strong>
 options. For Arcsinh, users need to set a cofactor.</p>
-<p align="center">
-</p>
-<p><img src="./images/af_factor.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/af_factor.jpg" width="500"></p>
 <p>Of note, you can now set the <strong><em>Factor for default
 Autofluorescence</em></strong> to control the displayed spread from AF.
 the displayed spread will be multiplied with the (factor / 100). So,
 when the factor is set to 100, the estimated spread from AF will be
 displayed completely. If the factor is set to 0, the spread from AF will
 be removed. This helps to check only the spread from noise.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_5.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_5.jpg" width="500"></p>
 <p>The pinv matrix shows the pseudo-inverse of the signature matrix.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_6.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_6.jpg" width="500"></p>
 <p>In the intercept matrix tab, you can check the intercept matrix of
 each SCC.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_7.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_7.jpg" width="500"></p>
 <p>The summary intercept matrix for each SCC is calculated as
-<img src="./images/function1.jpg" width="100/"> The median value of all
-summary intercept matrixes is used in the prediction (last two
+<img src="../reference/figures/function1.jpg" width="100/"> The median value
+of all summary intercept matrixes is used in the prediction (last two
 rows).</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_8.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_8.jpg" width="500"></p>
 <p>In the slop matrix tab, you can check the slop matrix of each
 fluroescence.</p>
-<p align="center">
-</p>
-<p><img src="./images/prediction_9.jpg" width="500/"></p>
-
+<p><img src="../reference/figures/prediction_9.jpg" width="500"></p>
 <p>Similarly, The summary slop matrix for each fluorescence is
-calculated as <img src="./images/function2.jpg" width="100/"> The
+calculated as <img src="../reference/figures/function2.jpg" width="100/"> The
 summed value of all weighted slop matrixes is used in the prediction
 (last two rows).</p>
 <p align="center">
 </p>
-<p><img src="./images/prediction_82.jpg" width="500/"></p>
+<p><img src="../reference/figures/prediction_82.jpg" width="500/"></p>
 
 <p>To check the detail of each number summary slop matrix, you can use
 the weighted tab. Select the fluorescence and the channels to be spread
@@ -335,7 +284,7 @@ With the weighted slop matrix, you can explain why a severe spread
 occurs.</p>
 <p align="center">
 </p>
-<p><img src="./images/prediction_10.jpg" width="500/"></p>
+<p><img src="../reference/figures/prediction_10.jpg" width="500/"></p>
 
 <p>In the export tab, you may directly download a complete report of all
 the matrixes. You may also export the N-by-N or N-by-1 plots, which
@@ -353,7 +302,7 @@ populations together.</p>
 <span><span class="fu"><a href="../reference/PredMultipleSpread.html">PredMultipleSpread</a></span><span class="op">(</span>Userm <span class="op">=</span> <span class="va">UsermObj</span>,population_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P1"</span>,<span class="st">"P2"</span>,<span class="st">"P3"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/prediction_11.jpg" width="500/"></p>
+<p><img src="../reference/figures/prediction_11.jpg" width="500/"></p>
 
 <p>All 3 populations will be shown together in the scatter plot. The
 design and the interactive web is similar to that for PredOneSpread
@@ -374,7 +323,7 @@ and the Spread Distance Matrix. All matrix can be visualized with the
 <span>        title <span class="op">=</span> <span class="st">"Coefficient of residual model matrix (Coef Matrix) (row spread into column)"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/matrix_1.jpg" width="500/"></p>
+<p><img src="../reference/figures/matrix_1.jpg" width="500/"></p>
 
 <p>In the Coefficient Matrix, a high coef number indicates high
 increasing trend of spread from one fluorescence (row) into another
@@ -397,7 +346,7 @@ required:</p>
 <span>        title <span class="op">=</span> <span class="st">"Hotspot matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/matrix_2.jpg" width="500/"></p>
+<p><img src="../reference/figures/matrix_2.jpg" width="500"></p>
 
 <p>Based on the paper from Mage PL and et al.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Mage PL, Konecny AJ, Mair F. Measurement and prediction
 of unmixing-dependent spreading in spectral flow cytometry panels.
@@ -413,7 +362,7 @@ required:</p>
 <span>        title <span class="op">=</span> <span class="st">"Cosine similarity matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/matrix_3.jpg" width="500/"></p>
+<p><img src="../reference/figures/matrix_3.jpg" width="500"></p>
 
 <p>For similarity matrix, a number higher than 0.98 indicates that
 signals from the pair of fluorescence cannot be well separated. So, one
@@ -427,7 +376,7 @@ two populations with estimated fluorescence intensities:</p>
 <span><span class="fu"><a href="../reference/Vis_Mtx.html">Vis_Mtx</a></span><span class="op">(</span>mat <span class="op">=</span> <span class="va">SpreadDistance_mtx</span>,mincolor <span class="op">=</span> <span class="st">"darkred"</span>,midcolor <span class="op">=</span> <span class="st">"white"</span>, maxcolor <span class="op">=</span> <span class="st">"white"</span>,max <span class="op">=</span> <span class="fl">1.5</span>,mid <span class="op">=</span> <span class="fl">1</span>,min <span class="op">=</span> <span class="fl">0</span>,title <span class="op">=</span> <span class="st">"Spread Distance matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/matrix_4.jpg" width="500/"></p>
+<p><img src="../reference/figures/matrix_4.jpg" width="500/"></p>
 
 <p>For the Spread Distance matrix, a value &lt; 1.0 indicates low
 resolution between these two cell populations. Of note, this results

@@ -61,23 +61,16 @@ checkSig_linePlot(id = fluor_to_check)
 > print(fluor_to_check)
 [1] "SCC_Bead_CD2_FITC"
 ```
+![](../man/figures/checkSig_linePlot.jpg){width=500}
 
-<p align="center">
-
-<img src="./images/checkSig_linePlot.jpg" width="500/"/>
-
-</p>
 
 These available fluorescence were preprocessed with parameters extracted for residual model. To access the corresponding residaul model and its parameters, you can use the getRes function.
 
 ``` r
 ResObj = getRes(id = fluor_to_check)
 ```
-<p align="center">
+![](../man/figures/ResObj.jpg){width=500}
 
-<img src="./images/ResObj.jpg" width="500/"/>
-
-</p>
 
 The ResObj Object contains all relavant informations. If you are interested, please read our paper (mentioned on the top) to know the concepts of each matrix shown here. See \code{\link{CreateRes}} and \code{\link{SlopEstimation}} for detailed introduction of the structure of ResObj.
 
@@ -87,32 +80,24 @@ To check the slop matrix:
 ``` r
 checkRes_slopMtx(Res = ResObj)
 ```
-<p align="center">
 
-<img src="./images/slopmtx.jpg" width="500/"/>
-
-</p>
+![](../man/figures/slopmtx.jpg){width=500}
 
 To check the intercept matrix:
 ``` r
 checkRes_interceptMtx(Res = ResObj)
 ```
-<p align="center">
 
-<img src="./images/interceptmtx.jpg" width="500/"/>
-
-</p>
+![](../man/figures/interceptmtx.jpg){width=500}
 
 You can check the covariance matrix at a specified fluorescence intensity (bin):
 ``` r
 print(ResObj$bin_mids)
 checkRes_covMtx(Res = ResObj,bin=3)
 ```
-<p align="center">
 
-<img src="./images/covmtx.jpg" width="500/"/>
+![](../man/figures/covmtx.jpg){width=500}
 
-</p>
 
 You can even check the linear fitting of covariance versus fluorescence intensity (bin) between two speific detectors:
 ``` r
@@ -121,12 +106,8 @@ checkRes_covScatter(Res = ResObj,
                     detector1 = ResObj$detectors[1],
                     detector2 = ResObj$detectors[2])
 ```
-<p align="center">
 
-<img src="./images/covscatter.jpg" width="500/"/>
-
-</p>
-
+![](../man/figures/covscatter.jpg){width=500}
 
 ## Step 2 🖊 Select and rename fluors and create SuprObj
 
@@ -165,11 +146,8 @@ for (save_suf in colnames(Sig_mtx)) {
   UsermObj = AddRes2Userm(Res = ResObj, Userm = UsermObj)
 }
 ```
-<p align="center">
 
-<img src="./images/UsermObj.jpg" width="500/"/>
-
-</p>
+![](../man/figures/UsermObj.jpg){width=500}
 
 The UsermObj contains all information needed for prediction. The Res item is a list with ResObj of each fluorescence. The Scale_df item contains the scale setting for visualization afterward. It is ok to leave it as NA. Default linear scale will be applied (Options: "Linear", "Log10", "Arcsinh"). The Intensity_mtx contains the estimated fluorescence intensities of cell populations. In the example shown here, we have one default populaiton named "P1". You can modify the name or intensities or add new populations for interactive prediction in Step 3.
 
@@ -202,90 +180,63 @@ To predict for one population:
 ``` r
 PredOneSpread(Userm = UsermObj,population_id = c("P1"))
 ```
-<p align="center">
 
-<img src="./images/prediction_1.jpg" width="500/"/>
+![](../man/figures/prediction_1.jpg){width=500}
 
-</p>
 
 You will see a pop-out shinyapp window. 
 
-<p align="center">
+![](../man/figures/prediction_2.jpg){width=500}
 
-<img src="./images/prediction_2.jpg" width="500/"/>
-
-</p>
 
 The left panel allows users to interactively select and un-select fluroescence and detectors, and modify intensities. So that users can flexibly explore the impact of fluorescence combination and intensities on the predicted spread. Of note, you can use set-all button to adjust all intensities together. This can be handy when you want to set all of them as 0 except one fluorescence, in which case you are simulating a SCC sample.
 
-<p align="center">
-
-<img src="./images/prediction_3.jpg" width="500/"/>
-
-</p>
+![](../man/figures/prediction_3.jpg){width=500}
 
 The right panel have some tabs. The signature matrix contains all normalized signatures. If you want to adjust the color threshold, you may scroll down to the bottom and set new color threshold. There are tow ways to use different color palette. First, you can get the matrix with mathods described in Step1 or Step4, and visualize with the Vis_Mtx function, which is also described in Step4. Another method is that you can directly copy and paste the whole matrix into Excel and apply distinct color palette in Excel or other software.
 
-<p align="center">
-
-<img src="./images/prediction_4.jpg" width="500/"/>
-
-</p>
+![](../man/figures/prediction_4.jpg){width=500}
 
 In the prediction tab, you will see a scatter plot visualizing the 95% range of predicted spread. Two display mode is supported: ***Pseudo-color*** and ***Counter-line***. It allows the selection of fluorescence for x and y axes. You can also adjsut the display limis of the axes. Scale is support with ***Linear***, ***Log10*** and ***Arcsinh*** options. For Arcsinh, users need to set a cofactor.
 
-<p align="center">
-
-<img src="./images/af_factor.jpg" width="500/"/>
-
-</p>
+![](../man/figures/af_factor.jpg){width=500}
 
 Of note, you can now set the ***Factor for default Autofluorescence*** to control the displayed spread from AF. the displayed spread will be multiplied with the (factor / 100). So, when the factor is set to 100, the estimated spread from AF will be displayed completely. If the factor is set to 0, the spread from AF will be removed. This helps to check only the spread from noise. 
 
-<p align="center">
 
-<img src="./images/prediction_5.jpg" width="500/"/>
+![](../man/figures/prediction_5.jpg){width=500}
 
-</p>
 
 The pinv matrix shows the pseudo-inverse of the signature matrix.
 
-<p align="center">
 
-<img src="./images/prediction_6.jpg" width="500/"/>
+![](../man/figures/prediction_6.jpg){width=500}
 
-</p>
 
 In the intercept matrix tab, you can check the intercept matrix of each SCC. 
 
-<p align="center">
 
-<img src="./images/prediction_7.jpg" width="500/"/>
+![](../man/figures/prediction_7.jpg){width=500}
 
-</p>
 
-The summary intercept matrix for each SCC is calculated as <img src="./images/function1.jpg" width="100/"/> The median value of all summary intercept matrixes is used in the prediction (last two rows).
+The summary intercept matrix for each SCC is calculated as <img src="../man/figures/function1.jpg" width="100/"/> The median value of all summary intercept matrixes is used in the prediction (last two rows).
 
-<p align="center">
 
-<img src="./images/prediction_8.jpg" width="500/"/>
+![](../man/figures/prediction_8.jpg){width=500}
 
-</p>
 
 In the slop matrix tab, you can check the slop matrix of each fluroescence. 
 
 
-<p align="center">
+![](../man/figures/prediction_9.jpg){width=500}
 
-<img src="./images/prediction_9.jpg" width="500/"/>
 
-</p>
+Similarly, The summary slop matrix for each fluorescence is calculated as <img src="../man/figures/function2.jpg" width="100/"/> The summed value of all weighted slop matrixes is used in the prediction (last two rows).
 
-Similarly, The summary slop matrix for each fluorescence is calculated as <img src="./images/function2.jpg" width="100/"/> The summed value of all weighted slop matrixes is used in the prediction (last two rows).
 
 <p align="center">
 
-<img src="./images/prediction_82.jpg" width="500/"/>
+<img src="../man/figures/prediction_82.jpg" width="500/"/>
 
 </p>
 
@@ -293,7 +244,7 @@ To check the detail of each number summary slop matrix, you can use the weighted
 
 <p align="center">
 
-<img src="./images/prediction_10.jpg" width="500/"/>
+<img src="../man/figures/prediction_10.jpg" width="500/"/>
 
 </p>
 
@@ -309,7 +260,7 @@ PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
 ```
 <p align="center">
 
-<img src="./images/prediction_11.jpg" width="500/"/>
+<img src="../man/figures/prediction_11.jpg" width="500/"/>
 
 </p>
 All 3 populations will be shown together in the scatter plot. The design and the interactive web is similar to that for PredOneSpread function.
@@ -328,7 +279,7 @@ Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABD
 ```
 <p align="center">
 
-<img src="./images/matrix_1.jpg" width="500/"/>
+<img src="../man/figures/matrix_1.jpg" width="500/"/>
 
 </p>
 
@@ -346,7 +297,7 @@ Vis_Mtx(mat = Hotspot_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95
 ```
 <p align="center">
 
-<img src="./images/matrix_2.jpg" width="500/"/>
+<img src="../man/figures/matrix_2.jpg" width="500"/>
 
 </p>
 
@@ -361,7 +312,7 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
 ```
 <p align="center">
 
-<img src="./images/matrix_3.jpg" width="500/"/>
+<img src="../man/figures/matrix_3.jpg" width="500"/>
 
 </p>
 
@@ -376,7 +327,7 @@ Vis_Mtx(mat = SpreadDistance_mtx,mincolor = "darkred",midcolor = "white", maxcol
 ```
 <p align="center">
 
-<img src="./images/matrix_4.jpg" width="500/"/>
+<img src="../man/figures/matrix_4.jpg" width="500/"/>
 
 </p>
 

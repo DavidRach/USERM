@@ -144,13 +144,13 @@ data <-GateDecider(gate = gate2, df = data)
 ```
 <p align="center">
 
-<img src="./images/custom_sig_gatesiglets_1.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_gatesiglets_1.jpg" width="500/"/>
 
 </p>
 
 <p align="center">
 
-<img src="./images/custom_sig_gatesiglets_2.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_gatesiglets_2.jpg" width="500/"/>
 
 </p>
 
@@ -164,7 +164,7 @@ data <-GateDecider(gate = gate3, df = data)
 ```
 <p align="center">
 
-<img src="./images/custom_sig_gatesiglets_3.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_gatesiglets_3.jpg" width="500/"/>
 
 </p>
 
@@ -208,13 +208,13 @@ FALSE  TRUE
 ``` 
 <p align="center">
 
-<img src="./images/custom_sig_gatesiglets_4.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_gatesiglets_4.jpg" width="500/"/>
 
 </p>
 
 <p align="center">
 
-<img src="./images/custom_sig_gatesiglets_5.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_gatesiglets_5.jpg" width="500/"/>
 
 </p>
 
@@ -288,14 +288,14 @@ ggplot(df, aes(x = Detector, y = Signal, group = 1)) +
 
 <p align="center">
 
-<img src="./images/custom_sig_CD2.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_CD2.jpg" width="500/"/>
 
 </p>
 
 For AF:
 <p align="center">
 
-<img src="./images/custom_sig_AF.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_AF.jpg" width="500/"/>
 
 </p>
 
@@ -323,7 +323,7 @@ In the end, you should have a Custom_Sig_list containing elements like this:
 
 <p align="center">
 
-<img src="./images/custom_sig_list.jpg" width="500/"/>
+<img src="../man/figures/custom_sig_list.jpg" width="500/"/>
 
 </p>
 
@@ -440,17 +440,17 @@ data = data[data$gate3,]
 ```
 <p align="center">
 
-<img src="./images/custom_res_gatesiglets_1.jpg" width="500/"/>
+<img src="../man/figures/custom_res_gatesiglets_1.jpg" width="500/"/>
 
 </p>
 <p align="center">
 
-<img src="./images/custom_res_gatesiglets_2.jpg" width="500/"/>
+<img src="../man/figures/custom_res_gatesiglets_2.jpg" width="500/"/>
 
 </p>
 <p align="center">
 
-<img src="./images/custom_res_gatesiglets_3.jpg" width="500/"/>
+<img src="../man/figures/custom_res_gatesiglets_3.jpg" width="500/"/>
 
 </p>
 
@@ -499,7 +499,7 @@ data = data[data$gate_normal,rownames(Sig_mtx)]
 
 <p align="center">
 
-<img src="./images/custom_res_gatenromal_CD2.jpg" width="500/"/>
+<img src="../man/figures/custom_res_gatenromal_CD2.jpg" width="500/"/>
 
 </p>
 
@@ -507,7 +507,7 @@ To gate normal population for AF, we just need to gate a stable negative populai
 
 <p align="center">
 
-<img src="./images/custom_res_gatenromal_AF.jpg" width="500/"/>
+<img src="../man/figures/custom_res_gatenromal_AF.jpg" width="500/"/>
 
 </p>
 
@@ -542,14 +542,14 @@ calculating slop matrix...
 ```
 <p align="center">
 
-<img src="./images/custom_res_slop_CD2.jpg" width="500/"/>
+<img src="../man/figures/custom_res_slop_CD2.jpg" width="500/"/>
 
 </p>
 
 For AF:
 <p align="center">
 
-<img src="./images/custom_res_slop_AF.jpg" width="500/"/>
+<img src="../man/figures/custom_res_slop_AF.jpg" width="500/"/>
 
 </p>
 
@@ -557,7 +557,7 @@ The generated ResObj contains all details, which will be used for prediction.
 
 <p align="center">
 
-<img src="./images/custom_res_detail.jpg" width="500/"/>
+<img src="../man/figures/custom_res_detail.jpg" width="500/"/>
 
 </p>
 
@@ -668,7 +668,7 @@ PredOneSpread(Userm = UsermObj,population_id = c("P1"))
 ``` 
 <p align="center">
 
-<img src="./images/custom_predict_1.jpg" width="500/"/>
+<img src="../man/figures/custom_predict_1.jpg" width="500/"/>
 
 </p>
 
@@ -686,7 +686,7 @@ PredMultipleSpread(Userm = UsermObj,population_ids = c("P1","P2","P3"))
 ```
 <p align="center">
 
-<img src="./images/custom_predict_2.jpg" width="500/"/>
+<img src="../man/figures/custom_predict_2.jpg" width="500/"/>
 
 </p>
 
@@ -699,7 +699,7 @@ Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABD
 ```
 <p align="center">
 
-<img src="./images/custom_predict_3.jpg" width="500/"/>
+<img src="../man/figures/custom_predict_3.jpg" width="500/"/>
 
 </p>
 
@@ -711,7 +711,7 @@ Vis_Mtx(mat = Hotspot_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95
 ```
 <p align="center">
 
-<img src="./images/custom_predict_4.jpg" width="500/"/>
+<img src="../man/figures/custom_predict_4.jpg" width="500/"/>
 
 </p>
 
@@ -723,7 +723,7 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
 ```
 <p align="center">
 
-<img src="./images/custom_predict_5.jpg" width="500/"/>
+<img src="../man/figures/custom_predict_5.jpg" width="500/"/>
 
 </p>
 

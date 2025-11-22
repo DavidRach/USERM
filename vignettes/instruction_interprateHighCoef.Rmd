@@ -76,7 +76,7 @@ Vis_Mtx(mat = Coef_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95ABD
 ```
 <p align="center">
 
-<img src="./images/inteprate_coef_mtx.jpg" width="800/"/>
+<img src="../man/figures/inteprate_coef_mtx.jpg" width="800/"/>
 
 </p>
 
@@ -134,7 +134,7 @@ Set the ***Factor for default Autofluorescence*** to be 0, so that we remove the
 
 <p align="center">
 
-<img src="./images/inteprate_predict_high.jpg" width="800/"/>
+<img src="../man/figures/inteprate_predict_high.jpg" width="800/"/>
 
 </p>
 
@@ -142,7 +142,7 @@ The plot shows an increasing trend in the spread from PECy7 into BV510 as the fl
 
 <p align="center">
 
-<img src="./images/inteprate_predict_low.jpg" width="800/"/>
+<img src="../man/figures/inteprate_predict_low.jpg" width="800/"/>
 
 </p>
 
@@ -156,11 +156,11 @@ Let's first take a look at the key part of the residual model[^1], which is used
 
 <p align="center">
 
-<img src="./images/inteprate_formula1.jpg" width="200/"/>
+<img src="../man/figures/inteprate_formula1.jpg" width="200/"/>
 
 </p>
 
-In this formulation, <img src="./images/inteprate_formula2.jpg" height="20/"/> is the intensity of fluroescence ***h***. <img src="./images/inteprate_formula6.jpg" height="20/"/> is the pseudo-inverse of the signature matrix <img src="./images/inteprate_formula7.jpg" height="20/"/>. <img src="./images/inteprate_formula3.jpg" height="20/"/> is the ***k***-th row of the pseudo-inverse <img src="./images/inteprate_formula6.jpg" height="20/"/>. The <img src="./images/inteprate_formula4.jpg" height="20/"/> is the slope matrix (will explain later). And the <img src="./images/inteprate_formula5.jpg" height="20/"/> is the transpose of the <img src="./images/inteprate_formula3.jpg" height="20/"/>. The multiplied results of them is the predicted spread from the fluorescence ***h*** into fluorescence ***k***. 
+In this formulation, <img src="../man/figures/inteprate_formula2.jpg" height="20/"/> is the intensity of fluroescence ***h***. <img src="../man/figures/inteprate_formula6.jpg" height="20/"/> is the pseudo-inverse of the signature matrix <img src="../man/figures/inteprate_formula7.jpg" height="20/"/>. <img src="../man/figures/inteprate_formula3.jpg" height="20/"/> is the ***k***-th row of the pseudo-inverse <img src="../man/figures/inteprate_formula6.jpg" height="20/"/>. The <img src="../man/figures/inteprate_formula4.jpg" height="20/"/> is the slope matrix (will explain later). And the <img src="../man/figures/inteprate_formula5.jpg" height="20/"/> is the transpose of the <img src="../man/figures/inteprate_formula3.jpg" height="20/"/>. The multiplied results of them is the predicted spread from the fluorescence ***h*** into fluorescence ***k***. 
 
 For detailed explanation of the Matrix multiplication, please check the [Matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication)
 
@@ -179,7 +179,7 @@ Vis_Mtx(mat = A,mincolor = "white",midcolor = "#D03E4C", maxcolor = "#B02B38",
 
 <p align="center">
 
-<img src="./images/inteprate_sigmtx.jpg" height="800/"/>
+<img src="../man/figures/inteprate_sigmtx.jpg" height="800/"/>
 
 </p>
 
@@ -197,10 +197,10 @@ Vis_Mtx(mat = A_pinv,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B3
 ```
 <p align="center">
 
-<img src="./images/inteprate_pinvmtx.jpg" width="800/"/>
+<img src="../man/figures/inteprate_pinvmtx.jpg" width="800/"/>
 
 </p>
-The circled line is the <img src="./images/inteprate_formula3.jpg" height="20/"/>. 
+The circled line is the <img src="../man/figures/inteprate_formula3.jpg" height="20/"/>. 
 
 ### 3. slope matrix
 
@@ -213,7 +213,7 @@ Vis_Mtx(mat = slop_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02
 ```
 <p align="center">
 
-<img src="./images/inteprate_slopmtx.jpg" width="800/"/>
+<img src="../man/figures/inteprate_slopmtx.jpg" width="800/"/>
 
 </p>
 
@@ -239,7 +239,7 @@ checkRes_covScatter(Res = ResObj,
 ```
 <p align="center">
 
-<img src="./images/inteprate_scatter.jpg" width="800/"/>
+<img src="../man/figures/inteprate_scatter.jpg" width="800/"/>
 
 </p>
 
@@ -254,10 +254,10 @@ Vis_Mtx(mat = A_pinv_t,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02
 ```
 <p align="center">
 
-<img src="./images/inteprate_t_pinvmtx.jpg" height="800/"/>
+<img src="../man/figures/inteprate_t_pinvmtx.jpg" height="800/"/>
 
 </p>
-The circled column is the <img src="./images/inteprate_formula5.jpg" height="20/"/>. 
+The circled column is the <img src="../man/figures/inteprate_formula5.jpg" height="20/"/>. 
 
 ### 5. sum of the weighted slope matrix represents the observed spread
 
@@ -266,16 +266,16 @@ The circled column is the <img src="./images/inteprate_formula5.jpg" height="20/
 To better understand the formula, we can reshape it as:
 <p align="center">
 
-<img src="./images/inteprate_formula8.jpg" width="600/"/>
+<img src="../man/figures/inteprate_formula8.jpg" width="600/"/>
 
 </p>
 
 The indices ***i*** and ***j*** represents the ***i***-th row and ***j***-th column in the slope matrix.
-The formula can be interpreted as the sum over the weighted slope matrix, where the weight is the product of the ***i***-th and ***j***-th values in the <img src="./images/inteprate_formula3.jpg" height="20/"/>.
+The formula can be interpreted as the sum over the weighted slope matrix, where the weight is the product of the ***i***-th and ***j***-th values in the <img src="../man/figures/inteprate_formula3.jpg" height="20/"/>.
 
 #### 5.2 weight matrix
 
-We can compute the weight matrix, in which the value in the ***i***-th row and ***j***-th column is the product of the ***i***-th and ***j***-th value in the <img src="./images/inteprate_formula3.jpg" height="20/"/> :
+We can compute the weight matrix, in which the value in the ***i***-th row and ***j***-th column is the product of the ***i***-th and ***j***-th value in the <img src="../man/figures/inteprate_formula3.jpg" height="20/"/> :
 ``` r
 weight_mtx = A_pinv["SCC3_Cell_BV510_CD4",] %o% A_pinv["SCC3_Cell_BV510_CD4",]
 Vis_Mtx(mat = weight_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B02B38",
@@ -284,7 +284,7 @@ Vis_Mtx(mat = weight_mtx,mincolor = "#95ABDB",midcolor = "white", maxcolor = "#B
 ```
 <p align="center">
 
-<img src="./images/inteprate_weightmtx.jpg" width="800/"/>
+<img src="../man/figures/inteprate_weightmtx.jpg" width="800/"/>
 
 </p>
 
@@ -306,7 +306,7 @@ sum(weighted_slope_mtx)
 ```
 <p align="center">
 
-<img src="./images/inteprate_weightslopemtx.jpg" width="800/"/>
+<img src="../man/figures/inteprate_weightslopemtx.jpg" width="800/"/>
 
 </p>
 The sum of all values in the weighted slope matrix is the predicted spread from fluorescence ***h*** into fluorescence ***k***. These values can be negative, 0, or positive. It is obvious that only few values contribute to the overall sum. These contributing values correspond to detector pairs of B12-A, B13-A, B14-A, and YG10-A.
@@ -324,7 +324,7 @@ checkSig_linePlot(id = "SCC3_Cell_PECy7_CD4")
 ``` 
 <p align="center">
 
-<img src="./images/inteprateresult_sig.jpg" width="800/"/>
+<img src="../man/figures/inteprateresult_sig.jpg" width="800/"/>
 
 </p>
 
@@ -341,7 +341,7 @@ Vis_Mtx(mat = Similarity_mtx,mincolor = "white",midcolor = "white", maxcolor = "
 ``` 
 <p align="center">
 
-<img src="./images/inteprateresult_similaritymtx.jpg" width="800/"/>
+<img src="../man/figures/inteprateresult_similaritymtx.jpg" width="800/"/>
 
 </p>
 No clear conflicting fluorescence were found.
@@ -358,7 +358,7 @@ Vis_Mtx(mat = Hotspot_mtx,mincolor = "white",midcolor = "white", maxcolor = "#95
 ``` 
 <p align="center">
 
-<img src="./images/inteprateresult_hotspotmtx.jpg" width="800/"/>
+<img src="../man/figures/inteprateresult_hotspotmtx.jpg" width="800/"/>
 
 </p>
 The spread from PECy7 into BV510 was not identified. 

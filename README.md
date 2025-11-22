@@ -34,11 +34,11 @@ devtools::install_github("xiangmingcai/USERM")
 
 The following instructions and all reference can be found here: 📖 [Documentation website](https://xiangmingcai.github.io/USERM)
 
-1. For basic use of the USERM
+1. Basic use of the USERM
 
-2. For instruction about using custom single-color control FCS file
+2. Using custom single-color control FCS file
 
-3. For instruction about using USERM to interpret observed spread
+3. Using USERM to interpret observed spread
 
 ## ⚙️ Contribute Single-cor control FCS files to the USERM
 

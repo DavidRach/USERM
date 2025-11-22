@@ -138,7 +138,7 @@ of the scope of this instruction.</p>
 <span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">64</span> <span class="dv">21</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_coef_mtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_coef_mtx.jpg" width="800/"></p>
 
 <p>From the Coef Matrix, we find the high Coef value of PECy7 spread
 into BV510, which equals to 71.3. On the contrary, the coef value of
@@ -195,14 +195,14 @@ represents the spread from AF. Adjust the range of axes and we can saw
 this predicted plot:</p>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_predict_high.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_predict_high.jpg" width="800/"></p>
 
 <p>The plot shows an increasing trend in the spread from PECy7 into
 BV510 as the fluorescence intensity of PECy7 increases. Now we can
 switch the x axis to BV480.</p>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_predict_low.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_predict_low.jpg" width="800/"></p>
 
 <p>From the plot, it is clear that the PECy7 barely spread into BV480,
 compared to that for BV510. These observation verify what we find in the
@@ -221,22 +221,22 @@ used to predict the spread from a SCC fluorescence
 <strong><em>k</em></strong> (BV510):</p>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_formula1.jpg" width="200/"></p>
+<p><img src="../reference/figures/inteprate_formula1.jpg" width="200/"></p>
 
 <p>In this formulation,
-<img src="./images/inteprate_formula2.jpg" height="20/"> is the
+<img src="../reference/figures/inteprate_formula2.jpg" height="20/"> is the
 intensity of fluroescence <strong><em>h</em></strong>.
-<img src="./images/inteprate_formula6.jpg" height="20/"> is the
+<img src="../reference/figures/inteprate_formula6.jpg" height="20/"> is the
 pseudo-inverse of the signature matrix
-<img src="./images/inteprate_formula7.jpg" height="20/">.
-<img src="./images/inteprate_formula3.jpg" height="20/"> is the
+<img src="../reference/figures/inteprate_formula7.jpg" height="20/">.
+<img src="../reference/figures/inteprate_formula3.jpg" height="20/"> is the
 <strong><em>k</em></strong>-th row of the pseudo-inverse
-<img src="./images/inteprate_formula6.jpg" height="20/">. The
-<img src="./images/inteprate_formula4.jpg" height="20/"> is the slope
-matrix (will explain later). And the
-<img src="./images/inteprate_formula5.jpg" height="20/"> is the
+<img src="../reference/figures/inteprate_formula6.jpg" height="20/">. The
+<img src="../reference/figures/inteprate_formula4.jpg" height="20/"> is the
+slope matrix (will explain later). And the
+<img src="../reference/figures/inteprate_formula5.jpg" height="20/"> is the
 transpose of the
-<img src="./images/inteprate_formula3.jpg" height="20/">. The
+<img src="../reference/figures/inteprate_formula3.jpg" height="20/">. The
 multiplied results of them is the predicted spread from the fluorescence
 <strong><em>h</em></strong> into fluorescence
 <strong><em>k</em></strong>.</p>
@@ -257,7 +257,7 @@ signatures of all fluorescence in the panel.</p>
 <span>        title <span class="op">=</span> <span class="st">"Signature matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_sigmtx.jpg" height="800/"></p>
+<p><img src="../reference/figures/inteprate_sigmtx.jpg" height="800/"></p>
 
 </div>
 <div class="section level4">
@@ -275,10 +275,10 @@ detailed explanation of the pseudo-inverse, please check the <a href="https://en
 <span>        title <span class="op">=</span> <span class="st">"Pseudo-inverse matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_pinvmtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_pinvmtx.jpg" width="800/"></p>
 
 <p>The circled line is the
-<img src="./images/inteprate_formula3.jpg" height="20/">.</p>
+<img src="../reference/figures/inteprate_formula3.jpg" height="20/">.</p>
 </div>
 <div class="section level4">
 <h4 id="slope-matrix">3. slope matrix<a class="anchor" aria-label="anchor" href="#slope-matrix"></a>
@@ -293,7 +293,7 @@ visualize the slope matrix of the fluorescence
 <span>        title <span class="op">=</span> <span class="st">"slope matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_slopmtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_slopmtx.jpg" width="800/"></p>
 
 <p>The whole matrix is the slope matrix. The
 <strong><em>slope</em></strong> matrix is a <strong><em>m</em></strong>
@@ -328,7 +328,7 @@ B13-A and B14-A versus the fluorescence intensity of the fluorescence
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>[<span class="dv">56</span>] <span class="st">"YG10-A"</span> <span class="st">"R1-A"</span>   <span class="st">"R2-A"</span>   <span class="st">"R3-A"</span>   <span class="st">"R4-A"</span>   <span class="st">"R5-A"</span>   <span class="st">"R6-A"</span>   <span class="st">"R7-A"</span>   <span class="st">"R8-A"</span> </span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_scatter.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_scatter.jpg" width="800/"></p>
 
 </div>
 <div class="section level4">
@@ -343,10 +343,10 @@ the pseudo-inverse matrix:</p>
 <span>        title <span class="op">=</span> <span class="st">"transpose of Pseudo-inverse matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_t_pinvmtx.jpg" height="800/"></p>
+<p><img src="../reference/figures/inteprate_t_pinvmtx.jpg" height="800/"></p>
 
 <p>The circled column is the
-<img src="./images/inteprate_formula5.jpg" height="20/">.</p>
+<img src="../reference/figures/inteprate_formula5.jpg" height="20/">.</p>
 </div>
 <div class="section level4">
 <h4 id="sum-of-the-weighted-slope-matrix-represents-the-observed-spread">5. sum of the weighted slope matrix represents the observed
@@ -358,7 +358,7 @@ spread<a class="anchor" aria-label="anchor" href="#sum-of-the-weighted-slope-mat
 To better understand the formula, we can reshape it as:
 <p align="center">
 </p>
-<p><img src="./images/inteprate_formula8.jpg" width="600/"></p>
+<p><img src="../reference/figures/inteprate_formula8.jpg" width="600/"></p>
 
 <p>The indices <strong><em>i</em></strong> and
 <strong><em>j</em></strong> represents the
@@ -366,7 +366,8 @@ To better understand the formula, we can reshape it as:
 column in the slope matrix. The formula can be interpreted as the sum
 over the weighted slope matrix, where the weight is the product of the
 <strong><em>i</em></strong>-th and <strong><em>j</em></strong>-th values
-in the <img src="./images/inteprate_formula3.jpg" height="20/">.</p>
+in the
+<img src="../reference/figures/inteprate_formula3.jpg" height="20/">.</p>
 </div>
 <div class="section level5">
 <h5 id="weight-matrix">5.2 weight matrix<a class="anchor" aria-label="anchor" href="#weight-matrix"></a>
@@ -375,7 +376,7 @@ in the <img src="./images/inteprate_formula3.jpg" height="20/">.</p>
 <strong><em>i</em></strong>-th row and <strong><em>j</em></strong>-th
 column is the product of the <strong><em>i</em></strong>-th and
 <strong><em>j</em></strong>-th value in the
-<img src="./images/inteprate_formula3.jpg" height="20/"> :</p>
+<img src="../reference/figures/inteprate_formula3.jpg" height="20/"> :</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weight_mtx</span> <span class="op">=</span> <span class="va">A_pinv</span><span class="op">[</span><span class="st">"SCC3_Cell_BV510_CD4"</span>,<span class="op">]</span> <span class="op"><a href="https://rdrr.io/r/base/outer.html" class="external-link">%o%</a></span> <span class="va">A_pinv</span><span class="op">[</span><span class="st">"SCC3_Cell_BV510_CD4"</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="../reference/Vis_Mtx.html">Vis_Mtx</a></span><span class="op">(</span>mat <span class="op">=</span> <span class="va">weight_mtx</span>,mincolor <span class="op">=</span> <span class="st">"#95ABDB"</span>,midcolor <span class="op">=</span> <span class="st">"white"</span>, maxcolor <span class="op">=</span> <span class="st">"#B02B38"</span>,</span>
@@ -383,7 +384,7 @@ column is the product of the <strong><em>i</em></strong>-th and
 <span>        title <span class="op">=</span> <span class="st">"weight matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_weightmtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_weightmtx.jpg" width="800/"></p>
 
 <p>We can immediately find that most of the values in the weight matrix
 is zero. For detailed explanation of the outer product conducted here,
@@ -403,7 +404,7 @@ please check the <a href="https://en.wikipedia.org/wiki/Outer_product" class="ex
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">71.32371</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprate_weightslopemtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprate_weightslopemtx.jpg" width="800/"></p>
 
 <p>The sum of all values in the weighted slope matrix is the predicted
 spread from fluorescence <strong><em>h</em></strong> into fluorescence
@@ -436,7 +437,7 @@ intensity of fluorescence <strong><em>h</em></strong> (PECy7).</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/checkSig_linePlot.html">checkSig_linePlot</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"SCC3_Cell_PECy7_CD4"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprateresult_sig.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprateresult_sig.jpg" width="800/"></p>
 
 <p>Some peak channels appear to be related to our conclusion, although
 the connection remains unclear.</p>
@@ -452,7 +453,7 @@ the connection remains unclear.</p>
 <span>        title <span class="op">=</span> <span class="st">"Cosine similarity matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprateresult_similaritymtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprateresult_similaritymtx.jpg" width="800/"></p>
 
 <p>No clear conflicting fluorescence were found.</p>
 </div>
@@ -468,7 +469,7 @@ the connection remains unclear.</p>
 <span>        title <span class="op">=</span> <span class="st">"Hotspot matrix"</span><span class="op">)</span></span></code></pre></div>
 <p align="center">
 </p>
-<p><img src="./images/inteprateresult_hotspotmtx.jpg" width="800/"></p>
+<p><img src="../reference/figures/inteprateresult_hotspotmtx.jpg" width="800/"></p>
 
 <p>The spread from PECy7 into BV510 was not identified.</p>
 </div>
