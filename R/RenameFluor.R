@@ -73,7 +73,7 @@ RenameFluor <- function(Userm, raw_name, new_name) {
   }
 
   # Optionally, print a message
-  message(paste("Successfully renamed", raw_name, "to", new_name))
+  message(paste("Successfully renamed", raw_name, "as", new_name))
 
   # Return the updated object
   return(Userm)

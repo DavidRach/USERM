@@ -310,6 +310,58 @@ PredMultipleSpread = function(Userm,population_ids){
                    downloadButton("downloadNx1", "Export N x 1 plot")
 
 
+          ),tabPanel(
+            "About",
+
+            fluidRow(
+              column(12,
+                     h3("About USERM"),
+                     tags$hr()
+              )
+            ),
+
+            fluidRow(
+              column(12,
+                     p("The USERM package provides an out-of-box tool to apply the residual model approach,
+              which characterizes and predicts the spread of unmixed spectral flow cytometry data,
+              which arises from instrumental noise or deviations between actual cellular emission
+              and the average fluorescence signatures.")
+              )
+            ),
+            fluidRow(
+              column(12,
+                     p("You can predict spread and interactively adjust various parameters.")
+              )
+            ),
+
+            fluidRow(
+              column(12,
+                     p("To support panel design and spread interpretation,
+                       the USERM also supports computing various matrices, including:"),
+                     tags$ul(
+                       tags$li("Coefficient Matrix"),
+                       tags$li("Similarity Matrix"),
+                       tags$li("Hotspot Matrix"),
+                       tags$li("Signature Matrix"),
+                       tags$li("pseudo-inverse Matrix"),
+                       tags$li("Slop Matrix"),
+                       tags$li("Intercept Matrix")
+
+                     )
+              )
+            ),
+
+            fluidRow(
+              column(12,
+                     p(
+                       "Here is the link to ",
+                       tags$a(href = "https://github.com/xiangmingcai/USERM",
+                              "GitHub Repository", target = "_blank",
+                              style = "color:#2c3e50; font-weight:bold;"),
+                       ". You can find more instructions on the repository."
+                     )
+              )
+            )
           )
 
         )
@@ -438,6 +490,10 @@ PredMultipleSpread = function(Userm,population_ids){
       color_cache$matrix["hotspot_mtx","max"] = input[["hotspot_matrix_color_max"]]
     })
 
+    colormin = "#4473c5"#098ebb  2166ac
+    colormid = "#f7f7f7"
+    colormax = "#ef7e30" #e96449  b2182b
+
 
     # unmixing_matrix_table
     output$unmixing_matrix_html <- renderUI({
@@ -448,7 +504,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["signature_mtx","min"],
                             val_mid = color_cache$matrix["signature_mtx","mid"],
                             val_max = color_cache$matrix["signature_mtx","max"],
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # pinv_matrix_table
@@ -463,7 +519,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["pinv_mtx","min"],
                             val_mid = color_cache$matrix["pinv_mtx","mid"],
                             val_max = color_cache$matrix["pinv_mtx","max"],
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # intercept_matrix_table
@@ -481,7 +537,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["intercept_mtx_raw","min"],
                             val_mid = color_cache$matrix["intercept_mtx_raw","mid"],
                             val_max = color_cache$matrix["intercept_mtx_raw","max"],
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$intercept_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -502,7 +558,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["intercept_mtx_weighted","min"],
                             val_mid = color_cache$matrix["intercept_mtx_weighted","mid"],
                             val_max = color_cache$matrix["intercept_mtx_weighted","max"],
-                           colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # # slop_matrix_table
@@ -540,7 +596,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["slop_mtx_raw","min"],
                             val_mid = color_cache$matrix["slop_mtx_raw","mid"],
                             val_max = color_cache$matrix["slop_mtx_raw","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$slop_matrix_weighted_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -559,7 +615,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["slop_mtx_weighted","min"],
                             val_mid = color_cache$matrix["slop_mtx_weighted","mid"],
                             val_max = color_cache$matrix["slop_mtx_weighted","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     output$slop_matrix_summary_html <- renderUI({
       req(detector_cache$selected, fluor_cache$selected)
@@ -589,7 +645,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["slop_mtx_summary","min"],
                             val_mid = color_cache$matrix["slop_mtx_summary","mid"],
                             val_max = color_cache$matrix["slop_mtx_summary","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     # estimation mtx
@@ -618,7 +674,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["coef_mtx","min"],
                             val_mid = color_cache$matrix["coef_mtx","mid"],
                             val_max = color_cache$matrix["coef_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     #similarity_matrix_html
     output$similarity_matrix_html <- renderUI({
@@ -633,7 +689,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["similarity_mtx","min"],
                             val_mid = color_cache$matrix["similarity_mtx","mid"],
                             val_max = color_cache$matrix["similarity_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
     #hotspot_matrix_html
     output$hotspot_matrix_html <- renderUI({
@@ -653,7 +709,7 @@ PredMultipleSpread = function(Userm,population_ids){
                             val_min = color_cache$matrix["hotspot_mtx","min"],
                             val_mid = color_cache$matrix["hotspot_mtx","mid"],
                             val_max = color_cache$matrix["hotspot_mtx","max"],
-                            colormin = "#2166ac", colormid = "#f7f7f7", colormax = "#b2182b"))
+                            colormin = colormin, colormid = colormid, colormax = colormax))
     })
 
     #prediction
