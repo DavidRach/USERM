@@ -32,7 +32,7 @@ devtools::install_github("xiangmingcai/USERM")
 
 ## 🖊 Instruction
 
-The following instructions and all reference can be foudn here: 📖 [Documentation website](https://xiangmingcai.github.io/USERM)
+The following instructions and all reference can be found here: 📖 [Documentation website](https://xiangmingcai.github.io/USERM)
 
 1. For basic use of the USERM
 
