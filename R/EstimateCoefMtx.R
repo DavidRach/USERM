@@ -28,11 +28,13 @@
 #'
 #' @importFrom MASS ginv
 #' @export
-EstimateCoefMtx = function(Userm){
+EstimateCoefMtx = function(Userm,A=NULL){
 
   detectors = Userm$detectors
   fluors = Userm$fluors
-  A = Userm$A
+  if(is.null(A)){
+    A = Userm$A
+  }
   A = A[detectors, fluors, drop = FALSE]
   A_pinv = ginv(A)
   colnames(A_pinv) = rownames(A)

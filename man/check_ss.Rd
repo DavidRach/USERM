@@ -16,6 +16,8 @@ check_ss(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL, mSS = TRUE)
 \item{A}{A numeric matrix representing the detector-to-fluorophore unmixing matrix. Row names must be detector names; column names must be fluorophore names.}
 
 \item{custom_ssm_dir}{Optional path to a directory containing custom SSM \code{.rds} files. Default is \code{NULL}.}
+
+\item{mSS}{Modified Spread error. Default is TRUE. If set to FALSE, original Spread error will be calculated.}
 }
 \value{
 A list containing:

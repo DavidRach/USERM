@@ -11,6 +11,7 @@
 #' @param SSM_fluor A character vector of fluorophores required for SSM computation. Used for availability checks.
 #' @param A A numeric matrix representing the detector-to-fluorophore unmixing matrix. Row names must be detector names; column names must be fluorophore names.
 #' @param custom_ssm_dir Optional path to a directory containing custom SSM `.rds` files. Default is `NULL`.
+#' @param mSS Modified Spread error. Default is TRUE. If set to FALSE, original Spread error will be calculated.
 #'
 #' @return A list containing:
 #' \item{f_pos}{positive fluorophore name.}

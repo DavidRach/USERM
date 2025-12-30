@@ -4,7 +4,7 @@
 \alias{EstimateCoefMtx}
 \title{Estimate Coefficient Matrix of Slope Components in USERM}
 \usage{
-EstimateCoefMtx(Userm)
+EstimateCoefMtx(Userm, A = NULL)
 }
 \arguments{
 \item{Userm}{A list containing USERM analysis results. Must include:
