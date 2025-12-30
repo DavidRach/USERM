@@ -2,6 +2,7 @@
 
 export(AddRes2Userm)
 export(AddScale)
+export(B_remove_outlier)
 export(CreateRes)
 export(CreateUserm)
 export(EllipseLine_intersection)

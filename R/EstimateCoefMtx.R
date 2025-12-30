@@ -51,6 +51,15 @@ EstimateCoefMtx = function(Userm){
   Coef_matrix = t(Coef_matrix)
   # Coef_matrix = sqrt(abs(Coef_matrix))# Variance To Standard deviation
 
+  for (row in 1:nrow(Coef_matrix)) {
+    for (col in 1:ncol(Coef_matrix)) {
+      if(Coef_matrix[row,col] < 0){
+        Coef_matrix[row,col] = -sqrt(abs(Coef_matrix[row,col]))
+      }else if(Coef_matrix[row,col] > 0){
+        Coef_matrix[row,col] = sqrt(Coef_matrix[row,col])
+      }
+    }
+  }
   return(Coef_matrix)
 }
 

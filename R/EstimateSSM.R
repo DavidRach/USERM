@@ -38,7 +38,7 @@
 #' @export
 
 
-EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
+EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE,mSS=TRUE){
 
 
   #use raw_name to label SSM_fluor and A
@@ -135,11 +135,15 @@ EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
     B_pos = t(B_pos)
     colnames(B_pos) = fluor_A
 
+
+
     R_neg = t(df_neg) #R (detectors x cells)
     B_neg =  A_pinv %*% R_neg #B (fluors x cells)
     B_neg = t(B_neg)
     colnames(B_neg) = fluor_A
 
+    B_pos_backup = B_pos
+    B_neg_backup = B_neg
     #calculate ss
     for(fluor_negchannel in SSM_fluor){
       # fluor_negchannel = SSM_fluor[1]
@@ -147,8 +151,13 @@ EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
         ssm[fluor,fluor_negchannel] = 0
       }else{
 
-        B_pos_correct = as.data.frame(B_pos[,c(fluor,fluor_negchannel)])
+        #remove outliers of B_pos in fluor_negchannel column
+        B_pos = B_remove_outlier(B = B_pos_backup,col = fluor_negchannel)
+        #remove outliers of B_neg in fluor_negchannel column
+        B_neg = B_remove_outlier(B = B_neg_backup,col = fluor_negchannel)
+
         #correct B_pos_correct
+        B_pos_correct = as.data.frame(B_pos[,c(fluor,fluor_negchannel)])
         colnames(B_pos_correct) = c("X","Y")
         B_pos_correct = correct_to_horizontal(B_pos_correct)
         colnames(B_pos_correct) = c(fluor,fluor_negchannel)
@@ -174,7 +183,15 @@ EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE){
         R_F_pos_50 = quantile(B_neg[,fluor],probs = 0.50)[[1]]
         delta_F_pos = S_F_pos_50 - R_F_pos_50
 
-        delta_sigma_F_neg_2 = S_sigma_F_neg^2 - R_sigma_F_neg^2
+
+        if(mSS){
+          #mSS (Modified Spreading Error), to fit the coef concept in residual model
+          delta_sigma_F_neg_2 = S_sigma_F_neg - R_sigma_F_neg
+          delta_sigma_F_neg_2 = sign(delta_sigma_F_neg_2) * delta_sigma_F_neg_2^2
+        }else{
+          #ss in the original paper
+          delta_sigma_F_neg_2 = S_sigma_F_neg^2 - R_sigma_F_neg^2
+        }
 
         if(delta_F_pos == 0){
           ss = NA

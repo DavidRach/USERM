@@ -51,7 +51,7 @@
 #' @export
 
 
-check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL){
+check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL,mSS=TRUE){
 
   #use raw_name to label SSM_fluor and A, f_pos, f_neg
   Rename_table = Userm$Rename_table
@@ -149,6 +149,10 @@ check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL){
   B_neg = t(B_neg)
   colnames(B_neg) = fluor_A
 
+  #remove outliers of B_pos in f_neg column
+  B_pos = B_remove_outlier(B = B_pos,col = f_neg)
+  B_neg = B_remove_outlier(B = B_neg,col = f_neg)
+
   #correct B_pos
   B_pos_correct = as.data.frame(B_pos[,c(f_pos,f_neg)])
   #correct B_pos_correct
@@ -188,7 +192,15 @@ check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL){
     R_F_pos_50 = quantile(B_neg[,fluor],probs = 0.50)[[1]]
     delta_F_pos = S_F_pos_50 - R_F_pos_50
 
-    delta_sigma_F_neg_2 = S_sigma_F_neg^2 - R_sigma_F_neg^2
+    if(mSS){
+      #mSS (Modified Spreading Error), to fit the coef concept in residual model
+      delta_sigma_F_neg_2 = S_sigma_F_neg - R_sigma_F_neg
+      delta_sigma_F_neg_2 = sign(delta_sigma_F_neg_2) * delta_sigma_F_neg_2^2
+    }else{
+      #ss in the original paper
+      delta_sigma_F_neg_2 = S_sigma_F_neg^2 - R_sigma_F_neg^2
+    }
+
 
     if(delta_F_pos == 0){
       ss_2 = NA
