@@ -62,6 +62,7 @@ EstimateCoefMtx = function(Userm,A=NULL){
       }
     }
   }
+  diag(Coef_matrix) = 0# residual model cannot predict spread at the positive axis
   return(Coef_matrix)
 }
 

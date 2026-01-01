@@ -38,7 +38,7 @@
 #' @export
 
 
-EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE,mSS=TRUE){
+EstimateSSM = function(SSM_fluor,A,Userm,custom_ssm_dir = NULL,quiet = FALSE,mSS=FALSE){
 
 
   #use raw_name to label SSM_fluor and A

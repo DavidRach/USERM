@@ -52,7 +52,7 @@
 #' @export
 
 
-check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL,mSS=TRUE){
+check_ss = function(f_pos, f_neg, SSM_fluor, A, Userm, custom_ssm_dir = NULL,mSS=FALSE){
 
   #use raw_name to label SSM_fluor and A, f_pos, f_neg
   Rename_table = Userm$Rename_table

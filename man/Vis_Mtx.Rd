@@ -14,7 +14,8 @@ Vis_Mtx(
   maxcolor = "red",
   title = "Heatmap",
   legend_name = "value",
-  text_reg = "\%.2f"
+  text_reg = "\%.2f",
+  fontsize = 6
 )
 }
 \arguments{

@@ -10,7 +10,7 @@ EstimateSSM(
   Userm,
   custom_ssm_dir = NULL,
   quiet = FALSE,
-  mSS = TRUE
+  mSS = FALSE
 )
 }
 \arguments{
