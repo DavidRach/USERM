@@ -58,7 +58,7 @@ Any feedback is welcomed! You may post any issue on the [Issue](https://github.c
 
 If you use this package in your research, please cite our paper and the package as:
 ```
-Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
+Xiangming Cai, Sara Garcia-Garcia, Leo Kuhnen, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
 
 Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package version
   1.0.0,  <https://github.com/xiangmingcai/USERM>.
