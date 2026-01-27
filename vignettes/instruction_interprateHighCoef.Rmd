@@ -372,7 +372,7 @@ We think the Coef Matrix can be a good complementary to available tools. We want
 
 If you use this package in your research, please cite our paper and the package as:
 ```
-Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
+Xiangming Cai, Sara Garcia-Garcia, Leo Kuhnen, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation. (to be update)
 
 Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package version
   1.0.0,  <https://github.com/xiangmingcai/USERM>.

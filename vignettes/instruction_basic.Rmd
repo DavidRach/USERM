@@ -354,6 +354,6 @@ Cai X (2025). _USERM: Unmixing Spread Estimation with Residual Model_. R package
 
 
 
-[^1]: Xiangming Cai, Sara Garcia-Garcia, Nick Rohrbacker, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
+[^1]: Xiangming Cai, Sara Garcia-Garcia, Leo Kuhnen, Michaela Gianniou, Juan J. Garcia Vallejo. Manuscript in preparation.
 
 [^2]: Mage PL, Konecny AJ, Mair F. Measurement and prediction of unmixing-dependent spreading in spectral flow cytometry panels. bioRxiv [Preprint]. 2025. doi: 10.1101/2025.04.17.649396.
