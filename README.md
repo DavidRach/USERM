@@ -18,7 +18,7 @@ The USERM provides an out-of-box tool to apply the residual model approach [^1],
 The USERM also supports computing various matrixes tools for panel design, including the Coef Matrix, the Hotspot Matrix, and the Similarity Matrix, and many others.
 
 ## 🔧 Updates
-**2025-11-22**: 
+**2026-01-26**: 
 
 1. Release version 1.0.0
 

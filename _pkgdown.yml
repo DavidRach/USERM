@@ -20,7 +20,7 @@ navbar:
     menu:
       - text: "Basic Instruction"
         href: articles/instruction_basic.html
-      - text: "Custom FCS"
+      - text: "Use Custom FCS"
         href: articles/instruction_customFCS.html
       - text: "Interpret High Coef"
         href: articles/instruction_interprateHighCoef.html
