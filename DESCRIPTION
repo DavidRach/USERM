@@ -21,6 +21,9 @@ Imports:
     rmarkdown,
     scales,
     stats,
-    shiny
+    shiny,
+    ComplexHeatmap,
+    circlize,
+    lsa
 URL: https://xiangmingcai.github.io/USERM
 BugReports: https://github.com/xiangmingcai/USERM/issues
